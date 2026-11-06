@@ -1,39 +1,117 @@
+
 /*-- scss:defaults --*/
-// Base document colours
-$body-bg: white;
-$body-color: #000000; 
-$link-color: #38A5E0; 
-$navbar-bg: #15573A;
+
+// CIIDIR brand colours
+$ciidir-cyan: #51BFCE;
+$ciidir-magenta: #D90078;
+$ciidir-orange: #F08321;
+$ciidir-charcoal: #606060;
+$ciidir-dark: #30343B;
+
+// Base slide colours
+$body-bg: #FFFFFF;
+$body-color: $ciidir-dark;
+$link-color: #168D9C;
+
+// Typography
+$presentation-heading-color: $ciidir-charcoal;
+$presentation-heading-font: "Arial", sans-serif;
+$presentation-font-size-root: 36px;
 
 // Code blocks
-$code-block-bg-alpha: -.8;
+$code-block-bg: #F3F7F8;
+$code-block-border-color: #DCE7E9;
+$code-block-font-size: 0.80em;
 
-/* Change link color */
-a {
-  color: #38A5E0; /* Replace with your desired color */
-  text-decoration: none; /* Optional: Remove underline */
-  font-weight: bold; /* Make text bold */
+// RevealJS
+$presentation-title-slide-text-align: left;
+
+/*-- scss:rules --*/
+
+// Headings
+.reveal h1 {
+  color: $ciidir-charcoal;
+  font-weight: 700;
 }
 
-/* Change link color on hover */
-a:hover {
-  color: #90CFF0; /* Replace with your desired hover color */
-  text-decoration: underline; /* Optional: Add underline on hover */
-  font-weight: bold; /* Make text bold */
+.reveal h2 {
+  color: $ciidir-charcoal;
+  font-weight: 700;
+  border-bottom: 4px solid $ciidir-cyan;
+  padding-bottom: 12px;
 }
 
-h1 {
-  color: #15573A;
+.reveal h3 {
+  color: $ciidir-magenta;
+  font-weight: 600;
 }
 
-h2 {
-  color: #15573A;
+.reveal h4 {
+  color: $ciidir-dark;
 }
 
-h3 {
-  color: #15573A;
+// Links
+.reveal a {
+  color: #168D9C;
+  text-decoration: none;
+  font-weight: 600;
 }
 
-h4 {
-  color: #15573A;
+.reveal a:hover {
+  color: $ciidir-magenta;
+  text-decoration: underline;
+}
+
+// Emphasis
+.reveal strong {
+  color: $ciidir-magenta;
+}
+
+// Code blocks
+.reveal pre {
+  border-left: 4px solid $ciidir-cyan;
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.reveal code {
+  font-family: "Consolas", "Menlo", monospace;
+}
+
+// Tables
+.reveal table th {
+  background-color: $ciidir-cyan;
+  color: #FFFFFF;
+}
+
+.reveal table td {
+  border-bottom: 1px solid #DCE7E9;
+}
+
+// Section divider slides
+.reveal section.section-divider {
+  background-color: transparent;
+  color: #606060;
+}
+
+.reveal section.section-divider h1,
+.reveal section.section-divider h2 {
+  color: #606060;
+  border-bottom: 4px solid $ciidir-orange;
+}
+
+// Slide number
+.reveal .slide-number {
+  color: $ciidir-charcoal;
+  font-size: 14px;
+  bottom: 12px;
+  right: 18px;
+}
+
+// CIIDIR logo on regular slides
+.reveal .slide-background:not(.title-slide) {
+  background-image: url("images/CIIDIR_logo.png");
+  background-repeat: no-repeat;
+  background-position: left 20px bottom 15px;
+  background-size: 145px auto;
 }

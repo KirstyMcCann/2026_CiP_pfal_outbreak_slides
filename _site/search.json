@@ -121,7 +121,7 @@
   {
     "objectID": "index.html#question",
     "href": "index.html#question",
-    "title": "Population Genomics Workshop: Identification of Imported Cases",
+    "title": "Population Genomics Workshop",
     "section": "Question",
     "text": "Question"
   },
@@ -201,5 +201,614 @@
     "title": "Mapping Sampling Locations",
     "section": "",
     "text": "Exercises for Section 9. Mapping Sampling Locations\n\n\n\n\nPlot where all the samples are collected from?\nCan you change the shape of SEA samples vs AFR samples?\n\n\n\n\n\nCode\n# Ensure country is a proper factor with no empty strings\nmeta$country[meta$country == \"\" | is.na(meta$country)] &lt;- \"Unknown\"\n\n# Remove any samples missing coordinates\nmeta &lt;- meta %&gt;% filter(!is.na(latitude), !is.na(longitude))\n\nmeta_sf &lt;- st_as_sf(meta,\n                    coords = c(\"longitude\", \"latitude\"),\n                    crs = 4326,\n                    remove = FALSE)   # keep original columns\n\n\n# Load world map\nworld &lt;- ne_countries(scale = \"medium\", returnclass = \"sf\")\nsaveRDS(world, file = \"derived/world.rds\")\n\nmap &lt;- ggplot() +\n  geom_sf(data = world, fill = \"grey90\", color = \"grey60\", linewidth = 0.2) +\n  geom_sf(data = meta_sf,\n          aes(color = country),\n          size = 2, alpha = 0.8) +\n  coord_sf(xlim = c(-20, 120), ylim = c(-25, 25), expand = FALSE) +\n  scale_color_viridis_d() +\n  theme_minimal() +\n  labs(title = \"Sampling Locations of P. falciparum Isolates\",\n       x = \"Longitude\", y = \"Latitude\")\n\n\n\n\n\n\n\n\nClick to see plot"
+  },
+  {
+    "objectID": "index.html#install-and-load-packages-and-data",
+    "href": "index.html#install-and-load-packages-and-data",
+    "title": "Population Genomics Workshop: Identification of Imported Cases",
+    "section": "Install and Load Packages and Data",
+    "text": "Install and Load Packages and Data\nTo install the following packages on your computer you will need to:\n\nOpen the workshop project folder.\nLocate and open setup.R.\nClick Source to run the entire script. The script will check which packages are already installed and install any missing packages.\n\nAlternative: manual installation If you experience difficulties running setup.R, copy the following code into the RStudio Console: install.packages( c(“rmarkdown”, “knitr”, “ggplot2”, “ape”, “adegenet”), repos = “https://cloud.r-project.org” )"
+  },
+  {
+    "objectID": "index.html#install-and-load-packages",
+    "href": "index.html#install-and-load-packages",
+    "title": "Population Genomics Workshop",
+    "section": "Install and Load Packages",
+    "text": "Install and Load Packages\nRecommended: Open setup.R in RStudio and click Source. The script checks for missing packages and installs them.\nAlternatively, run the following in the RStudio Console:\ninstall.packages(\n  c(\"rmarkdown\", \"knitr\", \"ggplot2\", \"ape\", \"adegenet\"),\n  repos = \"https://cloud.r-project.org\"\n)\n\n\n\n\n\n\nNote\n\n\nRun package installation once, before the workshop. You do not need to reinstall packages every session."
+  },
+  {
+    "objectID": "index.html#load-the-data",
+    "href": "index.html#load-the-data",
+    "title": "Population Genomics Workshop",
+    "section": "Load the Data",
+    "text": "Load the Data\n\n\n\n     Angola    Botswana BurkinaFaso    Cambodia       Ghana       Kenya \n         30          20          20          30          20          20 \n       Laos     Namibia    Thailand \n         30         200          30 \n\n\nAFR: 310 samples; 180 SNPs\n\n\nSEA: 90 samples; 180 SNPs"
+  },
+  {
+    "objectID": "index.html#a-fictional-outbreak-investigation",
+    "href": "index.html#a-fictional-outbreak-investigation",
+    "title": "Population Genomics Workshop",
+    "section": "A fictional outbreak investigation",
+    "text": "A fictional outbreak investigation\n\n\n\n\n\n\nImportant\n\n\nTeaching scenario only. All outbreak, genotype and resistance data are synthetic. This is not evidence of a real outbreak or malaria-free status in Namibia. Do not use these data for public health decisions.\n\n\n\nIn early 2026, approximately 200 cases of Plasmodium falciparum malaria are reported in a fictional district of Namibia.\nThe scenario assumes the district achieved malaria-free status in 2019."
+  },
+  {
+    "objectID": "index.html#what-could-explain-the-outbreak",
+    "href": "index.html#what-could-explain-the-outbreak",
+    "title": "Population Genomics Workshop",
+    "section": "What could explain the outbreak?",
+    "text": "What could explain the outbreak?\n\n\n01 · Local resurgence\nParasites persisting or circulating locally.\n\n02 · Regional importation\nParasites introduced from neighbouring African populations, including Angola.\n\n03 · Long-distance importation\nParasites introduced from outside Africa.\n\n\n\n\n\n\n\nNote\n\n\nTourism and cross-border movement make multiple hypotheses plausible."
+  },
+  {
+    "objectID": "index.html#your-genomic-evidence",
+    "href": "index.html#your-genomic-evidence",
+    "title": "Population Genomics Workshop",
+    "section": "Your genomic evidence",
+    "text": "Your genomic evidence\n\n\nNamibian outbreak samples\nReference samples from Africa and Southeast Asia\n180-SNP common genetic barcode\n\nFiles supplied\n\nAFR_180snp_DR.vcf\nSEA_180snp_DR.vcf\nmetadata_samples.txt\n\n\nYour task: Which genetic evidence supports or challenges each hypothesis?"
+  },
+  {
+    "objectID": "index.html#the-investigation-question",
+    "href": "index.html#the-investigation-question",
+    "title": "Population Genomics Workshop",
+    "section": "The investigation question",
+    "text": "The investigation question\n\n\n\n\n\n\nWhere might the outbreak parasites have come from?\n\n\nCan you identify genetically related populations and evaluate the three competing hypotheses?\n\n\n\nRemember: Genetic similarity alone cannot establish the direction of parasite movement or the place of infection.\nConsider travel history, sampling bias and unsampled populations."
+  },
+  {
+    "objectID": "index.html#install-the-required-packages",
+    "href": "index.html#install-the-required-packages",
+    "title": "Population Genomics Workshop",
+    "section": "Install the required packages",
+    "text": "Install the required packages\nRecommended: Open setup.R in RStudio and click Source. The script checks for missing packages and installs them.\nAlternatively, run the following in the RStudio Console:\ninstall.packages(\n  c(\"rmarkdown\", \"knitr\", \"ggplot2\", \"ape\", \"adegenet\"),\n  repos = \"https://cloud.r-project.org\"\n)\n\n\n\n\n\n\nNote\n\n\nRun package installation once, before the workshop. You do not need to reinstall packages every session."
+  },
+  {
+    "objectID": "index.html#load-the-analysis-packages",
+    "href": "index.html#load-the-analysis-packages",
+    "title": "Population Genomics Workshop",
+    "section": "Load the analysis packages",
+    "text": "Load the analysis packages\nRun this chunk before the other analyses.\n\n\nShow R code\n\n\nlibrary(ggplot2)\nlibrary(ape)\nlibrary(adegenet)\nsource(\"scripts/helpers.R\")"
+  },
+  {
+    "objectID": "index.html#load-the-datasets",
+    "href": "index.html#load-the-datasets",
+    "title": "Population Genomics Workshop",
+    "section": "Load the datasets",
+    "text": "Load the datasets\nRead the two VCF files and the sample metadata, then check sample IDs and SNP counts.\n\n\nShow R code\n\n\nmeta &lt;- read.delim(\"data/metadata_samples.txt\", stringsAsFactors = FALSE)\nafr &lt;- read_barcode_vcf(\"data/AFR_180snp_DR.vcf\")\nsea &lt;- read_barcode_vcf(\"data/SEA_180snp_DR.vcf\")\n\n#stopifnot(!anyDuplicated(meta$sample))\n#stopifnot(all(c(rownames(afr$x), rownames(sea$x)) %in% meta$sample))\n#stopifnot(setequal(meta$sample, c(rownames(afr$x), rownames(sea$x))))\n#stopifnot(ncol(afr$x) == 180L, ncol(sea$x) == 180L)"
+  },
+  {
+    "objectID": "index.html#check-the-samples",
+    "href": "index.html#check-the-samples",
+    "title": "Population Genomics Workshop",
+    "section": "Check the samples",
+    "text": "Check the samples\nThe following summary is generated from the loaded data.\n\n\nShow R code\n\n\nprint(table(meta$country))\ncat('AFR:', nrow(afr$x), 'samples;', ncol(afr$x), 'SNPs\\n')\ncat('SEA:', nrow(sea$x), 'samples;', ncol(sea$x), 'SNPs\\n')\n\n#warning\n#stopifnot(ncol(afr$x) == 180L, ncol(sea$x) == 180L)\n\n\nAfrican dataset: 310 samples × 180 SNPs\nSoutheast Asian dataset: 90 samples × 180 SNPs\nTotal: 400 samples\n\n\n\n     Angola    Botswana BurkinaFaso    Cambodia       Ghana       Kenya \n         30          20          20          30          20          20 \n       Laos     Namibia    Thailand \n         30         200          30"
+  },
+  {
+    "objectID": "index.html#section",
+    "href": "index.html#section",
+    "title": "Population Genomics Workshop",
+    "section": "—",
+    "text": "—"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#disclaimer",
+    "href": "Population_Genomics_Workshop.html#disclaimer",
+    "title": "Population Genomics Workshop",
+    "section": "Disclaimer",
+    "text": "Disclaimer\n\n\n\n\n\n\nImportant\n\n\nSimulated data and scenario for teaching only. The scenario is fictional and is not evidence of an actual outbreak or malaria-free status in the stated location. Genotype and resistance data are synthetic and must not inform public health decisions."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#what-could-explain-the-outbreak",
+    "href": "Population_Genomics_Workshop.html#what-could-explain-the-outbreak",
+    "title": "Population Genomics Workshop",
+    "section": "What could explain the outbreak?",
+    "text": "What could explain the outbreak?\n\n\n01 · Local resurgence\nParasites persisting or circulating locally.\n\n02 · Regional importation\nParasites introduced from neighbouring African populations.\n\n03 · Long-distance importation\nParasites introduced from outside Africa.\n\n\n\n\n\n\n\nNote\n\n\nTourism and cross-border movement make multiple hypotheses plausible."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#your-investigation",
+    "href": "Population_Genomics_Workshop.html#your-investigation",
+    "title": "Population Genomics Workshop",
+    "section": "Your investigation",
+    "text": "Your investigation\nYou have two VCF files and sample metadata.\nWhich genetic evidence supports or challenges each hypothesis?\nGenetic similarity can suggest ancestry but cannot independently establish migration direction or place of infection.\nConsider travel histories, unsampled populations and sampling bias."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#your-genomic-evidence",
+    "href": "Population_Genomics_Workshop.html#your-genomic-evidence",
+    "title": "Population Genomics Workshop",
+    "section": "Your genomic evidence",
+    "text": "Your genomic evidence\n\n\n\n200 Namibian outbreak samples\nAfrican and Southeast Asian reference samples\nShared 180-SNP barcode\n\n\nFiles supplied\n\nAFR_180snp_DR.vcf\nSEA_180snp_DR.vcf\nmetadata_samples.txt\n\n\nResearch question: Where might the outbreak parasites be genetically related to sampled populations?"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#install-and-load-packages",
+    "href": "Population_Genomics_Workshop.html#install-and-load-packages",
+    "title": "Population Genomics Workshop",
+    "section": "Install and load packages",
+    "text": "Install and load packages\nRecommended: Open setup.R in RStudio and click Source. It checks for missing packages and installs them.\nAlternatively, run this once in the RStudio Console:\ninstall.packages(\n  c(\"rmarkdown\", \"knitr\", \"ggplot2\", \"ape\", \"adegenet\"),\n  repos = \"https://cloud.r-project.org\"\n)\n\n\n\n\n\n\nNote\n\n\nRun package installation once, before the workshop. You do not need to reinstall packages every session."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#load-analysis-packages",
+    "href": "Population_Genomics_Workshop.html#load-analysis-packages",
+    "title": "Population Genomics Workshop",
+    "section": "Load analysis packages",
+    "text": "Load analysis packages\nRun this code before other analyses.\n\n\nShow R code\n\nlibrary(ggplot2)\nlibrary(ape)\nlibrary(adegenet)\nsource(\"scripts/helpers.R\")"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#load-the-datasets",
+    "href": "Population_Genomics_Workshop.html#load-the-datasets",
+    "title": "Population Genomics Workshop",
+    "section": "Load the datasets",
+    "text": "Load the datasets\nRead the VCFs and metadata; check sample identifiers and marker counts.\n\n\nShow R code\n\nmeta &lt;- read.delim(\"data/metadata_samples.txt\", stringsAsFactors = FALSE)\nafr &lt;- read_barcode_vcf(\"data/AFR_180snp_DR.vcf\")\nsea &lt;- read_barcode_vcf(\"data/SEA_180snp_DR.vcf\")\n\n\n#stopifnot(!anyDuplicated(meta$sample))\n#stopifnot(setequal(meta$sample, c(rownames(afr$x), rownames(sea$x))))\n#stopifnot(ncol(afr$x) == 180L, ncol(sea$x) == 180L)"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#check-the-samples",
+    "href": "Population_Genomics_Workshop.html#check-the-samples",
+    "title": "Population Genomics Workshop",
+    "section": "Check the samples",
+    "text": "Check the samples\n\n\nShow R code\n\n\nprint(table(meta$country))\ncat('AFR:', nrow(afr$x), 'samples;', ncol(afr$x), 'SNPs\\n')\ncat('SEA:', nrow(sea$x), 'samples;', ncol(sea$x), 'SNPs\\n')\n\n#warning\n#stopifnot(ncol(afr$x) == 180L, ncol(sea$x) == 180L)\n\n\nAfrican dataset: 310 samples × 180 SNPs\nSoutheast Asian dataset: 90 samples × 180 SNPs\nTotal: 400 samples\n\n\n\n     Angola    Botswana BurkinaFaso    Cambodia       Ghana       Kenya \n         30          20          20          30          20          20 \n       Laos     Namibia    Thailand \n         30         200          30"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#genotype-quality-control-and-missingness",
+    "href": "Population_Genomics_Workshop.html#genotype-quality-control-and-missingness",
+    "title": "Population Genomics Workshop",
+    "section": "Genotype quality control and missingness",
+    "text": "Genotype quality control and missingness\nA missing genotype is not the reference allele. The small VCF reader in helpers.R accepts haploid 0/1 calls as a single parasite barcode state; missing calls are NA.\nExercises for Section 2. Filter the Dataset and Calculate Missingness\n\nWhich plots are most informative?\nWhy should you filter the data?\nAre these mostly complete datasets or are we missing important information?"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#missingness",
+    "href": "Population_Genomics_Workshop.html#missingness",
+    "title": "Population Genomics Workshop",
+    "section": "Missingness",
+    "text": "Missingness\n\n\nShow R code\n\nmissingness &lt;- function(genotypes) {\n  list(sample = rowMeans(is.na(genotypes)),\n       snp = colMeans(is.na(genotypes)))\n}\n\nqc_af &lt;- missingness(afr$x)\nqc_se &lt;- missingness(sea$x)\nqc_samples &lt;- rbind(data.frame(sample = names(qc_af$sample), missing = qc_af$sample, region = 'Africa'),\n                    data.frame(sample = names(qc_se$sample), missing = qc_se$sample, region = 'Southeast Asia'))\n\n\nggplot(qc_samples, aes(missing, fill = region)) +\n  geom_histogram(bins = 20, alpha = .65, position = 'identity') +\n  geom_vline(xintercept = .08, linetype = 2) +\n  facet_wrap(~ region) + theme_minimal() +\n  labs(title = 'Sample missingness', x = 'Fraction of missing SNPs', y = 'Samples')"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#missingness-snp",
+    "href": "Population_Genomics_Workshop.html#missingness-snp",
+    "title": "Population Genomics Workshop",
+    "section": "Missingness SNP",
+    "text": "Missingness SNP\n\n\nShow R code\n\nqc_snps &lt;- rbind(data.frame(missing = qc_af$snp, region = 'Africa'),\n                 data.frame(missing = qc_se$snp, region = 'Southeast Asia'))\n\n\nggplot(qc_snps, aes(missing, fill = region)) +\n  geom_histogram(bins = 20) + geom_vline(xintercept = .10, linetype = 2) +\n  facet_wrap(~ region) + theme_minimal() +\n  labs(title = 'SNP missingness', x = 'Fraction of missing samples', y = 'SNPs')"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#filtering",
+    "href": "Population_Genomics_Workshop.html#filtering",
+    "title": "Population Genomics Workshop",
+    "section": "Filtering",
+    "text": "Filtering\n\n\nShow R code\n\n# Apply QC in two steps: remove poor-quality samples, then poor-quality SNPs.\n# Keeping the two steps visible makes it easier to explore other thresholds.\n\nfilter_genotypes &lt;- function(genotypes, sample_max = 0.08, snp_max = 0.10) {\n  sample_missing &lt;- rowMeans(is.na(genotypes))\n  genotypes &lt;- genotypes[sample_missing &lt;= sample_max, , drop = FALSE]\n  snp_missing &lt;- colMeans(is.na(genotypes))\n  genotypes &lt;- genotypes[, snp_missing &lt;= snp_max, drop = FALSE]\n  # Require at least two observed genotypes per marker.\n  genotypes[, colSums(!is.na(genotypes)) &gt;= 2, drop = FALSE]\n}\n\n# Teaching thresholds: samples &lt;=8% missing; SNPs &lt;=10% missing.\nx_af &lt;- filter_genotypes(afr$x, sample_max = .08, snp_max = .10)\nx_se &lt;- filter_genotypes(sea$x, sample_max = .08, snp_max = .10)\nprint(data.frame(region = c('Africa','Southeast Asia'),\n                 samples_retained = c(nrow(x_af),nrow(x_se)),\n                 SNPs_retained = c(ncol(x_af),ncol(x_se))))\n\n\n\n          region samples_retained SNPs_retained\n1         Africa              296           180\n2 Southeast Asia               85           180"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#discuss-genotype-quality-control-and-missingness",
+    "href": "Population_Genomics_Workshop.html#discuss-genotype-quality-control-and-missingness",
+    "title": "Population Genomics Workshop",
+    "section": "Discuss · Genotype quality control and missingness",
+    "text": "Discuss · Genotype quality control and missingness\nExercises: Change the sample threshold to 5%. What changes? Which samples have the highest missingness? Are these thresholds suitable for a surveillance study?"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#regional-genetic-distances",
+    "href": "Population_Genomics_Workshop.html#regional-genetic-distances",
+    "title": "Population Genomics Workshop",
+    "section": "Regional genetic distances",
+    "text": "Regional genetic distances\nPairwise distance is the fraction of discordant alleles among SNPs typed in both samples. Unlike Euclidean distance, this measure is interpretable as a mismatch proportion. Require at least 10 jointly observed SNPs."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#distances",
+    "href": "Population_Genomics_Workshop.html#distances",
+    "title": "Population Genomics Workshop",
+    "section": "Distances",
+    "text": "Distances\n\n\nShow R code\n\n# Pairwise mismatch: count differences only at SNPs typed in BOTH samples.\n# Divide by the number of shared, observed SNPs (not all 180 SNPs).\npairwise_mismatch &lt;- function(genotypes, min_overlap = 10) {\n  n &lt;- nrow(genotypes)\n  distances &lt;- matrix(0, n, n,\n                      dimnames = list(rownames(genotypes), rownames(genotypes)))\n  overlaps &lt;- matrix(0L, n, n, dimnames = dimnames(distances))\n  for (i in seq_len(n)) {\n    for (j in i:n) {\n      shared &lt;- !is.na(genotypes[i, ]) & !is.na(genotypes[j, ])\n      n_shared &lt;- sum(shared)\n      overlaps[i, j] &lt;- overlaps[j, i] &lt;- n_shared\n      mismatch &lt;- if (n_shared &gt;= min_overlap) {\n        mean(genotypes[i, shared] != genotypes[j, shared])\n      } else NA_real_\n      distances[i, j] &lt;- distances[j, i] &lt;- mismatch\n    }\n  }\n  diag(distances) &lt;- 0\n  list(distance = distances, overlap = overlaps)\n}\n\nd_se &lt;- pairwise_mismatch(x_se, min_overlap = 10)$distance\nd_af &lt;- pairwise_mismatch(x_af, min_overlap = 10)$distance\n\n\nsummary(as.vector(d_se[upper.tri(d_se)]))\n\n#warning\nstopifnot(!anyNA(d_se), !anyNA(d_af))\n\n\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n0.03509 0.11923 0.19885 0.23579 0.23392 0.64596"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#pcoa-regional-population-structure",
+    "href": "Population_Genomics_Workshop.html#pcoa-regional-population-structure",
+    "title": "Population Genomics Workshop",
+    "section": "PCoA: regional population structure",
+    "text": "PCoA: regional population structure\nPCoA represents genetic distance in a low-dimensional plot. Nearby points have similar SNPs; axes do not represent geographic coordinates.\nExercises for Section 4. PCoA / MDS Plot (Population Structure)\n\nWhat patterns do you observe in this section?\nWhich samples or populations stand out?\nWhat does this tell you about the population structure?\nWhy do we use PCoA plots?\n\nOther tasks:\n\nUse ggplot2 to change colours or change the shapes of the countries."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#southeast-asian-pcoa",
+    "href": "Population_Genomics_Workshop.html#southeast-asian-pcoa",
+    "title": "Population Genomics Workshop",
+    "section": "Southeast Asian PCoA",
+    "text": "Southeast Asian PCoA\n\n\nShow R code\n\n# Classical multidimensional scaling (PCoA)\n# using pairwise genetic distances.\n\nmake_pcoa &lt;- function(distance_matrix, metadata, plot_title) {\n\n  stopifnot(!anyNA(distance_matrix))\n\n  pcoa &lt;- cmdscale(\n    as.dist(distance_matrix),\n    k = 2,\n    eig = TRUE,\n    add = TRUE\n  )\n\n  coordinates &lt;- data.frame(\n    sample = row names(pcoa$points),\n    PC1 = pcoa$points[, 1],\n    PC2 = pcoa$points[, 2]\n  )\n\n  coordinates$country &lt;- metadata$country[\n    match(coordinates$sample, metadata$sample)\n  ]\n\n  positive_eigenvalues &lt;- pmax(pcoa$eig, 0)\n  percent &lt;- 100 * positive_eigenvalues[1:2] /\n    sum(positive_eigenvalues)\n\n  ggplot(coordinates, aes(PC1, PC2, colour = country)) +\n    geom_point(alpha = 0.8, size = 2) +\n    theme_minimal() +\n    labs(\n      title = plot_title,\n      x = paste0(\"PCoA 1 (\", round(percent[1], 1), \"%)\"),\n      y = paste0(\"PCoA 2 (\", round(percent[2], 1), \"%)\")\n    )\n}\n\nprint(make_pcoa(d_se, meta, \"Southeast Asian barcode PCoA\"))\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#african-pcoa",
+    "href": "Population_Genomics_Workshop.html#african-pcoa",
+    "title": "Population Genomics Workshop",
+    "section": "African PCoA",
+    "text": "African PCoA\n\n\nShow R code\n\nprint(make_pcoa(d_af, meta, 'African barcode PCoA'))\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#discuss-pcoa-regional-population-structure",
+    "href": "Population_Genomics_Workshop.html#discuss-pcoa-regional-population-structure",
+    "title": "Population Genomics Workshop",
+    "section": "Discuss · PCoA: regional population structure",
+    "text": "Discuss · PCoA: regional population structure\nExercises: Which populations cluster? Do you see variation within countries? Try colouring points by site instead of country in make_pcoa()."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#neighbour-joining-trees",
+    "href": "Population_Genomics_Workshop.html#neighbour-joining-trees",
+    "title": "Population Genomics Workshop",
+    "section": "Neighbour-joining trees",
+    "text": "Neighbour-joining trees\nNeighbour joining displays a distance-based clustering summary.\nExercises for Section 5. Phylogenetic Tree (Neighbor-Joining) - What patterns do you observe in this section? - Which samples or populations stand out? - What does this tell you about the population structure? - Why do we use phylogentic trees plots?\nOther tasks:\n\nUse ggplot2 to change colours or change the shapes of the countries."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#southeast-asian-neighbour-joining-tree",
+    "href": "Population_Genomics_Workshop.html#southeast-asian-neighbour-joining-tree",
+    "title": "Population Genomics Workshop",
+    "section": "Southeast Asian neighbour-joining tree",
+    "text": "Southeast Asian neighbour-joining tree\n\n\nShow R code\n\n# Neighbour-joining builds an unrooted distance-based tree.\n# Tip colours indicate sampling country, not transmission direction.\nplot_nj &lt;- function(distance_matrix, metadata, plot_title) {\n  stopifnot(!anyNA(distance_matrix))\n  tree &lt;- ape::njs(as.dist(distance_matrix))\n  countries &lt;- sort(unique(metadata$country))\n  palette &lt;- setNames(grDevices::hcl.colors(length(countries), 'Dark 3'), countries)\n  tip_country &lt;- metadata$country[match(tree$tip.label, metadata$sample)]\n  ape::plot.phylo(tree, type = 'fan', show.tip.label = FALSE,\n                  edge.width = 0.7, main = plot_title)\n  ape::tiplabels(pch = 16, col = palette[tip_country], cex = 0.65)\n  legend('topleft', legend = names(palette), col = palette,\n         pch = 16, cex = 0.7, bty = 'n')\n  invisible(tree)\n}\n\nplot_nj(d_se, meta, 'Southeast Asia: neighbour-joining tree')\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#african-neighbour-joining-tree",
+    "href": "Population_Genomics_Workshop.html#african-neighbour-joining-tree",
+    "title": "Population Genomics Workshop",
+    "section": "African neighbour-joining tree",
+    "text": "African neighbour-joining tree\n\n\nShow R code\n\nplot_nj(d_af, meta, 'Africa: neighbour-joining tree')\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#discuss-neighbour-joining-trees",
+    "href": "Population_Genomics_Workshop.html#discuss-neighbour-joining-trees",
+    "title": "Population Genomics Workshop",
+    "section": "Discuss · Neighbour-joining trees",
+    "text": "Discuss · Neighbour-joining trees\nDiscuss: Are there country-specific groups? Do the tree and PCoA tell a consistent story?"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#population-diversity-and-differentiation",
+    "href": "Population_Genomics_Workshop.html#population-diversity-and-differentiation",
+    "title": "Population Genomics Workshop",
+    "section": "Population diversity and differentiation",
+    "text": "Population diversity and differentiation\nFor each SNP, estimate the probability that two different sampled haploid parasite genotypes carry different alleles. This is an unbiased, sample-size-corrected biallelic diversity estimate, averaged across typed barcode SNPs. Because this is an ascertained marker panel, do not interpret the result as genome-wide nucleotide diversity (π)."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#barcode-diversity-summary",
+    "href": "Population_Genomics_Workshop.html#barcode-diversity-summary",
+    "title": "Population Genomics Workshop",
+    "section": "Barcode diversity summary",
+    "text": "Barcode diversity summary\n\n\nShow R code\n\nsite_diversity &lt;- function(genotypes, metadata) {\n  sites &lt;- split(metadata$sample, metadata$site)\n  do.call(rbind, lapply(names(sites), function(site_name) {\n    ids &lt;- intersect(sites[[site_name]], rownames(genotypes))\n    if (!length(ids)) return(NULL)\n    z &lt;- genotypes[ids, , drop = FALSE]\n    n_typed &lt;- colSums(!is.na(z))\n    alt_frequency &lt;- colMeans(z, na.rm = TRUE)\n    diversity_per_snp &lt;- 2 * alt_frequency * (1 - alt_frequency) *\n      n_typed / (n_typed - 1)\n    diversity_per_snp[n_typed &lt; 2] &lt;- NA_real_\n    data.frame(site = site_name,\n               country = metadata$country[match(ids[1], metadata$sample)],\n               pi_barcode = if (all(is.na(diversity_per_snp))) NA_real_\n                            else mean(diversity_per_snp, na.rm = TRUE),\n               n_samples = length(ids),\n               n_loci = sum(!is.na(diversity_per_snp)))\n  }))\n}\n\ndiversity_af &lt;- site_diversity(x_af, meta)\ndiversity_se &lt;- site_diversity(x_se, meta)\ndiversity &lt;- rbind(diversity_af, diversity_se)\n\n\nprint(diversity[order(diversity$pi_barcode, decreasing = TRUE), ])\n\n\n\n            site     country pi_barcode n_samples n_loci\n18        Pursat    Cambodia 0.34216049         9    180\n17        Pailin    Cambodia 0.30104420        13    180\n14    Battambang    Cambodia 0.21407407         6    180\n6    KavangoWest     Namibia 0.18158688        63    180\n13       Zambezi     Namibia 0.17249751        69    180\n5    KavangoEast     Namibia 0.16106621        60    180\n9    LuandaNorth      Angola 0.09725275        14    180\n1          Accra       Ghana 0.09497354         9    180\n15     Champasak        Laos 0.09308303        15    180\n19   Savannakhet        Laos 0.09206349        14    180\n16  Kanchanaburi    Thailand 0.08845118        12    180\n12   Ouagadougou BurkinaFaso 0.08651235        10    180\n2  BoboDioulasso BurkinaFaso 0.08355379         9    180\n7         Kisumu       Kenya 0.08311448        12    180\n4         Huambo      Angola 0.08238095        15    180\n20       Sisaket    Thailand 0.08095340        16    180\n8         Kumasi       Ghana 0.08083333        10    180\n11      Okavango    Botswana 0.08007175        11    180\n3    Francistown    Botswana 0.07731481         8    180\n10       Nairobi       Kenya 0.06740741         6    180"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#barcode-diversity-by-site",
+    "href": "Population_Genomics_Workshop.html#barcode-diversity-by-site",
+    "title": "Population Genomics Workshop",
+    "section": "Barcode diversity by site",
+    "text": "Barcode diversity by site\n\n\nShow R code\n\nggplot(diversity, aes(reorder(site, pi_barcode), pi_barcode, fill = country)) +\n  geom_col() + coord_flip() + theme_minimal() +\n  labs(title = 'Mean per-SNP barcode diversity by site', x = 'Site',\n       y = 'Sample-size-corrected barcode diversity')\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#combine-the-global-180-snp-barcode",
+    "href": "Population_Genomics_Workshop.html#combine-the-global-180-snp-barcode",
+    "title": "Population Genomics Workshop",
+    "section": "Combine the global 180-SNP barcode",
+    "text": "Combine the global 180-SNP barcode\nThe synthetic VCFs share the same 180 barcode markers, positions and REF/ALT definitions. Nevertheless, a robust pipeline checks allele compatibility before combining data. Any reversed allele definitions are recoded; incompatible variants would be excluded and reported. This prevents a common error when merging real VCFs."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#harmonise",
+    "href": "Population_Genomics_Workshop.html#harmonise",
+    "title": "Population Genomics Workshop",
+    "section": "Harmonise",
+    "text": "Harmonise\n\n\nShow R code\n\nharmonised &lt;- harmonise_vcfs(afr, sea)\n\nprint(data.frame(markers_harmonised = harmonised$compatible,\n                 alleles_flipped = harmonised$swapped,\n                 incompatible = harmonised$incompatible))\n\n#warning\nstopifnot(harmonised$compatible == 180L, harmonised$incompatible == 0L)\n\nx_all &lt;- filter_genotypes(harmonised$x, sample_max = .08, snp_max = .10)\n\ncat('Global comparison:', nrow(x_all), 'samples and', ncol(x_all), 'SNPs after QC\\n')\n\n#warning\nstopifnot(ncol(x_all) &gt;= 100L)\n\nd_all &lt;- pairwise_mismatch(x_all, min_overlap = 100)$distance\n\n#warning\nstopifnot(!anyNA(d_all))\n\n\n\n  markers_harmonised alleles_flipped incompatible\n1                180               0            0\n\n\nGlobal comparison: 381 samples and 180 SNPs after QC"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#global-pcoa-and-neighbour-joining-tree",
+    "href": "Population_Genomics_Workshop.html#global-pcoa-and-neighbour-joining-tree",
+    "title": "Population Genomics Workshop",
+    "section": "Global PCoA and neighbour-joining tree",
+    "text": "Global PCoA and neighbour-joining tree\nExercises:\n\nWhich countries are genetically closest to the Namibia outbreak samples?\nHow does missingness filtering affect your confidence?\n\nBreak: We will wait until everyone has completed this activity."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#global-pcoa",
+    "href": "Population_Genomics_Workshop.html#global-pcoa",
+    "title": "Population Genomics Workshop",
+    "section": "Global pcoa",
+    "text": "Global pcoa\n\n\nShow R code\n\nprint(make_pcoa(d_all, meta, paste0('Global PCoA: ',ncol(x_all),' harmonised SNPs')))"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#global-tree",
+    "href": "Population_Genomics_Workshop.html#global-tree",
+    "title": "Population Genomics Workshop",
+    "section": "Global tree",
+    "text": "Global tree\n\n\nShow R code\n\nplot_nj(d_all, meta, paste0('Global neighbour-joining tree (',ncol(x_all),' SNPs)'))"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#discuss-global-pcoa-and-neighbour-joining-tree",
+    "href": "Population_Genomics_Workshop.html#discuss-global-pcoa-and-neighbour-joining-tree",
+    "title": "Population Genomics Workshop",
+    "section": "Discuss · Global PCoA and neighbour-joining tree",
+    "text": "Discuss · Global PCoA and neighbour-joining tree\nExercises: Which countries are genetically closest to the Namibia outbreak samples? How does missingness filtering affect your confidence?"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#geographic-sampling-locations",
+    "href": "Population_Genomics_Workshop.html#geographic-sampling-locations",
+    "title": "Population Genomics Workshop",
+    "section": "Geographic sampling locations",
+    "text": "Geographic sampling locations\n\n\nShow R code\n\nprint(plot_locations(meta, 'Sampling locations (simulated coordinates)'))\n\n\n\nShow figure\n\n\n\n\n\n\n\n\n\n\n\nExercises: Identify the African and Southeast Asian groups. Why is a coordinate plot not enough to infer movement direction?"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#sample-map",
+    "href": "Population_Genomics_Workshop.html#sample-map",
+    "title": "Population Genomics Workshop",
+    "section": "Sample map",
+    "text": "Sample map\n\n\nShow R code\n\nprint(plot_locations(meta, 'Sampling locations (simulated coordinates)'))\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#discuss-geographic-sampling-locations",
+    "href": "Population_Genomics_Workshop.html#discuss-geographic-sampling-locations",
+    "title": "Population Genomics Workshop",
+    "section": "Discuss · Geographic sampling locations",
+    "text": "Discuss · Geographic sampling locations\nExercises: Identify the African and Southeast Asian groups. Why is a coordinate plot not enough to infer movement direction?"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#drug-resistance-markers",
+    "href": "Population_Genomics_Workshop.html#drug-resistance-markers",
+    "title": "Population Genomics Workshop",
+    "section": "Drug-resistance markers",
+    "text": "Drug-resistance markers\nResistance markers are provided as simulated metadata. They are not used in the neutral barcode distance analysis. To get this information, samples would be processed using a drug resistant assay. WT indicates wild-type, and other values indicate the listed amino-acids; marker presence alone does not establish clinical treatment failure."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#c580y",
+    "href": "Population_Genomics_Workshop.html#c580y",
+    "title": "Population Genomics Workshop",
+    "section": "C580y",
+    "text": "C580y\n\n\nShow R code\n\ndr &lt;- aggregate(sample ~ country + kelch13_C580Y, meta, length)\nnames(dr)[3] &lt;- 'n'\ndr$total &lt;- ave(dr$n, dr$country, FUN = sum)\ndr$proportion &lt;- dr$n / dr$total\nggplot(dr, aes(country, proportion, fill = kelch13_C580Y)) +\n  geom_col() + coord_flip() + theme_minimal() +\n  scale_fill_manual(values = c(WT = 'grey75', Y = 'firebrick')) +\n  labs(title = 'Simulated kelch13 C580Y states', x = 'Country', y = 'Proportion')\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#resistance-heatmap",
+    "href": "Population_Genomics_Workshop.html#resistance-heatmap",
+    "title": "Population Genomics Workshop",
+    "section": "Resistance heatmap",
+    "text": "Resistance heatmap\n\n\nShow R code\n\ndr_cols &lt;- c('kelch13_C580Y','crt_N75E','crt_K76T','crt_I356T',\n             'mdr1_N86Y','mdr1_Y184F','dhfr_N51I','dhfr_C59R',\n             'dhfr_S108N','dhps_A437G','dhps_K540E')\ndr_long &lt;- do.call(rbind, lapply(dr_cols, function(marker) {\n  data.frame(country = meta$country, marker = marker,\n             mutant = as.numeric(!is.na(meta[[marker]]) & meta[[marker]] != 'WT'))\n}))\ndr_summary &lt;- aggregate(mutant ~ country + marker, dr_long, mean)\nggplot(dr_summary, aes(marker, country, fill = mutant)) +\n  geom_tile(colour = 'white') + scale_fill_viridis_c(limits = c(0,1)) +\n  theme_minimal() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +\n  labs(title = 'Simulated drug-resistance marker frequency', x = 'Marker',\n       y = 'Country', fill = 'Mutant fraction')\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#resistance-map",
+    "href": "Population_Genomics_Workshop.html#resistance-map",
+    "title": "Population Genomics Workshop",
+    "section": "Resistance map",
+    "text": "Resistance map\n\n\nShow R code\n\nmeta$C580Y_status &lt;- ifelse(meta$kelch13_C580Y == 'Y', 'C580Y mutant', 'WT')\nprint(plot_locations(meta, 'Simulated C580Y geographic distribution', 'C580Y_status'))\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#discuss-drug-resistance-markers",
+    "href": "Population_Genomics_Workshop.html#discuss-drug-resistance-markers",
+    "title": "Population Genomics Workshop",
+    "section": "Discuss · Drug-resistance markers",
+    "text": "Discuss · Drug-resistance markers\nResearch question: What are the roles of kelch13, crt, mdr1, dhfr and dhps in antimalarial resistance? Which conclusions require phenotypic or clinical evidence?"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#genetic-connectedness-between-countries",
+    "href": "Population_Genomics_Workshop.html#genetic-connectedness-between-countries",
+    "title": "Population Genomics Workshop",
+    "section": "Genetic connectedness between countries",
+    "text": "Genetic connectedness between countries\nWe summarise the fraction of between-country sample pairs whose mismatch proportion is at most a selected threshold. This is an undirected similarity measure, not a migration rate or transmission direction. The connectedness display uses country sampling centroids and no map boundaries."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#connectedness",
+    "href": "Population_Genomics_Workshop.html#connectedness",
+    "title": "Population Genomics Workshop",
+    "section": "Connectedness",
+    "text": "Connectedness\n\n\nShow R code\n\ncountry &lt;- meta$country[match(rownames(d_all), meta$sample)]\ncenters &lt;- aggregate(cbind(longitude, latitude) ~ country, meta, mean)\nthresholds &lt;- c(.05, .10, .20)\nconnections &lt;- list()\nfor (a in seq_len(nrow(centers) - 1)) for (b in (a+1):nrow(centers)) {\n  ia &lt;- which(country == centers$country[a]); ib &lt;- which(country == centers$country[b])\n  if (length(ia) * length(ib) &lt; 10) next\n  values &lt;- as.vector(d_all[ia, ib, drop = FALSE])\n  for (cutoff in thresholds) {\n    connections[[length(connections)+1]] &lt;- data.frame(\n      country1 = centers$country[a], country2 = centers$country[b],\n      lon1 = centers$longitude[a], lat1 = centers$latitude[a],\n      lon2 = centers$longitude[b], lat2 = centers$latitude[b],\n      fraction = mean(values &lt;= cutoff), cutoff = paste0('Mismatch &lt;= ',cutoff))\n  }\n}\nconnections &lt;- do.call(rbind, connections)\nconnections &lt;- subset(connections, fraction &gt; 0)\nprint(ggplot() +\n  geom_segment(data = connections,\n               aes(x = lon1, y = lat1, xend = lon2, yend = lat2,\n                   linewidth = fraction, colour = fraction), alpha = .65) +\n  geom_point(data = centers, aes(longitude, latitude), size = 2) +\n  geom_text(data = centers, aes(longitude, latitude, label = country),\n            size = 2.8, vjust = -1) +\n  facet_wrap(~ cutoff) + coord_quickmap(xlim = c(-25,115), ylim = c(-30,30)) +\n  scale_linewidth(range = c(.2, 2.5)) + theme_minimal() +\n  labs(title = 'Genetic connectedness: between-country comparisons',\n       x = 'Longitude', y = 'Latitude', colour = 'Fraction', linewidth = 'Fraction'))\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#dapc-discriminant-analysis-of-principal-components",
+    "href": "Population_Genomics_Workshop.html#dapc-discriminant-analysis-of-principal-components",
+    "title": "Population Genomics Workshop",
+    "section": "DAPC: discriminant analysis of principal components",
+    "text": "DAPC: discriminant analysis of principal components\nDAPC is a supervised multivariate method when population labels are provided. Here, country labels are known; this analysis describes separation among the specified groups, rather than independently discovering the origin of Namibia parasites. PCA retention is capped conservatively to avoid the interactive console prompts used in the original document."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#dapc-scatter-plot",
+    "href": "Population_Genomics_Workshop.html#dapc-scatter-plot",
+    "title": "Population Genomics Workshop",
+    "section": "DAPC scatter plot",
+    "text": "DAPC scatter plot\n\n\nShow R code\n\nx_dapc &lt;- x_all\n\nfor (j in seq_len(ncol(x_dapc))) {\n  miss &lt;- is.na(x_dapc[, j])\n\n  if (any(miss)) {\n    x_dapc[miss, j] &lt;- mean(x_dapc[, j], na.rm = TRUE)}\n}\n\ngroups &lt;- factor(\n  meta$country[match(rownames(x_dapc), meta$sample)])\nstopifnot(!anyNA(groups))\n\n# Run DAPC\n# n.pca = number of principal components retained\n# n.da  = number of discriminant axes retained\n\nn_pca &lt;- 30\nn_da &lt;- 4\n\ndapc_fit &lt;- adegenet::dapc(\n  x_dapc,\n  grp = groups,\n  n.pca = n_pca,\n  n.da = n_da\n)\n\nscatter(dapc_fit, scree.da=FALSE, scree.pca=FALSE,\ncell=1.5, cex=4, solid=0.8, bg=\"white\",cstar=0, clab=0, leg=TRUE)\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#discriminant-axis-distributions",
+    "href": "Population_Genomics_Workshop.html#discriminant-axis-distributions",
+    "title": "Population Genomics Workshop",
+    "section": "Discriminant axis distributions",
+    "text": "Discriminant axis distributions\n\n\nShow R code\n\nscatter(dapc_fit,1,1,  bg=\"white\",\nscree.da=FALSE, legend=TRUE, solid=0.9)\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#membership-probabilities",
+    "href": "Population_Genomics_Workshop.html#membership-probabilities",
+    "title": "Population Genomics Workshop",
+    "section": "Membership probabilities",
+    "text": "Membership probabilities\n\n\nShow R code\n\ncompoplot(dapc_fit, lab=\"\", posi=list(x=100,y=-.03), cleg=.7)\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#discuss-dapc-discriminant-analysis-of-principal-components",
+    "href": "Population_Genomics_Workshop.html#discuss-dapc-discriminant-analysis-of-principal-components",
+    "title": "Population Genomics Workshop",
+    "section": "Discuss · DAPC: discriminant analysis of principal components",
+    "text": "Discuss · DAPC: discriminant analysis of principal components\nExercise: Why is DAPC supervised here while PCoA is not? What would happen if Namibia were excluded from model training and then predicted?"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#genetic-similarity-heatmap",
+    "href": "Population_Genomics_Workshop.html#genetic-similarity-heatmap",
+    "title": "Population Genomics Workshop",
+    "section": "Genetic similarity heatmap",
+    "text": "Genetic similarity heatmap\nFor a readable heatmap, use a fixed selection of outbreak samples and a small reference subset. The complete distance matrix is retained for all calculations."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#distance-heatmap",
+    "href": "Population_Genomics_Workshop.html#distance-heatmap",
+    "title": "Population Genomics Workshop",
+    "section": "Distance heatmap",
+    "text": "Distance heatmap\n\n\nShow R code\n\nset.seed(42)\n\nnam &lt;- intersect(rownames(d_all), meta$sample[meta$country == 'Namibia'])\nref_by_country &lt;- split(meta$sample[meta$country != 'Namibia'], meta$country[meta$country != 'Namibia'])\nref_subset &lt;- unlist(lapply(ref_by_country, function(ids) head(intersect(ids, rownames(d_all)), 3)), use.names = FALSE)\nchosen &lt;- c(head(nam, 12), ref_subset)\nsubD &lt;- d_all[chosen, chosen, drop = FALSE]\nheat &lt;- as.data.frame(as.table(subD)); names(heat) &lt;- c('sample1','sample2','mismatch')\n\nggplot(heat, aes(sample1, sample2, fill = mismatch)) +\n  geom_tile() + scale_fill_viridis_c() + coord_equal() +\n  theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6),\n                          axis.text.y = element_text(size = 6)) +\n  labs(title = 'Pairwise barcode mismatch heatmap (selected samples)',\n       x = NULL, y = NULL, fill = 'Mismatch')\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#nearest-reference-populations",
+    "href": "Population_Genomics_Workshop.html#nearest-reference-populations",
+    "title": "Population Genomics Workshop",
+    "section": "Nearest reference populations",
+    "text": "Nearest reference populations\nFor each Namibian sample, identify the reference country with the lowest average genetic mismatch. This is an exploratory similarity ranking, not a validated geographic classifier. Even with 180 shared markers, uneven reference sampling, barcode resolution and potentially missing source populations limit interpretation."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#mean-mismatch-by-reference-country",
+    "href": "Population_Genomics_Workshop.html#mean-mismatch-by-reference-country",
+    "title": "Population Genomics Workshop",
+    "section": "Mean mismatch by reference country",
+    "text": "Mean mismatch by reference country\n\n\nShow R code\n\nnam &lt;- intersect(rownames(d_all), meta$sample[meta$country == 'Namibia'])\nreference_countries &lt;- setdiff(sort(unique(meta$country)), 'Namibia')\n\n# Country-level summary across all outbreak-reference sample pairs.\nranking &lt;- do.call(rbind, lapply(reference_countries, function(ctry) {\n  ids &lt;- intersect(rownames(d_all), meta$sample[meta$country == ctry])\n  data.frame(reference_country = ctry,\n             mean_mismatch = mean(d_all[nam, ids, drop = FALSE]),\n             n_reference = length(ids))\n}))\n\nranking &lt;- ranking[order(ranking$mean_mismatch), ]\nprint(ranking)\nprint(ggplot(ranking, aes(reorder(reference_country, mean_mismatch), mean_mismatch)) +\n  geom_col(fill = 'steelblue') + coord_flip() + theme_minimal() +\n  labs(title = 'Namibia outbreak: average mismatch to reference countries',\n       x = 'Reference country', y = 'Mean pairwise SNP mismatch'))\n\n\n\nShow figure\n\n\n\n  reference_country mean_mismatch n_reference\n1            Angola     0.2222789          29\n6             Kenya     0.2509241          18\n2          Botswana     0.2560694          19\n5             Ghana     0.2837186          19\n3       BurkinaFaso     0.3056849          19\n4          Cambodia     0.4140650          28\n8          Thailand     0.5204844          28\n7              Laos     0.5258655          29"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#closest-reference-per-outbreak-sample",
+    "href": "Population_Genomics_Workshop.html#closest-reference-per-outbreak-sample",
+    "title": "Population Genomics Workshop",
+    "section": "Closest reference per outbreak sample",
+    "text": "Closest reference per outbreak sample\n\n\nShow R code\n\nper_sample &lt;- do.call(rbind, lapply(nam, function(id) {\n  scores &lt;- vapply(reference_countries, function(ctry) {\n    refs &lt;- intersect(rownames(d_all), meta$sample[meta$country == ctry])\n    mean(d_all[id, refs])\n  }, numeric(1))\n  best &lt;- which.min(scores)\n  ordered &lt;- sort(scores)\n  data.frame(sample = id, nearest_reference = names(scores)[best],\n             mismatch = unname(scores[best]),\n             margin_to_second = unname(ordered[2] - ordered[1]))\n}))\n\n\nprint(table(per_sample$nearest_reference))\n\nprint(ggplot(per_sample, aes(nearest_reference, fill = nearest_reference)) +\n  geom_bar() + coord_flip() + theme_minimal() + guides(fill = 'none') +\n  labs(title = 'Closest reference country for each Namibia sample',\n       x = 'Reference country', y = 'Outbreak samples'))\n\n\n\n\n  Angola Botswana    Ghana    Kenya \n     105       25        5       57"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#discuss-nearest-reference-populations",
+    "href": "Population_Genomics_Workshop.html#discuss-nearest-reference-populations",
+    "title": "Population Genomics Workshop",
+    "section": "Discuss · Nearest reference populations",
+    "text": "Discuss · Nearest reference populations\nExercise: Does the country-wide average hide different groups of outbreak cases? What does a small margin between the two best-matching countries imply?\nFinal investigation: Which reference country is most similar? Do the PCoA, tree, heatmap and resistance markers agree? Can you conclude where the outbreak originated, or only generate hypotheses? What additional data would you collect (travel histories, dense genomes, sampling from unsurveyed countries, temporal data)?"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#outbreak-investigation-weigh-the-hypotheses",
+    "href": "Population_Genomics_Workshop.html#outbreak-investigation-weigh-the-hypotheses",
+    "title": "Population Genomics Workshop",
+    "section": "Outbreak investigation: weigh the hypotheses",
+    "text": "Outbreak investigation: weigh the hypotheses\nUse your QC, PCoA, tree, heatmap, nearest-reference results and drug-resistance patterns to evaluate local resurgence, regional importation, and long-distance importation. For each hypothesis, describe the genetic observations supporting it, observations arguing against it, and additional evidence needed.\nDiscussion questions: Are all 200 cases likely to share a single origin? Could several introductions occur in the same period? How would missing reference countries or mixed infections affect your conclusions? What travel and longitudinal sampling information would strengthen the investigation?"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#end-of-workshop",
+    "href": "Population_Genomics_Workshop.html#end-of-workshop",
+    "title": "Population Genomics Workshop",
+    "section": "End of workshop",
+    "text": "End of workshop\nTake-home message: Population genomics can reveal structure and genetic similarity, but reliable source attribution requires harmonised markers, representative reference populations and epidemiological evidence. :::"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#missingness-sample",
+    "href": "Population_Genomics_Workshop.html#missingness-sample",
+    "title": "Population Genomics Workshop",
+    "section": "Missingness sample",
+    "text": "Missingness sample\n\n\nShow R code\n\nmissingness &lt;- function(genotypes) {\n  list(sample = rowMeans(is.na(genotypes)),\n       snp = colMeans(is.na(genotypes)))\n}\n\nqc_af &lt;- missingness(afr$x)\nqc_se &lt;- missingness(sea$x)\nqc_samples &lt;- rbind(data.frame(sample = names(qc_af$sample), missing = qc_af$sample, region = 'Africa'),\n                    data.frame(sample = names(qc_se$sample), missing = qc_se$sample, region = 'Southeast Asia'))\n\n\nggplot(qc_samples, aes(missing, fill = region)) +\n  geom_histogram(bins = 20, alpha = .65, position = 'identity') +\n  geom_vline(xintercept = .08, linetype = 2) +\n  facet_wrap(~ region) + theme_minimal() +\n  labs(title = 'Sample missingness', x = 'Fraction of missing SNPs', y = 'Samples')"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#sample-missingness",
+    "href": "Population_Genomics_Workshop.html#sample-missingness",
+    "title": "Population Genomics Workshop",
+    "section": "Sample missingness",
+    "text": "Sample missingness\n\n\nShow R code\n\nmissingness &lt;- function(genotypes) {\n  list(\n    sample = rowMeans(is.na(genotypes)),\n    snp = colMeans(is.na(genotypes))\n  )\n}\n\nqc_af &lt;- missingness(afr$x)\nqc_se &lt;- missingness(sea$x)\n\nqc_samples &lt;- rbind(\n  data.frame(\n    sample = names(qc_af$sample),\n    missing = qc_af$sample,\n    region = \"Africa\"\n  ),\n  data.frame(\n    sample = names(qc_se$sample),\n    missing = qc_se$sample,\n    region = \"Southeast Asia\"\n  )\n)\n\nggplot(qc_samples, aes(missing, fill = region)) +\n  geom_histogram(bins = 20, alpha = 0.65) +\n  geom_vline(xintercept = 0.08, linetype = 2) +\n  facet_wrap(~region) +\n  theme_minimal() +\n  labs(\n    title = \"Sample missingness\",\n    x = \"Fraction of missing SNPs\",\n    y = \"Samples\"\n  )\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#calculating-pairwise-distances",
+    "href": "Population_Genomics_Workshop.html#calculating-pairwise-distances",
+    "title": "Population Genomics Workshop",
+    "section": "Calculating Pairwise Distances",
+    "text": "Calculating Pairwise Distances\n\n\nShow R code\n\n# Pairwise mismatch: count differences only at SNPs typed in BOTH samples.\n# Divide by the number of shared, observed SNPs (not all 180 SNPs).\npairwise_mismatch &lt;- function(genotypes, min_overlap = 10) {\n  n &lt;- nrow(genotypes)\n  distances &lt;- matrix(0, n, n,\n                      dimnames = list(rownames(genotypes), rownames(genotypes)))\n  overlaps &lt;- matrix(0L, n, n, dimnames = dimnames(distances))\n  for (i in seq_len(n)) {\n    for (j in i:n) {\n      shared &lt;- !is.na(genotypes[i, ]) & !is.na(genotypes[j, ])\n      n_shared &lt;- sum(shared)\n      overlaps[i, j] &lt;- overlaps[j, i] &lt;- n_shared\n      mismatch &lt;- if (n_shared &gt;= min_overlap) {\n        mean(genotypes[i, shared] != genotypes[j, shared])\n      } else NA_real_\n      distances[i, j] &lt;- distances[j, i] &lt;- mismatch\n    }\n  }\n  diag(distances) &lt;- 0\n  list(distance = distances, overlap = overlaps)\n}\n\nd_se &lt;- pairwise_mismatch(x_se, min_overlap = 10)$distance\nd_af &lt;- pairwise_mismatch(x_af, min_overlap = 10)$distance\n\n\nsummary(as.vector(d_se[upper.tri(d_se)]))\n\n#warning\nstopifnot(!anyNA(d_se), !anyNA(d_af))\n\n\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n0.03509 0.11923 0.19885 0.23579 0.23392 0.64596"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#pcoa-population-structure",
+    "href": "Population_Genomics_Workshop.html#pcoa-population-structure",
+    "title": "Population Genomics Workshop",
+    "section": "PCoA: population structure",
+    "text": "PCoA: population structure\nPCoA represents genetic distance in a low-dimensional plot. Nearby points have similar SNPs; axes do not represent geographic coordinates.\nExercises for Section 4. PCoA / MDS Plot (Population Structure)\n\nWhat patterns do you observe in this section?\nWhich samples or populations stand out?\nWhat does this tell you about the population structure?\nWhy do we use PCoA plots?\n\nOther tasks:\n\nUse ggplot2 to change colours or change the shapes of the countries."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#discussion---pcoa-population-structure",
+    "href": "Population_Genomics_Workshop.html#discussion---pcoa-population-structure",
+    "title": "Population Genomics Workshop",
+    "section": "Discussion - PCoA: population structure",
+    "text": "Discussion - PCoA: population structure\nExercises: Which populations cluster? Do you see variation within countries? Try colouring points by site instead of country in make_pcoa(). —\n\n\n\n::: {.incremental} What Does PCoA Do? - Converts genetic distances between samples into a visual 2-D or 3-D space. - Places genetically similar samples closer together, and genetically different samples farther apart. - Helps uncover population structure, clusters, admixture, and outliers.\n\n\nWhy It’s Useful for This Workshop - Shows whether the Namibia samples form a tight cluster (suggesting an outbreak from a common source). - Reveals where the outbreak is genetically similar to. - Quickly distinguishes regional genetic signatures (SEA vs Southern Africa vs West Africa).\n\n\nStrengths - Very fast, works on large datasets. - Makes complex multidimensional relationships easy to interpret. - No model assumptions (unlike PCA which assumes linearity). - Great for teaching and preliminary exploration.\n\n\nWeaknesses - The axes are often hard to interpret biologically. - Does not explicitly model ancestry or evolution. - Clusters can appear clearer or blurrier depending on scaling :::\n\n\n## Neighbour-joining trees\n\n\nNeighbour joining displays a distance-based clustering summary.\n\n\nExercises for Section 5. Phylogenetic Tree (Neighbor-Joining) - What patterns do you observe in this section? - Which samples or populations stand out? - What does this tell you about the population structure? - Why do we use phylogentic trees plots?\n\n\nOther tasks:\n\n\n- Use ggplot2 to change colours or change the shapes of the countries."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#snp-missingness",
+    "href": "Population_Genomics_Workshop.html#snp-missingness",
+    "title": "Population Genomics Workshop",
+    "section": "SNP missingness",
+    "text": "SNP missingness\n\n\nShow R code\n\nqc_snps &lt;- rbind(\n  data.frame(\n    missing = qc_af$snp,\n    region = \"Africa\"\n  ),\n  data.frame(\n    missing = qc_se$snp,\n    region = \"Southeast Asia\"\n  )\n)\n\nggplot(qc_snps, aes(missing, fill = region)) +\n  geom_histogram(bins = 20) +\n  geom_vline(xintercept = 0.10, linetype = 2) +\n  facet_wrap(~region) +\n  theme_minimal() +\n  labs(\n    title = \"SNP missingness\",\n    x = \"Fraction of missing samples\",\n    y = \"SNPs\"\n  )\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#discussion-genotype-quality-control-and-missingness",
+    "href": "Population_Genomics_Workshop.html#discussion-genotype-quality-control-and-missingness",
+    "title": "Population Genomics Workshop",
+    "section": "Discussion · Genotype quality control and missingness",
+    "text": "Discussion · Genotype quality control and missingness\nExercises: Change the sample threshold to 5%. What changes? - Which samples have the highest missingness? - Are these thresholds suitable for a surveillance study?"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#principal-coordinates-analysis-pcoa",
+    "href": "Population_Genomics_Workshop.html#principal-coordinates-analysis-pcoa",
+    "title": "Population Genomics Workshop",
+    "section": "Principal Coordinates Analysis (PCoA)",
+    "text": "Principal Coordinates Analysis (PCoA)\nWhat Does PCoA Do?\n\nConverts genetic distances between samples into a visual 2-D or 3-D space.\nPlaces genetically similar samples closer together, and genetically different samples farther apart.\nHelps uncover population structure, clusters, admixture, and outliers.\n\nWhy It’s Useful for This Workshop?\n\nShows whether the Namibia samples form a tight cluster (suggesting an outbreak from a common source).\nReveals where the outbreak is genetically similar to.\nQuickly distinguishes regional genetic signatures (SEA vs Southern Africa vs West Africa).\n\nStrengths?\n\nVery fast, works on large datasets.\nMakes complex multidimensional relationships easy to interpret.\nNo model assumptions (unlike PCA which assumes linearity).\nGreat for teaching and preliminary exploration.\n\nWeaknesses?\n\nThe axes are often hard to interpret biologically.\nDoes not explicitly model ancestry or evolution.\nClusters can appear clearer or blurrier depending on scaling."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#phylogenetic-tree-neighbor-joining",
+    "href": "Population_Genomics_Workshop.html#phylogenetic-tree-neighbor-joining",
+    "title": "Population Genomics Workshop",
+    "section": "Phylogenetic Tree (Neighbor-Joining)",
+    "text": "Phylogenetic Tree (Neighbor-Joining)\nTree Purpose\n\nReconstruct relationships between samples.\nShow how lineages evolved over time.\nHelp identify transmission clusters, founder haplotypes, and ancestral relationships.\n\nWhat a Tree Shows?\n\nReconstructs evolutionary relationships between samples.\nBranch lengths reflect genetic distance or divergence.\nClades represent groups with shared ancestry.\n\nWhy It’s Useful for This Workshop?\n\nCan identify a single outbreak clade in Namibia.\nConfirms where the outbreak samples descend from.\nHighlights differences between:\n\noutbreak lineage\nlocal African diversity\nSEA background structure\n\n\nStrengths\n\nHigh interpretability: evolutionary history shown as branching patterns.\nExcellent for identifying clonal expansions, outbreak clusters, and transmissions.\nWorks even with small numbers of SNPs (e.g. barcodes).\n\nWeaknesses\n\nDistance-based trees (e.g., NJ) do not model evolution explicitly.\nLow SNP counts can produce low-resolution or uncertain topologies.\nRecombination in malaria violates tree assumptions - networks or clustering methods may be more accurate.\nTrees can mislead if there is strong admixture or reticulation."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#quiz-time",
+    "href": "Population_Genomics_Workshop.html#quiz-time",
+    "title": "Population Genomics Workshop",
+    "section": "Quiz time",
+    "text": "Quiz time\n\n\n\n\n\n\nNote\n\n\nWhen would you use a PCoA plot and a tree in the following scenarios?\n\nExplore broad population structure\nIdentify outbreak clusters\nExamine evolutionary relationships\nIdentify drug resistant mutations\nDetect admixture or complex ancestry\nFirst-pass QC / exploratory analysis\n\n\n\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\n\n\n\n\nPurpose\nBest Method\nWhy\n\n\n\n\nExplore broad population structure\nPCoA\nFast, intuitive, clustering-focused\n\n\nIdentify outbreak clusters\nPCoA and Trees\nPCoA visualises clusters, tree shows lineage\n\n\nExamine evolutionary relationships\nTree\nReflects ancestral history\n\n\nDetect admixture or complex ancestry\nPCoA (or DAPC)\nTrees can be misleading with recombination\n\n\nFirst-pass QC / exploratory analysis\nPCoA\nQuick sanity check\n\n\nIdentify drug resistant mutations\nNeither\nThese plots will not help us in identifying new or emerging mutations. You can however, colours the plots based on this metadata information."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#population-genetic-statistics",
+    "href": "Population_Genomics_Workshop.html#population-genetic-statistics",
+    "title": "Population Genomics Workshop",
+    "section": "Population Genetic Statistics",
+    "text": "Population Genetic Statistics\nFor each SNP, estimate the probability that two different sampled haploid parasite genotypes carry different alleles. This is an unbiased, sample-size-corrected biallelic diversity estimate, averaged across typed barcode SNPs."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#merge-the-datasets-together-and-plot-the-pcoa-and-phylogenetic-trees",
+    "href": "Population_Genomics_Workshop.html#merge-the-datasets-together-and-plot-the-pcoa-and-phylogenetic-trees",
+    "title": "Population Genomics Workshop",
+    "section": "Merge the datasets together and plot the PCoA and phylogenetic trees",
+    "text": "Merge the datasets together and plot the PCoA and phylogenetic trees\n\n\nShow R code\n\nharmonised &lt;- harmonise_vcfs(afr, sea)\n\nprint(data.frame(markers_harmonised = harmonised$compatible,\n                 alleles_flipped = harmonised$swapped,\n                 incompatible = harmonised$incompatible))\n\n#warning\nstopifnot(harmonised$compatible == 180L, harmonised$incompatible == 0L)\n\nx_all &lt;- filter_genotypes(harmonised$x, sample_max = .08, snp_max = .10)\n\ncat('Global comparison:', nrow(x_all), 'samples and', ncol(x_all), 'SNPs after QC\\n')\n\n#warning\nstopifnot(ncol(x_all) &gt;= 100L)\n\nd_all &lt;- pairwise_mismatch(x_all, min_overlap = 100)$distance\n\n#warning\nstopifnot(!anyNA(d_all))\n\n\n\n  markers_harmonised alleles_flipped incompatible\n1                180               0            0\n\n\nGlobal comparison: 381 samples and 180 SNPs after QC"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#merged-pcoa",
+    "href": "Population_Genomics_Workshop.html#merged-pcoa",
+    "title": "Population Genomics Workshop",
+    "section": "Merged PCoA",
+    "text": "Merged PCoA\n\n\nShow R code\n\nprint(make_pcoa(d_all, meta, paste0('Global PCoA: ',ncol(x_all),' harmonised SNPs')))\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#merged-phylogenetic-tree",
+    "href": "Population_Genomics_Workshop.html#merged-phylogenetic-tree",
+    "title": "Population Genomics Workshop",
+    "section": "Merged phylogenetic tree",
+    "text": "Merged phylogenetic tree\n\n\nShow R code\n\nplot_nj(d_all, meta, paste0('Global neighbour-joining tree (',ncol(x_all),' SNPs)'))\n\n\n\nShow figure"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#merged-pcoa-and-neighbour-joining-tree",
+    "href": "Population_Genomics_Workshop.html#merged-pcoa-and-neighbour-joining-tree",
+    "title": "Population Genomics Workshop",
+    "section": "Merged PCoA and neighbour-joining tree",
+    "text": "Merged PCoA and neighbour-joining tree\nExercises:\n\nWhich countries are genetically closest to the Namibia outbreak samples?\nHow does missingness filtering affect your confidence?\n\nBreak: We will wait until everyone has completed this activity."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#what-is-dapc",
+    "href": "Population_Genomics_Workshop.html#what-is-dapc",
+    "title": "Population Genomics Workshop",
+    "section": "What is DAPC?",
+    "text": "What is DAPC?\n\nDAPC = Discriminant Analysis of Principal Components, implemented in adegenet.\nIt is a multivariate clustering method specifically designed for genetic data.\nIt works in two steps:\n\n\nPCA step → reduces dimensionality and removes linkage between loci\nDiscriminant Analysis step → maximises separation among predefined groups\n\n\n\n\nWhy you might choose DAPC over PCoA\n1. DAPC explicitly maximises between-group differences\n\nPCoA is unsupervised - it reduces the entire distance matrix in a neutral way.\nDAPC is supervised - you specify group labels (e.g., country, site, outbreak cluster).\nThis allows DAPC to highlight the separation you care about, even if subtle."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#why-you-might-choose-dapc-over-pcoa",
+    "href": "Population_Genomics_Workshop.html#why-you-might-choose-dapc-over-pcoa",
+    "title": "Population Genomics Workshop",
+    "section": "Why you might choose DAPC over PCoA",
+    "text": "Why you might choose DAPC over PCoA\n1. DAPC explicitly maximises between-group differences\n\nPCoA is unsupervised - it reduces the entire distance matrix in a neutral way.\nDAPC is supervised - you specify group labels (e.g., country, site, outbreak cluster).\nThis allows DAPC to highlight the separation you care about, even if subtle."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#weaknesses-of-dapc",
+    "href": "Population_Genomics_Workshop.html#weaknesses-of-dapc",
+    "title": "Population Genomics Workshop",
+    "section": "Weaknesses of DAPC",
+    "text": "Weaknesses of DAPC\n\nRequires predefined groups - PCoA does not.\n(Although find.clusters() can infer groups first.)\nCan overfit if too many PCs are retained.\nNot a true evolutionary model - separation is statistical, not phylogenetic.\nLess intuitive for beginners compared with PCA/PCoA."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#when-to-use-pcoa-vs-dapc",
+    "href": "Population_Genomics_Workshop.html#when-to-use-pcoa-vs-dapc",
+    "title": "Population Genomics Workshop",
+    "section": "When to use PcoA vs DAPC?",
+    "text": "When to use PcoA vs DAPC?\nPCoA shows the structure that exists naturally; DAPC shows the structure you are specifically looking for.\nPCoA asks: “How different are all these samples?”\nDAPC asks: “How different are these groups?”"
+  },
+  {
+    "objectID": "Population_Genomics_Workshop.html#additional",
+    "href": "Population_Genomics_Workshop.html#additional",
+    "title": "Population Genomics Workshop",
+    "section": "Additional",
+    "text": "Additional\nConnectedness Maps (grcMalaria-style)\n\n\n\n\n\n\nConnectedness Maps (based on grcMalaria - https://genremekong.org/tools/grcmalaria-guide)\n\n\n\n\n\n\nPopulation Genetic Courses ::: callout-note ### PlasmoGenEpi course - https://www.plasmogenepi.org/OnlineCourse :::"
   }
 ]
