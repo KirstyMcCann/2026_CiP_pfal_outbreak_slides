@@ -1,0 +1,40 @@
+project:
+  type: website
+  output-dir: _site
+
+execute:
+  freeze: auto
+  setup: setup.qmd
+  
+website:
+  title: "*P. falciparum* Outbreak Workshop"
+  navbar:
+    background: "#15573A"
+    left:
+      - text: "Workshop"
+        href: index.qmd
+      - setup.qmd
+      - missingness.qmd
+      - pcoa.qmd
+      - phylogenetics.qmd
+      - statistics.qmd
+      - activity.qmd
+      - mapping.qmd
+      - drugresistance.qmd
+      - Additional.qmd
+      - summary.qmd
+
+format:
+  html:
+    theme:
+      - theme.scss
+    css: 
+      - styles.css
+    toc: true
+    toc-depth: 2
+    code-fold: true
+    code-tools: true
+    number-sections: false
+    fontawesome: true
+
+editor: visual
