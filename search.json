@@ -137,7 +137,7 @@
     "href": "Population_Genomics_Workshop_slides.html#african-neighbour-joining-tree",
     "title": "Population Genomics Workshop",
     "section": "African neighbour-joining tree",
-    "text": "African neighbour-joining tree\n\n\nShow R code\n\nplot_nj(d_af, meta, 'Africa: neighbour-joining tree')\n\n\nShow figure"
+    "text": "African neighbour-joining tree\n\n\nShow R code\n\nplot_nj(d_af, meta, 'Africa: neighbour-joining tree')\n\n\n\nShow figure"
   },
   {
     "objectID": "Population_Genomics_Workshop_slides.html#phylogenetic-tree-neighbor-joining",
@@ -333,6 +333,6 @@
     "href": "Population_Genomics_Workshop_slides.html#additional",
     "title": "Population Genomics Workshop",
     "section": "Additional",
-    "text": "Additional\nConnectedness Maps (grcMalaria-style)\n\n\n\n\n\n\nConnectedness Maps (based on grcMalaria - https://genremekong.org/tools/grcmalaria-guide)\n\n\n\n\n\n\nPopulation Genetic Courses ::: callout-note ### PlasmoGenEpi course - https://www.plasmogenepi.org/OnlineCourse :::"
+    "text": "Additional\nConnectedness Maps (grcMalaria-style)\n\n\n\n\n\n\nConnectedness Maps (based on grcMalaria - https://genremekong.org/tools/grcmalaria-guide)\n\n\n\n\n\n\nPopulation Genetic Courses ::: {.callout-note} ### PlasmoGenEpi course - https://www.plasmogenepi.org/OnlineCourse :::"
   }
 ]
