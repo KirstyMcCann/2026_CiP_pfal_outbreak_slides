@@ -1,0 +1,1960 @@
+---
+title: "Population Genomics Workshop"
+subtitle: "Identification of Imported Malaria Cases"
+author: "Kirsty McCann"
+format:
+  revealjs:
+    slide-level: 2
+    theme:
+      - default
+      - theme.scss
+    slide-number: true
+    logo: images/CIIDIR_logo.png
+    footer: "Population Genomics Workshop"
+    transition: fade
+    center: false
+    smaller: false
+    scrollable: false
+    width: 1280
+    height: 720
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+::: callout-important
+## DISCLAIMER
+
+**Simulated data and scenario for teaching only.** The scenario is fictional and is not evidence of an actual outbreak or malaria-free status in the stated location. The genotype and resistance datasets are synthetic; conclusions must not be applied to public health decisions.
+:::
+
+# The Scenario
+
+In early 2026, an unexpected cluster of approximately 200 *Plasmodium falciparum* malaria cases was reported in a simulated district of Namibia that had previously achieved malaria-free status in 2019. The district attracts international tourists, while cross-border movement, particularly from Angola, also creates opportunities for importation.
+
+The team genotyped **200 Namibian outbreak samples** and reference samples from Africa and Southeast Asia using a common **180-SNP barcode**.
+
+------------------------------------------------------------------------
+
+## What could explain the outbreak?
+
+:::::: columns
+::: {.column width="33%"}
+### 01 · Local resurgence
+
+Parasites persisting or circulating locally.
+:::
+
+::: {.column width="33%"}
+### 02 · Regional importation
+
+Parasites introduced from neighbouring African populations.
+:::
+
+::: {.column width="33%"}
+### 03 · Long-distance importation
+
+Parasites introduced from outside Africa.
+:::
+::::::
+
+::: callout-note
+Tourism and cross-border movement make multiple hypotheses plausible.
+:::
+
+------------------------------------------------------------------------
+
+## Your investigation
+
+You have **two VCF files** and **sample metadata**.
+
+**Which genetic evidence supports or challenges each hypothesis?**
+
+Genetic similarity can suggest ancestry but **cannot independently establish migration direction or place of infection**.
+
+Consider travel histories, unsampled populations and sampling bias.
+
+------------------------------------------------------------------------
+
+## Your genomic evidence
+
+::::: columns
+::: {.column width="55%"}
+-   200 Namibian outbreak samples
+-   African and Southeast Asian reference samples
+-   Shared **180-SNP barcode**
+:::
+
+::: {.column width="45%"}
+**Files supplied**
+
+-   `AFR_180snp_DR.vcf`
+-   `SEA_180snp_DR.vcf`
+-   `metadata_samples.txt`
+:::
+:::::
+
+**Research question:** Where might the outbreak parasites be genetically related to sampled populations?
+
+# Setup
+
+## Install and load packages
+
+**Recommended:** Open `setup.R` in RStudio and click **Source**. It checks for missing packages and installs them.
+
+**Alternatively**, run this once in the RStudio Console:
+
+``` r
+install.packages(
+  c("rmarkdown", "knitr", "ggplot2", "ape", "adegenet"),
+  repos = "https://cloud.r-project.org"
+)
+```
+
+::: callout-note
+Run package installation **once**, before the workshop. You do not need to reinstall packages every session.
+:::
+
+------------------------------------------------------------------------
+
+## Load analysis packages
+
+Run this code before other analyses.
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+library(ggplot2)
+library(ape)
+library(adegenet)
+source("scripts/helpers.R")
+```
+
+</details>
+
+```{r load-packages}
+#| echo: false
+#| include: false
+library(ggplot2)
+library(ape)
+library(adegenet)
+source("scripts/helpers.R")
+```
+
+# Analysis
+
+## Load the datasets
+
+Read the VCFs and metadata; check sample identifiers and marker counts.
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+meta <- read.delim("data/metadata_samples.txt", stringsAsFactors = FALSE)
+afr <- read_barcode_vcf("data/AFR_180snp_DR.vcf")
+sea <- read_barcode_vcf("data/SEA_180snp_DR.vcf")
+
+
+#stopifnot(!anyDuplicated(meta$sample))
+#stopifnot(setequal(meta$sample, c(rownames(afr$x), rownames(sea$x))))
+#stopifnot(ncol(afr$x) == 180L, ncol(sea$x) == 180L)
+```
+
+</details>
+
+```{r load-data}
+#| include: false
+meta <- read.delim("data/metadata_samples.txt", stringsAsFactors = FALSE)
+afr <- read_barcode_vcf("data/AFR_180snp_DR.vcf")
+sea <- read_barcode_vcf("data/SEA_180snp_DR.vcf")
+
+#stopifnot(!anyDuplicated(meta$sample))
+#stopifnot(setequal(meta$sample, c(rownames(afr$x), rownames(sea$x))))
+#stopifnot(ncol(afr$x) == 180L, ncol(sea$x) == 180L)
+```
+
+------------------------------------------------------------------------
+
+## Check the samples
+
+<details>
+
+<summary>Show R code</summary>
+
+```{r check-data}
+#| echo: true
+#| results: hide
+print(table(meta$country))
+cat('AFR:', nrow(afr$x), 'samples;', ncol(afr$x), 'SNPs\n')
+cat('SEA:', nrow(sea$x), 'samples;', ncol(sea$x), 'SNPs\n')
+
+#warning
+#stopifnot(ncol(afr$x) == 180L, ncol(sea$x) == 180L)
+```
+
+</details>
+
+```{r sample-summary}
+#| echo: false
+#| results: asis
+cat("**African dataset:**", nrow(afr$x), "samples ×", ncol(afr$x), "SNPs  \n")
+cat("**Southeast Asian dataset:**", nrow(sea$x), "samples ×", ncol(sea$x), "SNPs  \n")
+cat("**Total:**", nrow(afr$x) + nrow(sea$x), "samples  \n")
+```
+
+```{r country-summary}
+#| echo: false
+print(table(meta$country))
+```
+
+------------------------------------------------------------------------
+
+## Genotype quality control and missingness
+
+A missing genotype is not the reference allele. The small VCF reader in `helpers.R` accepts haploid `0`/`1` calls as a single parasite barcode state; missing calls are `NA`.
+
+### Exercises for Section 2. Filter the Dataset and Calculate Missingness
+
+-   Which plots are most informative?
+-   Why should you filter the data?
+-   Are these mostly complete datasets or are we missing important information?
+
+------------------------------------------------------------------------
+
+## Sample missingness
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+missingness <- function(genotypes) {
+  list(
+    sample = rowMeans(is.na(genotypes)),
+    snp = colMeans(is.na(genotypes))
+  )
+}
+
+qc_af <- missingness(afr$x)
+qc_se <- missingness(sea$x)
+
+qc_samples <- rbind(
+  data.frame(
+    sample = names(qc_af$sample),
+    missing = qc_af$sample,
+    region = "Africa"
+  ),
+  data.frame(
+    sample = names(qc_se$sample),
+    missing = qc_se$sample,
+    region = "Southeast Asia"
+  )
+)
+
+ggplot(qc_samples, aes(missing, fill = region)) +
+  geom_histogram(bins = 20, alpha = 0.65) +
+  geom_vline(xintercept = 0.08, linetype = 2) +
+  facet_wrap(~region) +
+  theme_minimal() +
+  labs(
+    title = "Sample missingness",
+    x = "Fraction of missing SNPs",
+    y = "Samples"
+  )
+```
+
+</details>
+
+```{r missingness-sample}
+#| echo: false
+#| include: false
+
+missingness <- function(genotypes) {
+  list(
+    sample = rowMeans(is.na(genotypes)),
+    snp = colMeans(is.na(genotypes))
+  )
+}
+
+qc_af <- missingness(afr$x)
+qc_se <- missingness(sea$x)
+
+qc_samples <- rbind(
+  data.frame(
+    sample = names(qc_af$sample),
+    missing = qc_af$sample,
+    region = "Africa"
+  ),
+  data.frame(
+    sample = names(qc_se$sample),
+    missing = qc_se$sample,
+    region = "Southeast Asia"
+  )
+)
+```
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r missingness-figure-sample}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 9
+#| fig-height: 5
+#| out-width: "85%"
+#| fig-align: center
+
+ggplot(qc_samples, aes(missing, fill = region)) +
+  geom_histogram(bins = 20, alpha = 0.65) +
+  geom_vline(xintercept = 0.08, linetype = 2) +
+  facet_wrap(~region) +
+  theme_minimal() +
+  labs(
+    title = "Sample missingness",
+    x = "Fraction of missing SNPs",
+    y = "Samples"
+  )
+```
+
+</details>
+
+## SNP missingness
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+qc_snps <- rbind(
+  data.frame(
+    missing = qc_af$snp,
+    region = "Africa"
+  ),
+  data.frame(
+    missing = qc_se$snp,
+    region = "Southeast Asia"
+  )
+)
+
+ggplot(qc_snps, aes(missing, fill = region)) +
+  geom_histogram(bins = 20) +
+  geom_vline(xintercept = 0.10, linetype = 2) +
+  facet_wrap(~region) +
+  theme_minimal() +
+  labs(
+    title = "SNP missingness",
+    x = "Fraction of missing samples",
+    y = "SNPs"
+  )
+```
+
+</details>
+
+```{r missingness-snp}
+#| echo: false
+#| include: false
+
+# Calculate SNP missingness for each region
+qc_snps <- rbind(
+  data.frame(
+    missing = qc_af$snp,
+    region = "Africa"
+  ),
+  data.frame(
+    missing = qc_se$snp,
+    region = "Southeast Asia"
+  )
+)
+```
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r missingness-figure-snp}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 9
+#| fig-height: 5
+#| out-width: "85%"
+#| fig-align: center
+
+ggplot(qc_snps, aes(missing, fill = region)) +
+  geom_histogram(bins = 20) +
+  geom_vline(xintercept = 0.10, linetype = 2) +
+  facet_wrap(~region) +
+  theme_minimal() +
+  labs(
+    title = "SNP missingness",
+    x = "Fraction of missing samples",
+    y = "SNPs"
+  )
+```
+
+</details>
+
+## Filtering
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+# Apply QC in two steps: remove poor-quality samples, then poor-quality SNPs.
+# Keeping the two steps visible makes it easier to explore other thresholds.
+
+filter_genotypes <- function(genotypes, sample_max = 0.08, snp_max = 0.10) {
+  sample_missing <- rowMeans(is.na(genotypes))
+  genotypes <- genotypes[sample_missing <= sample_max, , drop = FALSE]
+  snp_missing <- colMeans(is.na(genotypes))
+  genotypes <- genotypes[, snp_missing <= snp_max, drop = FALSE]
+  # Require at least two observed genotypes per marker.
+  genotypes[, colSums(!is.na(genotypes)) >= 2, drop = FALSE]
+}
+
+# Thresholds: samples <=8% missing; SNPs <=10% missing.
+x_af <- filter_genotypes(afr$x, sample_max = .08, snp_max = .10)
+x_se <- filter_genotypes(sea$x, sample_max = .08, snp_max = .10)
+print(data.frame(region = c('Africa','Southeast Asia'),
+                 samples_retained = c(nrow(x_af),nrow(x_se)),
+                 SNPs_retained = c(ncol(x_af),ncol(x_se))))
+```
+
+</details>
+
+```{r filtering}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 5.4
+#| out-width: "90%"
+
+filter_genotypes <- function(genotypes, sample_max = 0.08, snp_max = 0.10) {
+  sample_missing <- rowMeans(is.na(genotypes))
+  genotypes <- genotypes[sample_missing <= sample_max, , drop = FALSE]
+  snp_missing <- colMeans(is.na(genotypes))
+  genotypes <- genotypes[, snp_missing <= snp_max, drop = FALSE]
+  genotypes[, colSums(!is.na(genotypes)) >= 2, drop = FALSE]
+}
+
+x_af <- filter_genotypes(afr$x, sample_max = .08, snp_max = .10)
+x_se <- filter_genotypes(sea$x, sample_max = .08, snp_max = .10)
+print(data.frame(region = c('Africa','Southeast Asia'),
+                 samples_retained = c(nrow(x_af),nrow(x_se)),
+                 SNPs_retained = c(ncol(x_af),ncol(x_se))))
+```
+
+------------------------------------------------------------------------
+
+## Discussion - Genotype quality control and missingness
+
+**Exercises:** Change the sample threshold to 5%.
+
+-   What changes?
+
+-   Which samples have the highest missingness?
+
+-   Are these thresholds suitable for a surveillance study?
+
+# Population Genetics
+
+## Calculating Pairwise Distances
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+# Pairwise mismatch: count differences only at SNPs typed in BOTH samples.
+# Divide by the number of shared, observed SNPs (not all 180 SNPs).
+pairwise_mismatch <- function(genotypes, min_overlap = 10) {
+  n <- nrow(genotypes)
+  distances <- matrix(0, n, n,
+                      dimnames = list(rownames(genotypes), rownames(genotypes)))
+  overlaps <- matrix(0L, n, n, dimnames = dimnames(distances))
+  for (i in seq_len(n)) {
+    for (j in i:n) {
+      shared <- !is.na(genotypes[i, ]) & !is.na(genotypes[j, ])
+      n_shared <- sum(shared)
+      overlaps[i, j] <- overlaps[j, i] <- n_shared
+      mismatch <- if (n_shared >= min_overlap) {
+        mean(genotypes[i, shared] != genotypes[j, shared])
+      } else NA_real_
+      distances[i, j] <- distances[j, i] <- mismatch
+    }
+  }
+  diag(distances) <- 0
+  list(distance = distances, overlap = overlaps)
+}
+
+d_se <- pairwise_mismatch(x_se, min_overlap = 10)$distance
+d_af <- pairwise_mismatch(x_af, min_overlap = 10)$distance
+
+
+summary(as.vector(d_se[upper.tri(d_se)]))
+
+#warning
+#stopifnot(!anyNA(d_se), !anyNA(d_af))
+```
+
+</details>
+
+```{r distances}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 5.4
+#| out-width: "90%"
+pairwise_mismatch <- function(genotypes, min_overlap = 10) {
+  n <- nrow(genotypes)
+  distances <- matrix(0, n, n,
+                      dimnames = list(rownames(genotypes), rownames(genotypes)))
+  overlaps <- matrix(0L, n, n, dimnames = dimnames(distances))
+  for (i in seq_len(n)) {
+    for (j in i:n) {
+      shared <- !is.na(genotypes[i, ]) & !is.na(genotypes[j, ])
+      n_shared <- sum(shared)
+      overlaps[i, j] <- overlaps[j, i] <- n_shared
+      mismatch <- if (n_shared >= min_overlap) {
+        mean(genotypes[i, shared] != genotypes[j, shared])
+      } else NA_real_
+      distances[i, j] <- distances[j, i] <- mismatch
+    }
+  }
+  diag(distances) <- 0
+  list(distance = distances, overlap = overlaps)
+}
+
+d_se <- pairwise_mismatch(x_se, min_overlap = 10)$distance
+d_af <- pairwise_mismatch(x_af, min_overlap = 10)$distance
+
+
+summary(as.vector(d_se[upper.tri(d_se)]))
+
+#warning
+#stopifnot(!anyNA(d_se), !anyNA(d_af))
+```
+
+## PCoA: population structure
+
+PCoA represents genetic distance in a low-dimensional plot. Nearby points have similar SNPs; axes do not represent geographic coordinates.
+
+### Exercises for Section 4. PCoA / MDS Plot (Population Structure)
+
+-   What patterns do you observe in this section?
+-   Which samples or populations stand out?
+-   What does this tell you about the population structure?
+-   Why do we use PCoA plots?
+
+Other tasks:
+
+-   Use [ggplot2](https://ggplot2.tidyverse.org/) to change colours or change the shapes of the countries.
+
+## Southeast Asian PCoA
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+# Classical multidimensional scaling (PCoA)
+# using pairwise genetic distances.
+
+make_pcoa <- function(distance_matrix, metadata, plot_title) {
+
+  stopifnot(!anyNA(distance_matrix))
+
+  pcoa <- cmdscale(
+    as.dist(distance_matrix),
+    k = 2,
+    eig = TRUE,
+    add = TRUE
+  )
+
+  coordinates <- data.frame(
+    sample = row names(pcoa$points),
+    PC1 = pcoa$points[, 1],
+    PC2 = pcoa$points[, 2]
+  )
+
+  coordinates$country <- metadata$country[
+    match(coordinates$sample, metadata$sample)
+  ]
+
+  positive_eigenvalues <- pmax(pcoa$eig, 0)
+  percent <- 100 * positive_eigenvalues[1:2] /
+    sum(positive_eigenvalues)
+
+  ggplot(coordinates, aes(PC1, PC2, colour = country)) +
+    geom_point(alpha = 0.8, size = 2) +
+    theme_minimal() +
+    labs(
+      title = plot_title,
+      x = paste0("PCoA 1 (", round(percent[1], 1), "%)"),
+      y = paste0("PCoA 2 (", round(percent[2], 1), "%)")
+    )
+}
+
+print(make_pcoa(d_se, meta, "Southeast Asian barcode PCoA"))
+```
+
+</details>
+
+```{r pcoa-setup}
+#| echo: false
+#| include: false
+
+# Define reusable PCoA plotting function
+make_pcoa <- function(distance_matrix, metadata, plot_title) {
+  stopifnot(!anyNA(distance_matrix))
+
+  pcoa <- cmdscale(
+    as.dist(distance_matrix),
+    k = 2, eig = TRUE, add = TRUE
+  )
+
+  coordinates <- data.frame(
+    sample = rownames(pcoa$points),
+    PC1 = pcoa$points[, 1], PC2 = pcoa$points[, 2]
+  )
+
+  coordinates$country <- metadata$country[
+    match(coordinates$sample, metadata$sample)
+  ]
+
+  positive_eigenvalues <- pmax(pcoa$eig, 0)
+  percent <- 100 * positive_eigenvalues[1:2] /
+    sum(positive_eigenvalues)
+
+  ggplot(coordinates, aes(PC1, PC2, colour = country)) +
+    geom_point(alpha = 0.8, size = 2) +
+    theme_minimal() +
+    labs(
+      title = plot_title,
+      x = paste0("PCoA 1 (", round(percent[1], 1), "%)"),
+      y = paste0("PCoA 2 (", round(percent[2], 1), "%)")
+    )
+}
+```
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r regional-pcoa-se}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 9
+#| fig-height: 5
+#| out-width: "85%"
+#| fig-align: center
+
+print(
+  make_pcoa(
+    d_se,
+    meta,
+    "Southeast Asian barcode PCoA"
+  )
+)
+```
+
+</details>
+
+------------------------------------------------------------------------
+
+## African PCoA
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+print(make_pcoa(d_af, meta, 'African barcode PCoA'))
+```
+
+</details>
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r regional-pcoa-af}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 9
+#| fig-height: 5
+#| out-width: "85%"
+#| fig-align: center
+print(make_pcoa(d_af, meta, 'African barcode PCoA'))
+```
+
+</details>
+
+------------------------------------------------------------------------
+
+## Principal Coordinates Analysis (PCoA)
+
+::: incremental
+**What Does PCoA Do?**
+
+-   Converts genetic distances between samples into a visual 2-D or 3-D space.
+
+-   Places genetically similar samples closer together, and genetically different samples farther apart.
+
+-   Helps uncover population structure, clusters, admixture, and outliers.
+
+**Why It’s Useful for This Workshop?**
+
+-   Shows whether the Namibia samples form a tight cluster (suggesting an outbreak from a common source).
+
+-   Reveals where the outbreak is genetically similar to.
+
+-   Quickly distinguishes regional genetic signatures (SEA vs Southern Africa vs West Africa).
+:::
+
+## Principal Coordinates Analysis (PCoA)
+
+::: incremental
+**Strengths?**
+
+-   Very fast, works on large datasets.
+
+-   Makes complex multidimensional relationships easy to interpret.
+
+-   No model assumptions (unlike PCA which assumes linearity).
+
+-   Great for teaching and preliminary exploration.
+
+**Weaknesses?**
+
+-   The axes are often hard to interpret biologically.
+
+-   Does not explicitly model ancestry or evolution.
+
+-   Clusters can appear clearer or blurrier depending on scaling.
+:::
+
+------------------------------------------------------------------------
+
+## Neighbour-joining trees
+
+**Neighbour joining displays a distance-based clustering summary.**
+
+### Exercises for Section 4. Phylogenetic Tree (Neighbor-Joining)
+
+-   What patterns do you observe in this section?
+
+-   Which samples or populations stand out?
+
+-   What does this tell you about the population structure?
+
+-   Why do we use phylogentic trees plots?
+
+Other tasks:
+
+-   Use [ggplot2](https://ggplot2.tidyverse.org/) to change colours or change the shapes of the countries.
+
+------------------------------------------------------------------------
+
+## Southeast Asian neighbour-joining tree
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+# Neighbour-joining builds an unrooted distance-based tree.
+# Tip colours indicate sampling country, not transmission direction.
+plot_nj <- function(distance_matrix, metadata, plot_title) {
+  stopifnot(!anyNA(distance_matrix))
+  tree <- ape::njs(as.dist(distance_matrix))
+  countries <- sort(unique(metadata$country))
+  palette <- setNames(grDevices::hcl.colors(length(countries), 'Dark 3'), countries)
+  tip_country <- metadata$country[match(tree$tip.label, metadata$sample)]
+  ape::plot.phylo(tree, type = 'fan', show.tip.label = FALSE,
+                  edge.width = 0.7, main = plot_title)
+  ape::tiplabels(pch = 16, col = palette[tip_country], cex = 0.65)
+  legend('topleft', legend = names(palette), col = palette,
+         pch = 16, cex = 0.7, bty = 'n')
+  invisible(tree)
+}
+
+plot_nj(d_se, meta, 'Southeast Asia: neighbour-joining tree')
+```
+
+</details>
+
+```{r regional-trees-se}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 6.1
+#| out-width: "90%"
+# Neighbour-joining builds an unrooted distance-based tree.
+# Tip colours indicate sampling country, not transmission direction.
+plot_nj <- function(distance_matrix, metadata, plot_title) {
+  stopifnot(!anyNA(distance_matrix))
+  tree <- ape::njs(as.dist(distance_matrix))
+  countries <- sort(unique(metadata$country))
+  palette <- setNames(grDevices::hcl.colors(length(countries), 'Dark 3'), countries)
+  tip_country <- metadata$country[match(tree$tip.label, metadata$sample)]
+  ape::plot.phylo(tree, type = 'fan', show.tip.label = FALSE,
+                  edge.width = 0.7, main = plot_title)
+  ape::tiplabels(pch = 16, col = palette[tip_country], cex = 0.65)
+  legend('topleft', legend = names(palette), col = palette,
+         pch = 16, cex = 0.7, bty = 'n')
+  invisible(tree)
+}
+
+```
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r tree-se}
+plot_nj(d_se, meta, 'Southeast Asia: neighbour-joining tree')
+```
+
+</details>
+
+------------------------------------------------------------------------
+
+## African neighbour-joining tree
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
+```
+
+</details>
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r regional-trees-af}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 6.1
+#| out-width: "90%"
+plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
+```
+
+</details>
+
+------------------------------------------------------------------------
+
+## Phylogenetic Tree (Neighbor-Joining)
+
+::: incremental
+**Tree Purpose**
+
+-   Reconstruct relationships between samples.
+
+-   Show how lineages evolved over time.
+
+-   Help identify transmission clusters, founder haplotypes, and ancestral relationships.
+
+**What a Tree Shows?**
+
+-   Reconstructs evolutionary relationships between samples.
+
+-   Branch lengths reflect genetic distance or divergence.
+
+-   Clades represent groups with shared ancestry.
+
+**Why It’s Useful for This Workshop?**
+
+-   Can identify a single outbreak clade in Namibia.
+
+-   Confirms where the outbreak samples descend from.
+
+-   Highlights differences between:
+
+    -   outbreak lineage
+
+    -   local African diversity
+
+    -   SEA background structure
+:::
+
+## Phylogenetic Tree (Neighbor-Joining)
+
+::: incremental
+**Strengths**
+
+-   High interpretability: evolutionary history shown as branching patterns.
+
+-   Excellent for identifying clonal expansions, outbreak clusters, and transmissions.
+
+-   Works even with small numbers of SNPs (e.g. barcodes).
+
+**Weaknesses**
+
+-   Distance-based trees (e.g., NJ) do not model evolution explicitly.
+
+-   Low SNP counts can produce low-resolution or uncertain topologies.
+
+-   Recombination in malaria violates tree assumptions - networks or clustering methods may be more accurate.
+
+-   Trees can mislead if there is strong admixture or reticulation.
+:::
+
+# Quiz time
+
+::: callout-note
+**When would you use a PCoA plot and a tree in the following scenarios?**
+
+1.  Explore broad population structure
+
+2.  Identify outbreak clusters
+
+3.  Examine evolutionary relationships
+
+4.  Identify drug resistant mutations
+
+5.  Detect admixture or complex ancestry
+
+6.  First-pass QC / exploratory analysis
+:::
+
+<details>
+
+## Solution
+
+| Purpose | Best Method | Why |
+|------------------------|------------------------|------------------------|
+| Explore broad population structure | PCoA | Fast, intuitive, clustering-focused |
+| Identify outbreak clusters | PCoA and Trees | PCoA visualises clusters, tree shows lineage |
+| Examine evolutionary relationships | Tree | Reflects ancestral history |
+| Detect admixture or complex ancestry | PCoA (or DAPC) | Trees can be misleading with recombination |
+| First-pass QC / exploratory analysis | PCoA | Quick sanity check |
+| Identify drug resistant mutations | Neither | These plots will not help us in identifying new or emerging mutations. You can however, colours the plots based on this metadata information. |
+
+</details>
+
+# Population Genetic Statistics
+
+For each SNP, estimate the probability that two different sampled haploid parasite genotypes carry different alleles. This is an unbiased, sample-size-corrected biallelic diversity estimate, averaged across **typed barcode SNPs**.
+
+------------------------------------------------------------------------
+
+## Barcode diversity summary
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+site_diversity <- function(genotypes, metadata) {
+  sites <- split(metadata$sample, metadata$site)
+  do.call(rbind, lapply(names(sites), function(site_name) {
+    ids <- intersect(sites[[site_name]], rownames(genotypes))
+    if (!length(ids)) return(NULL)
+    z <- genotypes[ids, , drop = FALSE]
+    n_typed <- colSums(!is.na(z))
+    alt_frequency <- colMeans(z, na.rm = TRUE)
+    diversity_per_snp <- 2 * alt_frequency * (1 - alt_frequency) *
+      n_typed / (n_typed - 1)
+    diversity_per_snp[n_typed < 2] <- NA_real_
+    data.frame(site = site_name,
+               country = metadata$country[match(ids[1], metadata$sample)],
+               pi_barcode = if (all(is.na(diversity_per_snp))) NA_real_
+                            else mean(diversity_per_snp, na.rm = TRUE),
+               n_samples = length(ids),
+               n_loci = sum(!is.na(diversity_per_snp)))
+  }))
+}
+
+diversity_af <- site_diversity(x_af, meta)
+diversity_se <- site_diversity(x_se, meta)
+diversity <- rbind(diversity_af, diversity_se)
+
+
+print(diversity[order(diversity$pi_barcode, decreasing = TRUE), ])
+```
+
+</details>
+
+```{r diversity-table}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 5.4
+#| out-width: "90%"
+site_diversity <- function(genotypes, metadata) {
+  sites <- split(metadata$sample, metadata$site)
+  do.call(rbind, lapply(names(sites), function(site_name) {
+    ids <- intersect(sites[[site_name]], rownames(genotypes))
+    if (!length(ids)) return(NULL)
+    z <- genotypes[ids, , drop = FALSE]
+    n_typed <- colSums(!is.na(z))
+    alt_frequency <- colMeans(z, na.rm = TRUE)
+    diversity_per_snp <- 2 * alt_frequency * (1 - alt_frequency) *
+      n_typed / (n_typed - 1)
+    diversity_per_snp[n_typed < 2] <- NA_real_
+    data.frame(site = site_name,
+               country = metadata$country[match(ids[1], metadata$sample)],
+               pi_barcode = if (all(is.na(diversity_per_snp))) NA_real_
+                            else mean(diversity_per_snp, na.rm = TRUE),
+               n_samples = length(ids),
+               n_loci = sum(!is.na(diversity_per_snp)))
+  }))
+}
+
+diversity_af <- site_diversity(x_af, meta)
+diversity_se <- site_diversity(x_se, meta)
+diversity <- rbind(diversity_af, diversity_se)
+
+
+print(diversity[order(diversity$pi_barcode, decreasing = TRUE), ])
+```
+
+------------------------------------------------------------------------
+
+## Barcode diversity by site
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+ggplot(diversity, aes(reorder(site, pi_barcode), pi_barcode, fill = country)) +
+  geom_col() + coord_flip() + theme_minimal() +
+  labs(title = 'Mean per-SNP barcode diversity by site', x = 'Site',
+       y = 'Sample-size-corrected barcode diversity')
+```
+
+</details>
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r diversity-fig}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 5.4
+#| out-width: "90%"
+ggplot(diversity, aes(reorder(site, pi_barcode), pi_barcode, fill = country)) +
+  geom_col() + coord_flip() + theme_minimal() +
+  labs(title = 'Mean per-SNP barcode diversity by site', x = 'Site',
+       y = 'Sample-size-corrected barcode diversity')
+```
+
+</details>
+
+## Combine the global 180-SNP barcode
+
+The **synthetic VCFs** share the same 180 barcode markers, positions and REF/ALT definitions. Nevertheless, a robust pipeline checks allele compatibility before combining data. Any reversed allele definitions are recoded; incompatible variants would be excluded and reported. This prevents a common error when merging real VCFs.
+
+# Merge the datasets together and plot the PCoA and phylogenetic trees
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+harmonised <- harmonise_vcfs(afr, sea)
+
+print(data.frame(markers_harmonised = harmonised$compatible,
+                 alleles_flipped = harmonised$swapped,
+                 incompatible = harmonised$incompatible))
+
+#warning
+stopifnot(harmonised$compatible == 180L, harmonised$incompatible == 0L)
+
+x_all <- filter_genotypes(harmonised$x, sample_max = .08, snp_max = .10)
+
+cat('Global comparison:', nrow(x_all), 'samples and', ncol(x_all), 'SNPs after QC\n')
+
+#warning
+stopifnot(ncol(x_all) >= 100L)
+
+d_all <- pairwise_mismatch(x_all, min_overlap = 100)$distance
+
+#warning
+stopifnot(!anyNA(d_all))
+```
+
+</details>
+
+```{r harmonise}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 5.4
+#| out-width: "90%"
+harmonised <- harmonise_vcfs(afr, sea)
+
+print(data.frame(markers_harmonised = harmonised$compatible,
+                 alleles_flipped = harmonised$swapped,
+                 incompatible = harmonised$incompatible))
+
+#warning
+stopifnot(harmonised$compatible == 180L, harmonised$incompatible == 0L)
+
+x_all <- filter_genotypes(harmonised$x, sample_max = .08, snp_max = .10)
+
+cat('Global comparison:', nrow(x_all), 'samples and', ncol(x_all), 'SNPs after QC\n')
+
+#warning
+stopifnot(ncol(x_all) >= 100L)
+
+d_all <- pairwise_mismatch(x_all, min_overlap = 100)$distance
+
+#warning
+stopifnot(!anyNA(d_all))
+```
+
+## Merged PCoA
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+print(make_pcoa(d_all, meta, paste0('Global PCoA: ',ncol(x_all),' harmonised SNPs')))
+```
+
+</details>
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r merged-pcoa}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 5.4
+#| out-width: "90%"
+print(make_pcoa(d_all, meta, paste0('Global PCoA: ',ncol(x_all),' harmonised SNPs')))
+```
+
+</details>
+
+------------------------------------------------------------------------
+
+## Merged phylogenetic tree
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+plot_nj(d_all, meta, paste0('Global neighbour-joining tree (',ncol(x_all),' SNPs)'))
+```
+
+</details>
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r merge-tree}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 6.1
+#| out-width: "90%"
+plot_nj(d_all, meta, paste0('Global neighbour-joining tree (',ncol(x_all),' SNPs)'))
+```
+
+</details>
+
+------------------------------------------------------------------------
+
+## Merged PCoA and neighbour-joining tree
+
+**Exercises:**
+
+-   Which countries are genetically closest to the Namibia outbreak samples?
+
+-   How does missingness filtering affect your confidence?
+
+**Break: We will wait until everyone has completed this activity.**
+
+## Geographic sampling locations
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+print(plot_locations(meta, 'Sampling locations (simulated coordinates)'))
+```
+
+</details>
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r sample-map}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 5.4
+#| out-width: "90%"
+print(plot_locations(meta, 'Sampling locations (simulated coordinates)'))
+```
+
+</details>
+
+**Exercises:** Identify the African and Southeast Asian groups. Why is a coordinate plot not enough to infer movement direction?
+
+------------------------------------------------------------------------
+
+## Drug-resistance markers
+
+Resistance markers are provided as simulated metadata. They are not used in the neutral barcode distance analysis. To get this information, samples would be processed using a drug resistant assay. `WT` indicates wild-type, and other values indicate the listed amino-acids; marker presence alone does not establish clinical treatment failure.
+
+------------------------------------------------------------------------
+
+## C580y
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+dr <- aggregate(sample ~ country + kelch13_C580Y, meta, length)
+names(dr)[3] <- 'n'
+dr$total <- ave(dr$n, dr$country, FUN = sum)
+dr$proportion <- dr$n / dr$total
+ggplot(dr, aes(country, proportion, fill = kelch13_C580Y)) +
+  geom_col() + coord_flip() + theme_minimal() +
+  scale_fill_manual(values = c(WT = 'grey75', Y = 'firebrick')) +
+  labs(title = 'Simulated kelch13 C580Y states', x = 'Country', y = 'Proportion')
+```
+
+</details>
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r c580y}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 5.4
+#| out-width: "90%"
+dr <- aggregate(sample ~ country + kelch13_C580Y, meta, length)
+names(dr)[3] <- 'n'
+dr$total <- ave(dr$n, dr$country, FUN = sum)
+dr$proportion <- dr$n / dr$total
+ggplot(dr, aes(country, proportion, fill = kelch13_C580Y)) +
+  geom_col() + coord_flip() + theme_minimal() +
+  scale_fill_manual(values = c(WT = 'grey75', Y = 'firebrick')) +
+  labs(title = 'Simulated kelch13 C580Y states', x = 'Country', y = 'Proportion')
+```
+
+</details>
+
+------------------------------------------------------------------------
+
+## Resistance heatmap
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+dr_cols <- c('kelch13_C580Y','crt_N75E','crt_K76T','crt_I356T',
+             'mdr1_N86Y','mdr1_Y184F','dhfr_N51I','dhfr_C59R',
+             'dhfr_S108N','dhps_A437G','dhps_K540E')
+dr_long <- do.call(rbind, lapply(dr_cols, function(marker) {
+  data.frame(country = meta$country, marker = marker,
+             mutant = as.numeric(!is.na(meta[[marker]]) & meta[[marker]] != 'WT'))
+}))
+dr_summary <- aggregate(mutant ~ country + marker, dr_long, mean)
+ggplot(dr_summary, aes(marker, country, fill = mutant)) +
+  geom_tile(colour = 'white') + scale_fill_viridis_c(limits = c(0,1)) +
+  theme_minimal() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = 'Simulated drug-resistance marker frequency', x = 'Marker',
+       y = 'Country', fill = 'Mutant fraction')
+```
+
+</details>
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r resistance-heatmap}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 11
+#| fig-height: 6.0
+#| out-width: "90%"
+dr_cols <- c('kelch13_C580Y','crt_N75E','crt_K76T','crt_I356T',
+             'mdr1_N86Y','mdr1_Y184F','dhfr_N51I','dhfr_C59R',
+             'dhfr_S108N','dhps_A437G','dhps_K540E')
+dr_long <- do.call(rbind, lapply(dr_cols, function(marker) {
+  data.frame(country = meta$country, marker = marker,
+             mutant = as.numeric(!is.na(meta[[marker]]) & meta[[marker]] != 'WT'))
+}))
+dr_summary <- aggregate(mutant ~ country + marker, dr_long, mean)
+ggplot(dr_summary, aes(marker, country, fill = mutant)) +
+  geom_tile(colour = 'white') + scale_fill_viridis_c(limits = c(0,1)) +
+  theme_minimal() + theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = 'Simulated drug-resistance marker frequency', x = 'Marker',
+       y = 'Country', fill = 'Mutant fraction')
+```
+
+</details>
+
+------------------------------------------------------------------------
+
+## Resistance map
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+meta$C580Y_status <- ifelse(meta$kelch13_C580Y == 'Y', 'C580Y mutant', 'WT')
+print(plot_locations(meta, 'Simulated C580Y geographic distribution', 'C580Y_status'))
+```
+
+</details>
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r resistance-map}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 5.4
+#| out-width: "90%"
+meta$C580Y_status <- ifelse(meta$kelch13_C580Y == 'Y', 'C580Y mutant', 'WT')
+print(plot_locations(meta, 'Simulated C580Y geographic distribution', 'C580Y_status'))
+```
+
+</details>
+
+------------------------------------------------------------------------
+
+## Genetic connectedness between countries
+
+We summarise the **fraction of between-country sample pairs** whose mismatch proportion is at most a selected threshold. This is an undirected similarity measure, **not a migration rate or transmission direction**. The connectedness display uses country sampling centroids and no map boundaries.
+
+------------------------------------------------------------------------
+
+## Connectedness
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+country <- meta$country[match(rownames(d_all), meta$sample)]
+centers <- aggregate(cbind(longitude, latitude) ~ country, meta, mean)
+thresholds <- c(.05, .10, .20)
+connections <- list()
+for (a in seq_len(nrow(centers) - 1)) for (b in (a+1):nrow(centers)) {
+  ia <- which(country == centers$country[a]); ib <- which(country == centers$country[b])
+  if (length(ia) * length(ib) < 10) next
+  values <- as.vector(d_all[ia, ib, drop = FALSE])
+  for (cutoff in thresholds) {
+    connections[[length(connections)+1]] <- data.frame(
+      country1 = centers$country[a], country2 = centers$country[b],
+      lon1 = centers$longitude[a], lat1 = centers$latitude[a],
+      lon2 = centers$longitude[b], lat2 = centers$latitude[b],
+      fraction = mean(values <= cutoff), cutoff = paste0('Mismatch <= ',cutoff))
+  }
+}
+connections <- do.call(rbind, connections)
+connections <- subset(connections, fraction > 0)
+print(ggplot() +
+  geom_segment(data = connections,
+               aes(x = lon1, y = lat1, xend = lon2, yend = lat2,
+                   linewidth = fraction, colour = fraction), alpha = .65) +
+  geom_point(data = centers, aes(longitude, latitude), size = 2) +
+  geom_text(data = centers, aes(longitude, latitude, label = country),
+            size = 2.8, vjust = -1) +
+  facet_wrap(~ cutoff) + coord_quickmap(xlim = c(-25,115), ylim = c(-30,30)) +
+  scale_linewidth(range = c(.2, 2.5)) + theme_minimal() +
+  labs(title = 'Genetic connectedness: between-country comparisons',
+       x = 'Longitude', y = 'Latitude', colour = 'Fraction', linewidth = 'Fraction'))
+```
+
+</details>
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r connectedness}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 5.4
+#| out-width: "90%"
+country <- meta$country[match(rownames(d_all), meta$sample)]
+centers <- aggregate(cbind(longitude, latitude) ~ country, meta, mean)
+thresholds <- c(.05, .10, .20)
+connections <- list()
+for (a in seq_len(nrow(centers) - 1)) for (b in (a+1):nrow(centers)) {
+  ia <- which(country == centers$country[a]); ib <- which(country == centers$country[b])
+  if (length(ia) * length(ib) < 10) next
+  values <- as.vector(d_all[ia, ib, drop = FALSE])
+  for (cutoff in thresholds) {
+    connections[[length(connections)+1]] <- data.frame(
+      country1 = centers$country[a], country2 = centers$country[b],
+      lon1 = centers$longitude[a], lat1 = centers$latitude[a],
+      lon2 = centers$longitude[b], lat2 = centers$latitude[b],
+      fraction = mean(values <= cutoff), cutoff = paste0('Mismatch <= ',cutoff))
+  }
+}
+connections <- do.call(rbind, connections)
+connections <- subset(connections, fraction > 0)
+print(ggplot() +
+  geom_segment(data = connections,
+               aes(x = lon1, y = lat1, xend = lon2, yend = lat2,
+                   linewidth = fraction, colour = fraction), alpha = .65) +
+  geom_point(data = centers, aes(longitude, latitude), size = 2) +
+  geom_text(data = centers, aes(longitude, latitude, label = country),
+            size = 2.8, vjust = -1) +
+  facet_wrap(~ cutoff) + coord_quickmap(xlim = c(-25,115), ylim = c(-30,30)) +
+  scale_linewidth(range = c(.2, 2.5)) + theme_minimal() +
+  labs(title = 'Genetic connectedness: between-country comparisons',
+       x = 'Longitude', y = 'Latitude', colour = 'Fraction', linewidth = 'Fraction'))
+```
+
+</details>
+
+# DAPC: discriminant analysis of principal components
+
+DAPC is a supervised multivariate method when population labels are provided. Here, **country labels are known**; this analysis describes separation among the specified groups, rather than independently discovering the origin of Namibia parasites. PCA retention is capped conservatively to avoid the interactive console prompts used in the original document.
+
+------------------------------------------------------------------------
+
+## DAPC scatter plot
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+x_dapc <- x_all
+
+for (j in seq_len(ncol(x_dapc))) {
+  miss <- is.na(x_dapc[, j])
+
+  if (any(miss)) {
+    x_dapc[miss, j] <- mean(x_dapc[, j], na.rm = TRUE)}
+}
+
+groups <- factor(
+  meta$country[match(rownames(x_dapc), meta$sample)])
+stopifnot(!anyNA(groups))
+
+# Run DAPC
+# n.pca = number of principal components retained
+# n.da  = number of discriminant axes retained
+
+n_pca <- 30
+n_da <- 4
+
+dapc_fit <- adegenet::dapc(
+  x_dapc,
+  grp = groups,
+  n.pca = n_pca,
+  n.da = n_da
+)
+
+scatter(dapc_fit, scree.da=FALSE, scree.pca=FALSE,
+cell=1.5, cex=4, solid=0.8, bg="white",cstar=0, clab=0, leg=TRUE)
+```
+
+</details>
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r dapc-scatter}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 6.1
+#| out-width: "90%"
+x_dapc <- x_all
+
+for (j in seq_len(ncol(x_dapc))) {
+  miss <- is.na(x_dapc[, j])
+
+  if (any(miss)) {
+    x_dapc[miss, j] <- mean(x_dapc[, j], na.rm = TRUE)}
+}
+
+groups <- factor(
+  meta$country[match(rownames(x_dapc), meta$sample)])
+stopifnot(!anyNA(groups))
+
+# Run DAPC
+# n.pca = number of principal components retained
+# n.da  = number of discriminant axes retained
+
+n_pca <- 30
+n_da <- 4
+
+dapc_fit <- adegenet::dapc(
+  x_dapc,
+  grp = groups,
+  n.pca = n_pca,
+  n.da = n_da
+)
+
+scatter(dapc_fit, scree.da=FALSE, scree.pca=FALSE,
+cell=1.5, cex=4, solid=0.8, bg="white",cstar=0, clab=0, leg=TRUE)
+```
+
+</details>
+
+------------------------------------------------------------------------
+
+## Discriminant distributions
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+scatter(dapc_fit,1,1,  bg="white",
+scree.da=FALSE, legend=TRUE, solid=0.9)
+```
+
+</details>
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r dapc-density}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 6.1
+#| out-width: "90%"
+scatter(dapc_fit,1,1,  bg="white",
+scree.da=FALSE, legend=TRUE, solid=0.9)
+```
+
+</details>
+
+------------------------------------------------------------------------
+
+## Membership probabilities
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+compoplot(dapc_fit, lab="", posi=list(x=100,y=-.03), cleg=.7)
+```
+
+</details>
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r dapc-membership}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 10
+#| fig-height: 6.1
+#| out-width: "90%"
+compoplot(dapc_fit, lab="", posi=list(x=100,y=-.03), cleg=.7)
+```
+
+</details>
+
+------------------------------------------------------------------------
+
+## **What is DAPC?**
+
+::: incremental
+-   DAPC = Discriminant Analysis of Principal Components, implemented in [adegenet](https://academic.oup.com/bioinformatics/article/24/11/1403/191127).
+
+-   It is a multivariate clustering method specifically designed for genetic data.
+
+-   It works in two steps:
+
+    <div>
+
+    1.  PCA step → reduces dimensionality and removes linkage between loci
+    2.  Discriminant Analysis step → maximises separation among predefined groups
+
+    </div>
+:::
+
+# **Why you might choose DAPC over PCoA**
+
+::: incremental
+### **1. DAPC explicitly maximises between-group differences**
+
+-   PCoA is unsupervised - it reduces the entire distance matrix in a neutral way.
+
+-   DAPC is supervised - you specify group labels (e.g., country, site, outbreak cluster).
+
+-   This allows DAPC to highlight the separation you care about, even if subtle.
+:::
+
+::: incremental
+### **2. DAPC is more powerful for detecting population structure**
+
+-   DAPC often reveals clusters missed by PCA/PCoA.
+
+-   Particularly useful for:
+
+    -   detecting cryptic population structure
+
+    -   separating closely related subpopulations
+
+    -   identifying outbreak clusters vs. background diversity
+:::
+
+::: incremental
+### **3. DAPC is not constrained by assumptions of Hardy–Weinberg equilibrium**
+
+-   Many traditional population genetic methods assume HWE.
+
+-   DAPC does not, making it suitable for:
+
+    -   mixed infections
+
+    -   clonally expanding outbreaks
+
+    -   organisms with unusual inheritance (e.g., malaria parasites)
+:::
+
+::: incremental
+### **4. DAPC works well when the goal is assignment or classification**
+
+-   You can classify individuals into:
+
+    -   countries
+    -   sites
+    -   haplotypes
+    -   outbreak vs. non-outbreak lineages
+
+-   It also provides posterior membership probabilities, helpful for detecting:
+
+    -   imports
+
+    -   admixture
+
+    -   migration events
+:::
+
+::: incremental
+### **5. DAPC allows flexible selection of PCs**
+
+-   You can tune the number of PCs to:
+
+    -   avoid overfitting
+
+    -   ensure robust structure inference
+
+-   Tools like `xvalDapc()` help you identify the optimal number.
+:::
+
+::: incremental
+## **Weaknesses of DAPC**
+
+-   Requires predefined groups - PCoA does not.\
+    (Although `find.clusters()` can infer groups first.)
+
+-   Can overfit if too many PCs are retained.
+
+-   Not a true evolutionary model - separation is statistical, not phylogenetic.
+
+-   Less intuitive for beginners compared with PCA/PCoA.
+
+## **When to use PcoA vs DAPC?**
+
+-   PCoA shows the structure that exists naturally; DAPC shows the structure you are specifically looking for.
+
+-   PCoA asks: “How different are all these samples?”
+
+-   DAPC asks: “How different are these groups?”
+:::
+
+------------------------------------------------------------------------
+
+## Genetic similarity heatmap
+
+For a readable heatmap, use a fixed selection of outbreak samples and a small reference subset. The complete distance matrix is retained for all calculations.
+
+------------------------------------------------------------------------
+
+## Distance heatmap
+
+<details class="code-toggle">
+
+<summary>Show R code</summary>
+
+``` r
+set.seed(42)
+
+nam <- intersect(rownames(d_all), meta$sample[meta$country == 'Namibia'])
+ref_by_country <- split(meta$sample[meta$country != 'Namibia'], meta$country[meta$country != 'Namibia'])
+ref_subset <- unlist(lapply(ref_by_country, function(ids) head(intersect(ids, rownames(d_all)), 3)), use.names = FALSE)
+chosen <- c(head(nam, 12), ref_subset)
+subD <- d_all[chosen, chosen, drop = FALSE]
+heat <- as.data.frame(as.table(subD)); names(heat) <- c('sample1','sample2','mismatch')
+
+ggplot(heat, aes(sample1, sample2, fill = mismatch)) +
+  geom_tile() + scale_fill_viridis_c() + coord_equal() +
+  theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6),
+                          axis.text.y = element_text(size = 6)) +
+  labs(title = 'Pairwise barcode mismatch heatmap (selected samples)',
+       x = NULL, y = NULL, fill = 'Mismatch')
+```
+
+</details>
+
+<details class="figure-toggle">
+
+<summary>Show figure</summary>
+
+```{r distance-heatmap}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 11
+#| fig-height: 6.0
+#| out-width: "90%"
+set.seed(42)
+
+nam <- intersect(rownames(d_all), meta$sample[meta$country == 'Namibia'])
+ref_by_country <- split(meta$sample[meta$country != 'Namibia'], meta$country[meta$country != 'Namibia'])
+ref_subset <- unlist(lapply(ref_by_country, function(ids) head(intersect(ids, rownames(d_all)), 3)), use.names = FALSE)
+chosen <- c(head(nam, 12), ref_subset)
+subD <- d_all[chosen, chosen, drop = FALSE]
+heat <- as.data.frame(as.table(subD)); names(heat) <- c('sample1','sample2','mismatch')
+
+ggplot(heat, aes(sample1, sample2, fill = mismatch)) +
+  geom_tile() + scale_fill_viridis_c() + coord_equal() +
+  theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6),
+                          axis.text.y = element_text(size = 6)) +
+  labs(title = 'Pairwise barcode mismatch heatmap (selected samples)',
+       x = NULL, y = NULL, fill = 'Mismatch')
+```
+
+</details>
+
+# Additional
+
+**Connectedness Maps (grcMalaria-style)**
+
+::: callout-note
+Connectedness Maps (based on grcMalaria - <https://genremekong.org/tools/grcmalaria-guide>)
+:::
+
+**Population Genetic Courses**
+
+::: callout-note
+PlasmoGenEpi course - <https://www.plasmogenepi.org/OnlineCourse>
+:::
+
+# Key Take-Home Messages
+
+::: {.callout-note appearance="simple"}
+The workshop walked you through how we identify these patterns using:
+
+-   population structure methods (PCoA / DAPC)
+
+-   phylogenetic trees
+
+-   drug-resistance markers
+
+-   connectedness maps
+
+-   genetic diversity & differentiation (π, Fst)
+:::
+
+------------------------------------------------------------------------
+
+### **Distinct population structure**
+
+::: {.callout-note appearance="simple"}
+There is a clear separation between Southeast Asian and African parasite populations.
+
+-   SEA clusters tightly and distinctly from the rest.
+
+-   African populations show broader diversity and weaker structure overall.
+:::
+
+------------------------------------------------------------------------
+
+### **Drug-resistant lineage detection**
+
+::: {.callout-note appearance="simple"}
+The outbreak lineage is characterised by:
+
+-   C580Y kelch13 mutation,
+
+-   A full background of crt, mdr1, dhfr, and dhps mutations typically associated with artemisinin and partner-drug resistance.
+
+These mutations were exclusive to the Cambodian founders and the Namibia outbreak samples, confirming a single imported resistant lineage rather than local evolution.
+:::
+
+------------------------------------------------------------------------
+
+### **Geographic patterns**
+
+::: {.callout-note appearance="simple"}
+Mapping revealed:
+
+-   Strong spatial clustering of outbreak-associated samples within Namibia.
+
+-   Overlap and admixture among other African sites, consistent with regional gene flow.
+
+-   Complete absence of SEA-type DR mutations outside the outbreak cluster.
+:::
+
+------------------------------------------------------------------------
+
+### **Connectedness between populations**
+
+::: {.callout-note appearance="simple"}
+Connectedness maps showed:
+
+-   High genetic similarity links between Cambodian founder sites and Namibian outbreak sites.
+
+-   Regional linkage clusters within Africa (e.g., Angola ↔ Botswana).
+
+-   Weak or no genetic connectivity between distant African countries and between Africa and SEA, except for the imported lineage.
+:::
+
+------------------------------------------------------------------------
+
+### **Genetic diversity and differentiation**
+
+::: {.callout-note appearance="simple"}
+-   Nucleotide diversity (π) differed by site, reflecting varying transmission intensity and genetic mixing.
+
+-   Pairwise Fst supported strong differentiation between regions and between outbreak and non-outbreak samples.
+:::
+
+# Workshop Results
+
+As we completed the genomic analysis, a striking pattern emerged:
+
+::: {.callout-note appearance="simple"}
+### **Namibian outbreak parasites clustered tightly with a subset of Cambodian isolates.**
+:::
+
+At first glance, this raised a fundamental question: 
+
+::: {.callout-note appearance="simple"}
+### Is the outbreak caused from parasites imported from Cambodia into Africa OR from Africa into Cambodia?
+:::
+
+This is a common source of confusion when interpreting “imported case” narratives.
+
+------------------------------------------------------------------------
+
+### Using multiple genetic analyses provides a consistent explanation.
+
+Although the outbreak parasites group with a small Cambodian lineage, those specific Cambodian samples themselves carry a largely African genetic history. This pattern can occur when:
+
+-   a parasite population originally from Africa circulates in travellers or migrant workers in Asia
+
+-   acquires additional mutations (e.g., drug-resistance markers such as C580Y)
+
+-   and is later re-imported back into Africa
+
+Genomics therefore reveals a bidirectional history in this dataset:
+
+-   Deep ancestry, African-like genetic background
+
+-   Recent evolutionary events including Southeast Asian-like drug-resistant profile (e.g., kelch13 C580Y)
+
+-   Most recent movement from Cambodia back into Namibia
+
+This complex genetic signature cannot be inferred from epidemiology alone.
+
+------------------------------------------------------------------------
+
+### **Conclusion of the mystery**
+
+::: {.callout-note appearance="simple"}
+The Namibia cluster was seeded by a recent importation of a Cambodian resistant lineage, itself derived historically from African ancestry but now evolving in Southeast Asia.
+
+This demonstrates exactly why genomic surveillance is critical:
+
+-   Epidemiology tells us that importation occurred.
+
+-   Genomics tells us where from and which direction the parasites moved.
+:::
+
+# References/Links
+
+-   [plotly for R](https://plotly.com/r/)
+
+-   [ggplot2 documentation](https://ggplot2.tidyverse.org/)
+
+-   [ggtree](https://yulab-smu.top/treedata-book/)
+
+-   [vcfR](https://knausb.github.io/vcfR_documentation/)
+
+-   [poppr](https://grunwaldlab.github.io/poppr/)
+
+-   [ape](https://cran.r-project.org/web/packages/ape/index.html)
+
+-   [pegas](https://github.com/emmanuelparadis/pegas)
+
+-   [rnaturalearthdata](https://docs.ropensci.org/rnaturalearthdata/)
+
+-   [viridis](https://ggplot2.tidyverse.org/reference/scale_viridis.html)
+
+-   [heirfstat](https://cran.r-project.org/web/packages/hierfstat/hierfstat.pdf)
+
+-   [PGEforge](https://mrc-ide.github.io/PGEforge/)
+
+-   [PlasmoGenEpi](https://www.plasmogenepi.org/) - online course and data anaysis standards
+
+-   [GenRe - Mekong](https://genremekong.org/) - transforming data into a Genetic Report Card (GRC), grcMalaria tool, EpiGenTracker
