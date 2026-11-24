@@ -942,7 +942,7 @@ plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
 ## Solution
 
 | Purpose | Best Method | Why |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | Explore broad population structure | PCoA | Fast, intuitive, clustering-focused |
 | Identify outbreak clusters | PCoA and Trees | PCoA visualises clusters, tree shows lineage |
 | Examine evolutionary relationships | Tree | Reflects ancestral history |
@@ -1933,6 +1933,8 @@ This demonstrates exactly why genomic surveillance is critical:
 
 # References/Links
 
+:::::: columns
+::: {.column width="33%"}
 -   [plotly for R](https://plotly.com/r/)
 
 -   [ggplot2 documentation](https://ggplot2.tidyverse.org/)
@@ -1942,7 +1944,9 @@ This demonstrates exactly why genomic surveillance is critical:
 -   [vcfR](https://knausb.github.io/vcfR_documentation/)
 
 -   [poppr](https://grunwaldlab.github.io/poppr/)
+:::
 
+::: {.column width="33%"}
 -   [ape](https://cran.r-project.org/web/packages/ape/index.html)
 
 -   [pegas](https://github.com/emmanuelparadis/pegas)
@@ -1950,7 +1954,9 @@ This demonstrates exactly why genomic surveillance is critical:
 -   [rnaturalearthdata](https://docs.ropensci.org/rnaturalearthdata/)
 
 -   [viridis](https://ggplot2.tidyverse.org/reference/scale_viridis.html)
+:::
 
+::: {.column width="33%"}
 -   [heirfstat](https://cran.r-project.org/web/packages/hierfstat/hierfstat.pdf)
 
 -   [PGEforge](https://mrc-ide.github.io/PGEforge/)
@@ -1958,3 +1964,5 @@ This demonstrates exactly why genomic surveillance is critical:
 -   [PlasmoGenEpi](https://www.plasmogenepi.org/) - online course and data anaysis standards
 
 -   [GenRe - Mekong](https://genremekong.org/) - transforming data into a Genetic Report Card (GRC), grcMalaria tool, EpiGenTracker
+:::
+::::::

@@ -1711,21 +1711,30 @@ Show figure
 </section></section>
 <section id="referenceslinks" class="title-slide slide level1 center">
 <h1>References/Links</h1>
+<div class="columns">
+<div class="column" style="width:33%;">
 <ul>
 <li><p><a href="https://plotly.com/r/">plotly for R</a></p></li>
 <li><p><a href="https://ggplot2.tidyverse.org/">ggplot2 documentation</a></p></li>
 <li><p><a href="https://yulab-smu.top/treedata-book/">ggtree</a></p></li>
 <li><p><a href="https://knausb.github.io/vcfR_documentation/">vcfR</a></p></li>
 <li><p><a href="https://grunwaldlab.github.io/poppr/">poppr</a></p></li>
+</ul>
+</div><div class="column" style="width:33%;">
+<ul>
 <li><p><a href="https://cran.r-project.org/web/packages/ape/index.html">ape</a></p></li>
 <li><p><a href="https://github.com/emmanuelparadis/pegas">pegas</a></p></li>
 <li><p><a href="https://docs.ropensci.org/rnaturalearthdata/">rnaturalearthdata</a></p></li>
 <li><p><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html">viridis</a></p></li>
+</ul>
+</div><div class="column" style="width:33%;">
+<ul>
 <li><p><a href="https://cran.r-project.org/web/packages/hierfstat/hierfstat.pdf">heirfstat</a></p></li>
 <li><p><a href="https://mrc-ide.github.io/PGEforge/">PGEforge</a></p></li>
 <li><p><a href="https://www.plasmogenepi.org/">PlasmoGenEpi</a> - online course and data anaysis standards</p></li>
 <li><p><a href="https://genremekong.org/">GenRe - Mekong</a> - transforming data into a Genetic Report Card (GRC), grcMalaria tool, EpiGenTracker</p></li>
 </ul>
+</div></div>
 
 
 </section>
@@ -2052,7 +2061,7 @@ Show figure
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp("https:\/\/KirstyMcCann\.github\.io\/2026_CiP_pfal_outbreak_slides\/");
+            var filterRegex = new RegExp('/' + window.location.host + '/');
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }
