@@ -2,7 +2,7 @@
 
 This repository contains materials for the *Population Genomics Workshop: Identification of Imported Cases*.
 
-Access to the slides: [Slides for Workshop]([https://kirstymccann.github.io/2025_CiP_pfal_outbreak_workshop/](https://kirstymccann.github.io/2026_CiP_pfal_outbreak_slides/Population_Genomics_Workshop_slides.html#/title-slide)
+Access to the slides: [Slides for Workshop]([https://kirstymccann.github.io/2026_CiP_pfal_outbreak_slides/Population_Genomics_Workshop_slides.html#/title-slide])
 
 # The Scenario
 
