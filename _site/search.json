@@ -74,21 +74,21 @@
     "href": "Population_Genomics_Workshop_slides.html#filtering",
     "title": "Population Genomics Workshop",
     "section": "Filtering",
-    "text": "Filtering\n\n\nShow R code\n\n# Apply QC in two steps: remove poor-quality samples, then poor-quality SNPs.\n# Keeping the two steps visible makes it easier to explore other thresholds.\n\nfilter_genotypes &lt;- function(genotypes, sample_max = 0.08, snp_max = 0.10) {\n  sample_missing &lt;- rowMeans(is.na(genotypes))\n  genotypes &lt;- genotypes[sample_missing &lt;= sample_max, , drop = FALSE]\n  snp_missing &lt;- colMeans(is.na(genotypes))\n  genotypes &lt;- genotypes[, snp_missing &lt;= snp_max, drop = FALSE]\n  # Require at least two observed genotypes per marker.\n  genotypes[, colSums(!is.na(genotypes)) &gt;= 2, drop = FALSE]\n}\n\n# Teaching thresholds: samples &lt;=8% missing; SNPs &lt;=10% missing.\nx_af &lt;- filter_genotypes(afr$x, sample_max = .08, snp_max = .10)\nx_se &lt;- filter_genotypes(sea$x, sample_max = .08, snp_max = .10)\nprint(data.frame(region = c('Africa','Southeast Asia'),\n                 samples_retained = c(nrow(x_af),nrow(x_se)),\n                 SNPs_retained = c(ncol(x_af),ncol(x_se))))\n\n\n\n          region samples_retained SNPs_retained\n1         Africa              296           180\n2 Southeast Asia               85           180"
+    "text": "Filtering\n\n\nShow R code\n\n# Apply QC in two steps: remove poor-quality samples, then poor-quality SNPs.\n# Keeping the two steps visible makes it easier to explore other thresholds.\n\nfilter_genotypes &lt;- function(genotypes, sample_max = 0.08, snp_max = 0.10) {\n  sample_missing &lt;- rowMeans(is.na(genotypes))\n  genotypes &lt;- genotypes[sample_missing &lt;= sample_max, , drop = FALSE]\n  snp_missing &lt;- colMeans(is.na(genotypes))\n  genotypes &lt;- genotypes[, snp_missing &lt;= snp_max, drop = FALSE]\n  # Require at least two observed genotypes per marker.\n  genotypes[, colSums(!is.na(genotypes)) &gt;= 2, drop = FALSE]\n}\n\n# Thresholds: samples &lt;=8% missing; SNPs &lt;=10% missing.\nx_af &lt;- filter_genotypes(afr$x, sample_max = .08, snp_max = .10)\nx_se &lt;- filter_genotypes(sea$x, sample_max = .08, snp_max = .10)\nprint(data.frame(region = c('Africa','Southeast Asia'),\n                 samples_retained = c(nrow(x_af),nrow(x_se)),\n                 SNPs_retained = c(ncol(x_af),ncol(x_se))))\n\n\n\n          region samples_retained SNPs_retained\n1         Africa              296           180\n2 Southeast Asia               85           180"
   },
   {
-    "objectID": "Population_Genomics_Workshop_slides.html#discussion-genotype-quality-control-and-missingness",
-    "href": "Population_Genomics_Workshop_slides.html#discussion-genotype-quality-control-and-missingness",
+    "objectID": "Population_Genomics_Workshop_slides.html#discussion---genotype-quality-control-and-missingness",
+    "href": "Population_Genomics_Workshop_slides.html#discussion---genotype-quality-control-and-missingness",
     "title": "Population Genomics Workshop",
-    "section": "Discussion · Genotype quality control and missingness",
-    "text": "Discussion · Genotype quality control and missingness\nExercises: Change the sample threshold to 5%. What changes? - Which samples have the highest missingness? - Are these thresholds suitable for a surveillance study?"
+    "section": "Discussion - Genotype quality control and missingness",
+    "text": "Discussion - Genotype quality control and missingness\nExercises: Change the sample threshold to 5%.\n\nWhat changes?\nWhich samples have the highest missingness?\nAre these thresholds suitable for a surveillance study?"
   },
   {
     "objectID": "Population_Genomics_Workshop_slides.html#calculating-pairwise-distances",
     "href": "Population_Genomics_Workshop_slides.html#calculating-pairwise-distances",
     "title": "Population Genomics Workshop",
     "section": "Calculating Pairwise Distances",
-    "text": "Calculating Pairwise Distances\n\n\nShow R code\n\n# Pairwise mismatch: count differences only at SNPs typed in BOTH samples.\n# Divide by the number of shared, observed SNPs (not all 180 SNPs).\npairwise_mismatch &lt;- function(genotypes, min_overlap = 10) {\n  n &lt;- nrow(genotypes)\n  distances &lt;- matrix(0, n, n,\n                      dimnames = list(rownames(genotypes), rownames(genotypes)))\n  overlaps &lt;- matrix(0L, n, n, dimnames = dimnames(distances))\n  for (i in seq_len(n)) {\n    for (j in i:n) {\n      shared &lt;- !is.na(genotypes[i, ]) & !is.na(genotypes[j, ])\n      n_shared &lt;- sum(shared)\n      overlaps[i, j] &lt;- overlaps[j, i] &lt;- n_shared\n      mismatch &lt;- if (n_shared &gt;= min_overlap) {\n        mean(genotypes[i, shared] != genotypes[j, shared])\n      } else NA_real_\n      distances[i, j] &lt;- distances[j, i] &lt;- mismatch\n    }\n  }\n  diag(distances) &lt;- 0\n  list(distance = distances, overlap = overlaps)\n}\n\nd_se &lt;- pairwise_mismatch(x_se, min_overlap = 10)$distance\nd_af &lt;- pairwise_mismatch(x_af, min_overlap = 10)$distance\n\n\nsummary(as.vector(d_se[upper.tri(d_se)]))\n\n#warning\nstopifnot(!anyNA(d_se), !anyNA(d_af))\n\n\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n0.03509 0.11923 0.19885 0.23579 0.23392 0.64596"
+    "text": "Calculating Pairwise Distances\n\n\nShow R code\n\n# Pairwise mismatch: count differences only at SNPs typed in BOTH samples.\n# Divide by the number of shared, observed SNPs (not all 180 SNPs).\npairwise_mismatch &lt;- function(genotypes, min_overlap = 10) {\n  n &lt;- nrow(genotypes)\n  distances &lt;- matrix(0, n, n,\n                      dimnames = list(rownames(genotypes), rownames(genotypes)))\n  overlaps &lt;- matrix(0L, n, n, dimnames = dimnames(distances))\n  for (i in seq_len(n)) {\n    for (j in i:n) {\n      shared &lt;- !is.na(genotypes[i, ]) & !is.na(genotypes[j, ])\n      n_shared &lt;- sum(shared)\n      overlaps[i, j] &lt;- overlaps[j, i] &lt;- n_shared\n      mismatch &lt;- if (n_shared &gt;= min_overlap) {\n        mean(genotypes[i, shared] != genotypes[j, shared])\n      } else NA_real_\n      distances[i, j] &lt;- distances[j, i] &lt;- mismatch\n    }\n  }\n  diag(distances) &lt;- 0\n  list(distance = distances, overlap = overlaps)\n}\n\nd_se &lt;- pairwise_mismatch(x_se, min_overlap = 10)$distance\nd_af &lt;- pairwise_mismatch(x_af, min_overlap = 10)$distance\n\n\nsummary(as.vector(d_se[upper.tri(d_se)]))\n\n#warning\n#stopifnot(!anyNA(d_se), !anyNA(d_af))\n\n\n\n   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. \n0.03509 0.11923 0.19885 0.23579 0.23392 0.64596"
   },
   {
     "objectID": "Population_Genomics_Workshop_slides.html#pcoa-population-structure",
@@ -116,14 +116,21 @@
     "href": "Population_Genomics_Workshop_slides.html#principal-coordinates-analysis-pcoa",
     "title": "Population Genomics Workshop",
     "section": "Principal Coordinates Analysis (PCoA)",
-    "text": "Principal Coordinates Analysis (PCoA)\nWhat Does PCoA Do?\n\nConverts genetic distances between samples into a visual 2-D or 3-D space.\nPlaces genetically similar samples closer together, and genetically different samples farther apart.\nHelps uncover population structure, clusters, admixture, and outliers.\n\nWhy It’s Useful for This Workshop?\n\nShows whether the Namibia samples form a tight cluster (suggesting an outbreak from a common source).\nReveals where the outbreak is genetically similar to.\nQuickly distinguishes regional genetic signatures (SEA vs Southern Africa vs West Africa).\n\nStrengths?\n\nVery fast, works on large datasets.\nMakes complex multidimensional relationships easy to interpret.\nNo model assumptions (unlike PCA which assumes linearity).\nGreat for teaching and preliminary exploration.\n\nWeaknesses?\n\nThe axes are often hard to interpret biologically.\nDoes not explicitly model ancestry or evolution.\nClusters can appear clearer or blurrier depending on scaling."
+    "text": "Principal Coordinates Analysis (PCoA)\nWhat Does PCoA Do?\n\nConverts genetic distances between samples into a visual 2-D or 3-D space.\nPlaces genetically similar samples closer together, and genetically different samples farther apart.\nHelps uncover population structure, clusters, admixture, and outliers.\n\nWhy It’s Useful for This Workshop?\n\nShows whether the Namibia samples form a tight cluster (suggesting an outbreak from a common source).\nReveals where the outbreak is genetically similar to.\nQuickly distinguishes regional genetic signatures (SEA vs Southern Africa vs West Africa)."
+  },
+  {
+    "objectID": "Population_Genomics_Workshop_slides.html#principal-coordinates-analysis-pcoa-1",
+    "href": "Population_Genomics_Workshop_slides.html#principal-coordinates-analysis-pcoa-1",
+    "title": "Population Genomics Workshop",
+    "section": "Principal Coordinates Analysis (PCoA)",
+    "text": "Principal Coordinates Analysis (PCoA)\nStrengths?\n\nVery fast, works on large datasets.\nMakes complex multidimensional relationships easy to interpret.\nNo model assumptions (unlike PCA which assumes linearity).\nGreat for teaching and preliminary exploration.\n\nWeaknesses?\n\nThe axes are often hard to interpret biologically.\nDoes not explicitly model ancestry or evolution.\nClusters can appear clearer or blurrier depending on scaling."
   },
   {
     "objectID": "Population_Genomics_Workshop_slides.html#neighbour-joining-trees",
     "href": "Population_Genomics_Workshop_slides.html#neighbour-joining-trees",
     "title": "Population Genomics Workshop",
     "section": "Neighbour-joining trees",
-    "text": "Neighbour-joining trees\nNeighbour joining displays a distance-based clustering summary.\nExercises for Section 5. Phylogenetic Tree (Neighbor-Joining) - What patterns do you observe in this section? - Which samples or populations stand out? - What does this tell you about the population structure? - Why do we use phylogentic trees plots?\nOther tasks:\n\nUse ggplot2 to change colours or change the shapes of the countries."
+    "text": "Neighbour-joining trees\nNeighbour joining displays a distance-based clustering summary.\nExercises for Section 4. Phylogenetic Tree (Neighbor-Joining)\n\nWhat patterns do you observe in this section?\nWhich samples or populations stand out?\nWhat does this tell you about the population structure?\nWhy do we use phylogentic trees plots?\n\nOther tasks:\n\nUse ggplot2 to change colours or change the shapes of the countries."
   },
   {
     "objectID": "Population_Genomics_Workshop_slides.html#southeast-asian-neighbour-joining-tree",
@@ -144,21 +151,21 @@
     "href": "Population_Genomics_Workshop_slides.html#phylogenetic-tree-neighbor-joining",
     "title": "Population Genomics Workshop",
     "section": "Phylogenetic Tree (Neighbor-Joining)",
-    "text": "Phylogenetic Tree (Neighbor-Joining)\nTree Purpose\n\nReconstruct relationships between samples.\nShow how lineages evolved over time.\nHelp identify transmission clusters, founder haplotypes, and ancestral relationships.\n\nWhat a Tree Shows?\n\nReconstructs evolutionary relationships between samples.\nBranch lengths reflect genetic distance or divergence.\nClades represent groups with shared ancestry.\n\nWhy It’s Useful for This Workshop?\n\nCan identify a single outbreak clade in Namibia.\nConfirms where the outbreak samples descend from.\nHighlights differences between:\n\noutbreak lineage\nlocal African diversity\nSEA background structure\n\n\nStrengths\n\nHigh interpretability: evolutionary history shown as branching patterns.\nExcellent for identifying clonal expansions, outbreak clusters, and transmissions.\nWorks even with small numbers of SNPs (e.g. barcodes).\n\nWeaknesses\n\nDistance-based trees (e.g., NJ) do not model evolution explicitly.\nLow SNP counts can produce low-resolution or uncertain topologies.\nRecombination in malaria violates tree assumptions - networks or clustering methods may be more accurate.\nTrees can mislead if there is strong admixture or reticulation."
+    "text": "Phylogenetic Tree (Neighbor-Joining)\nTree Purpose\n\nReconstruct relationships between samples.\nShow how lineages evolved over time.\nHelp identify transmission clusters, founder haplotypes, and ancestral relationships.\n\nWhat a Tree Shows?\n\nReconstructs evolutionary relationships between samples.\nBranch lengths reflect genetic distance or divergence.\nClades represent groups with shared ancestry.\n\nWhy It’s Useful for This Workshop?\n\nCan identify a single outbreak clade in Namibia.\nConfirms where the outbreak samples descend from.\nHighlights differences between:\n\noutbreak lineage\nlocal African diversity\nSEA background structure"
   },
   {
-    "objectID": "Population_Genomics_Workshop_slides.html#quiz-time",
-    "href": "Population_Genomics_Workshop_slides.html#quiz-time",
+    "objectID": "Population_Genomics_Workshop_slides.html#phylogenetic-tree-neighbor-joining-1",
+    "href": "Population_Genomics_Workshop_slides.html#phylogenetic-tree-neighbor-joining-1",
     "title": "Population Genomics Workshop",
-    "section": "Quiz time",
-    "text": "Quiz time\n\n\n\n\n\n\nNote\n\n\nWhen would you use a PCoA plot and a tree in the following scenarios?\n\nExplore broad population structure\nIdentify outbreak clusters\nExamine evolutionary relationships\nIdentify drug resistant mutations\nDetect admixture or complex ancestry\nFirst-pass QC / exploratory analysis\n\n\n\n\n\n\n\n\n\n\nSolution\n\n\n\n\n\n\n\n\n\n\nPurpose\nBest Method\nWhy\n\n\n\n\nExplore broad population structure\nPCoA\nFast, intuitive, clustering-focused\n\n\nIdentify outbreak clusters\nPCoA and Trees\nPCoA visualises clusters, tree shows lineage\n\n\nExamine evolutionary relationships\nTree\nReflects ancestral history\n\n\nDetect admixture or complex ancestry\nPCoA (or DAPC)\nTrees can be misleading with recombination\n\n\nFirst-pass QC / exploratory analysis\nPCoA\nQuick sanity check\n\n\nIdentify drug resistant mutations\nNeither\nThese plots will not help us in identifying new or emerging mutations. You can however, colours the plots based on this metadata information."
+    "section": "Phylogenetic Tree (Neighbor-Joining)",
+    "text": "Phylogenetic Tree (Neighbor-Joining)\nStrengths\n\nHigh interpretability: evolutionary history shown as branching patterns.\nExcellent for identifying clonal expansions, outbreak clusters, and transmissions.\nWorks even with small numbers of SNPs (e.g. barcodes).\n\nWeaknesses\n\nDistance-based trees (e.g., NJ) do not model evolution explicitly.\nLow SNP counts can produce low-resolution or uncertain topologies.\nRecombination in malaria violates tree assumptions - networks or clustering methods may be more accurate.\nTrees can mislead if there is strong admixture or reticulation."
   },
   {
-    "objectID": "Population_Genomics_Workshop_slides.html#population-genetic-statistics",
-    "href": "Population_Genomics_Workshop_slides.html#population-genetic-statistics",
+    "objectID": "Population_Genomics_Workshop_slides.html#solution",
+    "href": "Population_Genomics_Workshop_slides.html#solution",
     "title": "Population Genomics Workshop",
-    "section": "Population Genetic Statistics",
-    "text": "Population Genetic Statistics\nFor each SNP, estimate the probability that two different sampled haploid parasite genotypes carry different alleles. This is an unbiased, sample-size-corrected biallelic diversity estimate, averaged across typed barcode SNPs."
+    "section": "Solution",
+    "text": "Solution\n\n\n\n\n\n\n\n\nPurpose\nBest Method\nWhy\n\n\n\n\nExplore broad population structure\nPCoA\nFast, intuitive, clustering-focused\n\n\nIdentify outbreak clusters\nPCoA and Trees\nPCoA visualises clusters, tree shows lineage\n\n\nExamine evolutionary relationships\nTree\nReflects ancestral history\n\n\nDetect admixture or complex ancestry\nPCoA (or DAPC)\nTrees can be misleading with recombination\n\n\nFirst-pass QC / exploratory analysis\nPCoA\nQuick sanity check\n\n\nIdentify drug resistant mutations\nNeither\nThese plots will not help us in identifying new or emerging mutations. You can however, colours the plots based on this metadata information."
   },
   {
     "objectID": "Population_Genomics_Workshop_slides.html#barcode-diversity-summary",
@@ -180,13 +187,6 @@
     "title": "Population Genomics Workshop",
     "section": "Combine the global 180-SNP barcode",
     "text": "Combine the global 180-SNP barcode\nThe synthetic VCFs share the same 180 barcode markers, positions and REF/ALT definitions. Nevertheless, a robust pipeline checks allele compatibility before combining data. Any reversed allele definitions are recoded; incompatible variants would be excluded and reported. This prevents a common error when merging real VCFs."
-  },
-  {
-    "objectID": "Population_Genomics_Workshop_slides.html#merge-the-datasets-together-and-plot-the-pcoa-and-phylogenetic-trees",
-    "href": "Population_Genomics_Workshop_slides.html#merge-the-datasets-together-and-plot-the-pcoa-and-phylogenetic-trees",
-    "title": "Population Genomics Workshop",
-    "section": "Merge the datasets together and plot the PCoA and phylogenetic trees",
-    "text": "Merge the datasets together and plot the PCoA and phylogenetic trees\n\n\nShow R code\n\nharmonised &lt;- harmonise_vcfs(afr, sea)\n\nprint(data.frame(markers_harmonised = harmonised$compatible,\n                 alleles_flipped = harmonised$swapped,\n                 incompatible = harmonised$incompatible))\n\n#warning\nstopifnot(harmonised$compatible == 180L, harmonised$incompatible == 0L)\n\nx_all &lt;- filter_genotypes(harmonised$x, sample_max = .08, snp_max = .10)\n\ncat('Global comparison:', nrow(x_all), 'samples and', ncol(x_all), 'SNPs after QC\\n')\n\n#warning\nstopifnot(ncol(x_all) &gt;= 100L)\n\nd_all &lt;- pairwise_mismatch(x_all, min_overlap = 100)$distance\n\n#warning\nstopifnot(!anyNA(d_all))\n\n\n\n  markers_harmonised alleles_flipped incompatible\n1                180               0            0\n\n\nGlobal comparison: 381 samples and 180 SNPs after QC"
   },
   {
     "objectID": "Population_Genomics_Workshop_slides.html#merged-pcoa",
@@ -259,13 +259,6 @@
     "text": "Connectedness\n\n\nShow R code\n\ncountry &lt;- meta$country[match(rownames(d_all), meta$sample)]\ncenters &lt;- aggregate(cbind(longitude, latitude) ~ country, meta, mean)\nthresholds &lt;- c(.05, .10, .20)\nconnections &lt;- list()\nfor (a in seq_len(nrow(centers) - 1)) for (b in (a+1):nrow(centers)) {\n  ia &lt;- which(country == centers$country[a]); ib &lt;- which(country == centers$country[b])\n  if (length(ia) * length(ib) &lt; 10) next\n  values &lt;- as.vector(d_all[ia, ib, drop = FALSE])\n  for (cutoff in thresholds) {\n    connections[[length(connections)+1]] &lt;- data.frame(\n      country1 = centers$country[a], country2 = centers$country[b],\n      lon1 = centers$longitude[a], lat1 = centers$latitude[a],\n      lon2 = centers$longitude[b], lat2 = centers$latitude[b],\n      fraction = mean(values &lt;= cutoff), cutoff = paste0('Mismatch &lt;= ',cutoff))\n  }\n}\nconnections &lt;- do.call(rbind, connections)\nconnections &lt;- subset(connections, fraction &gt; 0)\nprint(ggplot() +\n  geom_segment(data = connections,\n               aes(x = lon1, y = lat1, xend = lon2, yend = lat2,\n                   linewidth = fraction, colour = fraction), alpha = .65) +\n  geom_point(data = centers, aes(longitude, latitude), size = 2) +\n  geom_text(data = centers, aes(longitude, latitude, label = country),\n            size = 2.8, vjust = -1) +\n  facet_wrap(~ cutoff) + coord_quickmap(xlim = c(-25,115), ylim = c(-30,30)) +\n  scale_linewidth(range = c(.2, 2.5)) + theme_minimal() +\n  labs(title = 'Genetic connectedness: between-country comparisons',\n       x = 'Longitude', y = 'Latitude', colour = 'Fraction', linewidth = 'Fraction'))\n\n\n\nShow figure"
   },
   {
-    "objectID": "Population_Genomics_Workshop_slides.html#dapc-discriminant-analysis-of-principal-components",
-    "href": "Population_Genomics_Workshop_slides.html#dapc-discriminant-analysis-of-principal-components",
-    "title": "Population Genomics Workshop",
-    "section": "DAPC: discriminant analysis of principal components",
-    "text": "DAPC: discriminant analysis of principal components\nDAPC is a supervised multivariate method when population labels are provided. Here, country labels are known; this analysis describes separation among the specified groups, rather than independently discovering the origin of Namibia parasites. PCA retention is capped conservatively to avoid the interactive console prompts used in the original document."
-  },
-  {
     "objectID": "Population_Genomics_Workshop_slides.html#dapc-scatter-plot",
     "href": "Population_Genomics_Workshop_slides.html#dapc-scatter-plot",
     "title": "Population Genomics Workshop",
@@ -273,11 +266,11 @@
     "text": "DAPC scatter plot\n\n\nShow R code\n\nx_dapc &lt;- x_all\n\nfor (j in seq_len(ncol(x_dapc))) {\n  miss &lt;- is.na(x_dapc[, j])\n\n  if (any(miss)) {\n    x_dapc[miss, j] &lt;- mean(x_dapc[, j], na.rm = TRUE)}\n}\n\ngroups &lt;- factor(\n  meta$country[match(rownames(x_dapc), meta$sample)])\nstopifnot(!anyNA(groups))\n\n# Run DAPC\n# n.pca = number of principal components retained\n# n.da  = number of discriminant axes retained\n\nn_pca &lt;- 30\nn_da &lt;- 4\n\ndapc_fit &lt;- adegenet::dapc(\n  x_dapc,\n  grp = groups,\n  n.pca = n_pca,\n  n.da = n_da\n)\n\nscatter(dapc_fit, scree.da=FALSE, scree.pca=FALSE,\ncell=1.5, cex=4, solid=0.8, bg=\"white\",cstar=0, clab=0, leg=TRUE)\n\n\n\nShow figure"
   },
   {
-    "objectID": "Population_Genomics_Workshop_slides.html#discriminant-axis-distributions",
-    "href": "Population_Genomics_Workshop_slides.html#discriminant-axis-distributions",
+    "objectID": "Population_Genomics_Workshop_slides.html#discriminant-distributions",
+    "href": "Population_Genomics_Workshop_slides.html#discriminant-distributions",
     "title": "Population Genomics Workshop",
-    "section": "Discriminant axis distributions",
-    "text": "Discriminant axis distributions\n\n\nShow R code\n\nscatter(dapc_fit,1,1,  bg=\"white\",\nscree.da=FALSE, legend=TRUE, solid=0.9)\n\n\n\nShow figure"
+    "section": "Discriminant distributions",
+    "text": "Discriminant distributions\n\n\nShow R code\n\nscatter(dapc_fit,1,1,  bg=\"white\",\nscree.da=FALSE, legend=TRUE, solid=0.9)\n\n\n\nShow figure"
   },
   {
     "objectID": "Population_Genomics_Workshop_slides.html#membership-probabilities",
@@ -291,14 +284,7 @@
     "href": "Population_Genomics_Workshop_slides.html#what-is-dapc",
     "title": "Population Genomics Workshop",
     "section": "What is DAPC?",
-    "text": "What is DAPC?\n\nDAPC = Discriminant Analysis of Principal Components, implemented in adegenet.\nIt is a multivariate clustering method specifically designed for genetic data.\nIt works in two steps:\n\n\nPCA step → reduces dimensionality and removes linkage between loci\nDiscriminant Analysis step → maximises separation among predefined groups\n\n\n\n\nWhy you might choose DAPC over PCoA\n1. DAPC explicitly maximises between-group differences\n\nPCoA is unsupervised - it reduces the entire distance matrix in a neutral way.\nDAPC is supervised - you specify group labels (e.g., country, site, outbreak cluster).\nThis allows DAPC to highlight the separation you care about, even if subtle."
-  },
-  {
-    "objectID": "Population_Genomics_Workshop_slides.html#why-you-might-choose-dapc-over-pcoa",
-    "href": "Population_Genomics_Workshop_slides.html#why-you-might-choose-dapc-over-pcoa",
-    "title": "Population Genomics Workshop",
-    "section": "Why you might choose DAPC over PCoA",
-    "text": "Why you might choose DAPC over PCoA\n1. DAPC explicitly maximises between-group differences\n\nPCoA is unsupervised - it reduces the entire distance matrix in a neutral way.\nDAPC is supervised - you specify group labels (e.g., country, site, outbreak cluster).\nThis allows DAPC to highlight the separation you care about, even if subtle."
+    "text": "What is DAPC?\n\nDAPC = Discriminant Analysis of Principal Components, implemented in adegenet.\nIt is a multivariate clustering method specifically designed for genetic data.\nIt works in two steps:\n\n\nPCA step → reduces dimensionality and removes linkage between loci\nDiscriminant Analysis step → maximises separation among predefined groups"
   },
   {
     "objectID": "Population_Genomics_Workshop_slides.html#weaknesses-of-dapc",
@@ -312,7 +298,7 @@
     "href": "Population_Genomics_Workshop_slides.html#when-to-use-pcoa-vs-dapc",
     "title": "Population Genomics Workshop",
     "section": "When to use PcoA vs DAPC?",
-    "text": "When to use PcoA vs DAPC?\nPCoA shows the structure that exists naturally; DAPC shows the structure you are specifically looking for.\nPCoA asks: “How different are all these samples?”\nDAPC asks: “How different are these groups?”"
+    "text": "When to use PcoA vs DAPC?\n\nPCoA shows the structure that exists naturally; DAPC shows the structure you are specifically looking for.\nPCoA asks: “How different are all these samples?”\nDAPC asks: “How different are these groups?”"
   },
   {
     "objectID": "Population_Genomics_Workshop_slides.html#genetic-similarity-heatmap",
@@ -327,12 +313,5 @@
     "title": "Population Genomics Workshop",
     "section": "Distance heatmap",
     "text": "Distance heatmap\n\n\nShow R code\n\nset.seed(42)\n\nnam &lt;- intersect(rownames(d_all), meta$sample[meta$country == 'Namibia'])\nref_by_country &lt;- split(meta$sample[meta$country != 'Namibia'], meta$country[meta$country != 'Namibia'])\nref_subset &lt;- unlist(lapply(ref_by_country, function(ids) head(intersect(ids, rownames(d_all)), 3)), use.names = FALSE)\nchosen &lt;- c(head(nam, 12), ref_subset)\nsubD &lt;- d_all[chosen, chosen, drop = FALSE]\nheat &lt;- as.data.frame(as.table(subD)); names(heat) &lt;- c('sample1','sample2','mismatch')\n\nggplot(heat, aes(sample1, sample2, fill = mismatch)) +\n  geom_tile() + scale_fill_viridis_c() + coord_equal() +\n  theme_minimal() + theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6),\n                          axis.text.y = element_text(size = 6)) +\n  labs(title = 'Pairwise barcode mismatch heatmap (selected samples)',\n       x = NULL, y = NULL, fill = 'Mismatch')\n\n\n\nShow figure"
-  },
-  {
-    "objectID": "Population_Genomics_Workshop_slides.html#additional",
-    "href": "Population_Genomics_Workshop_slides.html#additional",
-    "title": "Population Genomics Workshop",
-    "section": "Additional",
-    "text": "Additional\nConnectedness Maps (grcMalaria-style)\n\n\n\n\n\n\nConnectedness Maps (based on grcMalaria - https://genremekong.org/tools/grcmalaria-guide)\n\n\n\n\n\n\nPopulation Genetic Courses\n\n\n\n\n\n\nPlasmoGenEpi course - https://www.plasmogenepi.org/OnlineCourse"
   }
 ]

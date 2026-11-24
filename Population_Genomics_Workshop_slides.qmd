@@ -63,7 +63,6 @@ Parasites introduced from outside Africa.
 Tourism and cross-border movement make multiple hypotheses plausible.
 :::
 
-
 ------------------------------------------------------------------------
 
 ## Your investigation
@@ -145,7 +144,7 @@ library(adegenet)
 source("scripts/helpers.R")
 ```
 
-------------------------------------------------------------------------
+# Analysis
 
 ## Load the datasets
 
@@ -421,7 +420,7 @@ filter_genotypes <- function(genotypes, sample_max = 0.08, snp_max = 0.10) {
   genotypes[, colSums(!is.na(genotypes)) >= 2, drop = FALSE]
 }
 
-# Teaching thresholds: samples <=8% missing; SNPs <=10% missing.
+# Thresholds: samples <=8% missing; SNPs <=10% missing.
 x_af <- filter_genotypes(afr$x, sample_max = .08, snp_max = .10)
 x_se <- filter_genotypes(sea$x, sample_max = .08, snp_max = .10)
 print(data.frame(region = c('Africa','Southeast Asia'),
@@ -456,9 +455,17 @@ print(data.frame(region = c('Africa','Southeast Asia'),
 
 ------------------------------------------------------------------------
 
-## Discussion · Genotype quality control and missingness
+## Discussion - Genotype quality control and missingness
 
-**Exercises:** Change the sample threshold to 5%. What changes? - Which samples have the highest missingness? - Are these thresholds suitable for a surveillance study?
+**Exercises:** Change the sample threshold to 5%.
+
+-   What changes?
+
+-   Which samples have the highest missingness?
+
+-   Are these thresholds suitable for a surveillance study?
+
+# Population Genetics
 
 ## Calculating Pairwise Distances
 
@@ -496,7 +503,7 @@ d_af <- pairwise_mismatch(x_af, min_overlap = 10)$distance
 summary(as.vector(d_se[upper.tri(d_se)]))
 
 #warning
-stopifnot(!anyNA(d_se), !anyNA(d_af))
+#stopifnot(!anyNA(d_se), !anyNA(d_af))
 ```
 
 </details>
@@ -708,15 +715,19 @@ print(make_pcoa(d_af, meta, 'African barcode PCoA'))
 
 -   Helps uncover population structure, clusters, admixture, and outliers.
 
-**Why It’s Useful for This Workshop**?
+**Why It’s Useful for This Workshop?**
 
 -   Shows whether the Namibia samples form a tight cluster (suggesting an outbreak from a common source).
 
 -   Reveals where the outbreak is genetically similar to.
 
 -   Quickly distinguishes regional genetic signatures (SEA vs Southern Africa vs West Africa).
+:::
 
-**Strengths**?
+## Principal Coordinates Analysis (PCoA)
+
+::: incremental
+**Strengths?**
 
 -   Very fast, works on large datasets.
 
@@ -726,7 +737,7 @@ print(make_pcoa(d_af, meta, 'African barcode PCoA'))
 
 -   Great for teaching and preliminary exploration.
 
-**Weaknesses**?
+**Weaknesses?**
 
 -   The axes are often hard to interpret biologically.
 
@@ -739,9 +750,17 @@ print(make_pcoa(d_af, meta, 'African barcode PCoA'))
 
 ## Neighbour-joining trees
 
-Neighbour joining displays a distance-based clustering summary.
+**Neighbour joining displays a distance-based clustering summary.**
 
-Exercises for Section 5. Phylogenetic Tree (Neighbor-Joining) - What patterns do you observe in this section? - Which samples or populations stand out? - What does this tell you about the population structure? - Why do we use phylogentic trees plots?
+### Exercises for Section 4. Phylogenetic Tree (Neighbor-Joining)
+
+-   What patterns do you observe in this section?
+
+-   Which samples or populations stand out?
+
+-   What does this tell you about the population structure?
+
+-   Why do we use phylogentic trees plots?
 
 Other tasks:
 
@@ -876,7 +895,11 @@ plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
     -   local African diversity
 
     -   SEA background structure
+:::
 
+## Phylogenetic Tree (Neighbor-Joining)
+
+::: incremental
 **Strengths**
 
 -   High interpretability: evolutionary history shown as branching patterns.
@@ -896,7 +919,7 @@ plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
 -   Trees can mislead if there is strong admixture or reticulation.
 :::
 
-## Quiz time
+# Quiz time
 
 ::: callout-note
 **When would you use a PCoA plot and a tree in the following scenarios?**
@@ -914,7 +937,8 @@ plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
 6.  First-pass QC / exploratory analysis
 :::
 
-::: {.callout-tip collapse="true"}
+<details>
+
 ## Solution
 
 | Purpose | Best Method | Why |
@@ -925,9 +949,10 @@ plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
 | Detect admixture or complex ancestry | PCoA (or DAPC) | Trees can be misleading with recombination |
 | First-pass QC / exploratory analysis | PCoA | Quick sanity check |
 | Identify drug resistant mutations | Neither | These plots will not help us in identifying new or emerging mutations. You can however, colours the plots based on this metadata information. |
-:::
 
-## Population Genetic Statistics
+</details>
+
+# Population Genetic Statistics
 
 For each SNP, estimate the probability that two different sampled haploid parasite genotypes carry different alleles. This is an unbiased, sample-size-corrected biallelic diversity estimate, averaged across **typed barcode SNPs**.
 
@@ -1045,9 +1070,7 @@ ggplot(diversity, aes(reorder(site, pi_barcode), pi_barcode, fill = country)) +
 
 The **synthetic VCFs** share the same 180 barcode markers, positions and REF/ALT definitions. Nevertheless, a robust pipeline checks allele compatibility before combining data. Any reversed allele definitions are recoded; incompatible variants would be excluded and reported. This prevents a common error when merging real VCFs.
 
-------------------------------------------------------------------------
-
-## Merge the datasets together and plot the PCoA and phylogenetic trees
+# Merge the datasets together and plot the PCoA and phylogenetic trees
 
 <details class="code-toggle">
 
@@ -1435,7 +1458,7 @@ print(ggplot() +
 
 </details>
 
-## DAPC: discriminant analysis of principal components
+# DAPC: discriminant analysis of principal components
 
 DAPC is a supervised multivariate method when population labels are provided. Here, **country labels are known**; this analysis describes separation among the specified groups, rather than independently discovering the origin of Namibia parasites. PCA retention is capped conservatively to avoid the interactive console prompts used in the original document.
 
@@ -1527,7 +1550,7 @@ cell=1.5, cex=4, solid=0.8, bg="white",cstar=0, clab=0, leg=TRUE)
 
 ------------------------------------------------------------------------
 
-## Discriminant axis distributions
+## Discriminant distributions
 
 <details class="code-toggle">
 
@@ -1604,9 +1627,11 @@ compoplot(dapc_fit, lab="", posi=list(x=100,y=-.03), cleg=.7)
     2.  Discriminant Analysis step → maximises separation among predefined groups
 
     </div>
+:::
 
-## **Why you might choose DAPC over PCoA**
+# **Why you might choose DAPC over PCoA**
 
+::: incremental
 ### **1. DAPC explicitly maximises between-group differences**
 
 -   PCoA is unsupervised - it reduces the entire distance matrix in a neutral way.
@@ -1616,11 +1641,9 @@ compoplot(dapc_fit, lab="", posi=list(x=100,y=-.03), cleg=.7)
 -   This allows DAPC to highlight the separation you care about, even if subtle.
 :::
 
-------------------------------------------------------------------------
-
+::: incremental
 ### **2. DAPC is more powerful for detecting population structure**
 
-::: incremental
 -   DAPC often reveals clusters missed by PCA/PCoA.
 
 -   Particularly useful for:
@@ -1632,11 +1655,9 @@ compoplot(dapc_fit, lab="", posi=list(x=100,y=-.03), cleg=.7)
     -   identifying outbreak clusters vs. background diversity
 :::
 
-------------------------------------------------------------------------
-
+::: incremental
 ### **3. DAPC is not constrained by assumptions of Hardy–Weinberg equilibrium**
 
-::: incremental
 -   Many traditional population genetic methods assume HWE.
 
 -   DAPC does not, making it suitable for:
@@ -1648,11 +1669,9 @@ compoplot(dapc_fit, lab="", posi=list(x=100,y=-.03), cleg=.7)
     -   organisms with unusual inheritance (e.g., malaria parasites)
 :::
 
----
-
-### **4. DAPC works well when the goal is assignment or classification** 
-
 ::: incremental
+### **4. DAPC works well when the goal is assignment or classification**
+
 -   You can classify individuals into:
 
     -   countries
@@ -1669,11 +1688,9 @@ compoplot(dapc_fit, lab="", posi=list(x=100,y=-.03), cleg=.7)
     -   migration events
 :::
 
-------------------------------------------------------------------------
-
+::: incremental
 ### **5. DAPC allows flexible selection of PCs**
 
-::: incremental
 -   You can tune the number of PCs to:
 
     -   avoid overfitting
@@ -1683,9 +1700,9 @@ compoplot(dapc_fit, lab="", posi=list(x=100,y=-.03), cleg=.7)
 -   Tools like `xvalDapc()` help you identify the optimal number.
 :::
 
+::: incremental
 ## **Weaknesses of DAPC**
 
-::: incremental
 -   Requires predefined groups - PCoA does not.\
     (Although `find.clusters()` can infer groups first.)
 
@@ -1694,15 +1711,15 @@ compoplot(dapc_fit, lab="", posi=list(x=100,y=-.03), cleg=.7)
 -   Not a true evolutionary model - separation is statistical, not phylogenetic.
 
 -   Less intuitive for beginners compared with PCA/PCoA.
-:::
 
 ## **When to use PcoA vs DAPC?**
 
-PCoA shows the structure that exists naturally; DAPC shows the structure you are specifically looking for.
+-   PCoA shows the structure that exists naturally; DAPC shows the structure you are specifically looking for.
 
-PCoA asks: “How different are all these samples?”
+-   PCoA asks: “How different are all these samples?”
 
-DAPC asks: “How different are these groups?”
+-   DAPC asks: “How different are these groups?”
+:::
 
 ------------------------------------------------------------------------
 
@@ -1768,23 +1785,19 @@ ggplot(heat, aes(sample1, sample2, fill = mismatch)) +
 
 </details>
 
-------------------------------------------------------------------------
-
-## Additional
+# Additional
 
 **Connectedness Maps (grcMalaria-style)**
 
-::: {.callout-note}
-### Connectedness Maps (based on grcMalaria - <https://genremekong.org/tools/grcmalaria-guide>)
+::: callout-note
+Connectedness Maps (based on grcMalaria - <https://genremekong.org/tools/grcmalaria-guide>)
 :::
 
 **Population Genetic Courses**
 
-::: {.callout-note}
-### PlasmoGenEpi course - <https://www.plasmogenepi.org/OnlineCourse>
+::: callout-note
+PlasmoGenEpi course - <https://www.plasmogenepi.org/OnlineCourse>
 :::
-
-------------------------------------------------------------------------
 
 # Key Take-Home Messages
 
@@ -1802,7 +1815,7 @@ The workshop walked you through how we identify these patterns using:
 -   genetic diversity & differentiation (π, Fst)
 :::
 
----
+------------------------------------------------------------------------
 
 ### **Distinct population structure**
 
@@ -1814,7 +1827,7 @@ There is a clear separation between Southeast Asian and African parasite populat
 -   African populations show broader diversity and weaker structure overall.
 :::
 
----
+------------------------------------------------------------------------
 
 ### **Drug-resistant lineage detection**
 
@@ -1828,7 +1841,7 @@ The outbreak lineage is characterised by:
 These mutations were exclusive to the Cambodian founders and the Namibia outbreak samples, confirming a single imported resistant lineage rather than local evolution.
 :::
 
----
+------------------------------------------------------------------------
 
 ### **Geographic patterns**
 
@@ -1842,7 +1855,7 @@ Mapping revealed:
 -   Complete absence of SEA-type DR mutations outside the outbreak cluster.
 :::
 
----
+------------------------------------------------------------------------
 
 ### **Connectedness between populations**
 
@@ -1856,7 +1869,7 @@ Connectedness maps showed:
 -   Weak or no genetic connectivity between distant African countries and between Africa and SEA, except for the imported lineage.
 :::
 
----
+------------------------------------------------------------------------
 
 ### **Genetic diversity and differentiation**
 
@@ -1865,8 +1878,6 @@ Connectedness maps showed:
 
 -   Pairwise Fst supported strong differentiation between regions and between outbreak and non-outbreak samples.
 :::
-
----
 
 # Workshop Results
 
@@ -1884,7 +1895,7 @@ At first glance, this raised a fundamental question: 
 
 This is a common source of confusion when interpreting “imported case” narratives.
 
----
+------------------------------------------------------------------------
 
 ### Using multiple genetic analyses provides a consistent explanation.
 
@@ -1906,7 +1917,7 @@ Genomics therefore reveals a bidirectional history in this dataset:
 
 This complex genetic signature cannot be inferred from epidemiology alone.
 
----
+------------------------------------------------------------------------
 
 ### **Conclusion of the mystery**
 
@@ -1919,8 +1930,6 @@ This demonstrates exactly why genomic surveillance is critical:
 
 -   Genomics tells us where from and which direction the parasites moved.
 :::
-
-------------------------------------------------------------------------
 
 # References/Links
 

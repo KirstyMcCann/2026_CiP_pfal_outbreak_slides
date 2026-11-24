@@ -319,6 +319,11 @@ Show R code
 <span id="cb2-3"><a></a><span class="fu">library</span>(adegenet)</span>
 <span id="cb2-4"><a></a><span class="fu">source</span>(<span class="st">"scripts/helpers.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+</section></section>
+<section>
+<section id="analysis" class="title-slide slide level1 center">
+<h1>Analysis</h1>
+
 </section>
 <section id="load-the-datasets" class="slide level2">
 <h2>Load the datasets</h2>
@@ -491,7 +496,7 @@ Show R code
 <span id="cb8-10"><a></a>  genotypes[, <span class="fu">colSums</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotypes)) <span class="sc">&gt;=</span> <span class="dv">2</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
 <span id="cb8-11"><a></a>}</span>
 <span id="cb8-12"><a></a></span>
-<span id="cb8-13"><a></a><span class="co"># Teaching thresholds: samples &lt;=8% missing; SNPs &lt;=10% missing.</span></span>
+<span id="cb8-13"><a></a><span class="co"># Thresholds: samples &lt;=8% missing; SNPs &lt;=10% missing.</span></span>
 <span id="cb8-14"><a></a>x_af <span class="ot">&lt;-</span> <span class="fu">filter_genotypes</span>(afr<span class="sc">$</span>x, <span class="at">sample_max =</span> .<span class="dv">08</span>, <span class="at">snp_max =</span> .<span class="dv">10</span>)</span>
 <span id="cb8-15"><a></a>x_se <span class="ot">&lt;-</span> <span class="fu">filter_genotypes</span>(sea<span class="sc">$</span>x, <span class="at">sample_max =</span> .<span class="dv">08</span>, <span class="at">snp_max =</span> .<span class="dv">10</span>)</span>
 <span id="cb8-16"><a></a><span class="fu">print</span>(<span class="fu">data.frame</span>(<span class="at">region =</span> <span class="fu">c</span>(<span class="st">'Africa'</span>,<span class="st">'Southeast Asia'</span>),</span>
@@ -506,9 +511,19 @@ Show R code
 </div>
 </div>
 </section>
-<section id="discussion-genotype-quality-control-and-missingness" class="slide level2">
-<h2>Discussion · Genotype quality control and missingness</h2>
-<p><strong>Exercises:</strong> Change the sample threshold to 5%. What changes? - Which samples have the highest missingness? - Are these thresholds suitable for a surveillance study?</p>
+<section id="discussion---genotype-quality-control-and-missingness" class="slide level2">
+<h2>Discussion - Genotype quality control and missingness</h2>
+<p><strong>Exercises:</strong> Change the sample threshold to 5%.</p>
+<ul>
+<li><p>What changes?</p></li>
+<li><p>Which samples have the highest missingness?</p></li>
+<li><p>Are these thresholds suitable for a surveillance study?</p></li>
+</ul>
+</section></section>
+<section>
+<section id="population-genetics" class="title-slide slide level1 center">
+<h1>Population Genetics</h1>
+
 </section>
 <section id="calculating-pairwise-distances" class="slide level2">
 <h2>Calculating Pairwise Distances</h2>
@@ -545,7 +560,7 @@ Show R code
 <span id="cb10-27"><a></a><span class="fu">summary</span>(<span class="fu">as.vector</span>(d_se[<span class="fu">upper.tri</span>(d_se)]))</span>
 <span id="cb10-28"><a></a></span>
 <span id="cb10-29"><a></a><span class="co">#warning</span></span>
-<span id="cb10-30"><a></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">anyNA</span>(d_se), <span class="sc">!</span><span class="fu">anyNA</span>(d_af))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-30"><a></a><span class="co">#stopifnot(!anyNA(d_se), !anyNA(d_af))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -661,20 +676,23 @@ Show figure
 <li class="fragment"><p>Places genetically similar samples closer together, and genetically different samples farther apart.</p></li>
 <li class="fragment"><p>Helps uncover population structure, clusters, admixture, and outliers.</p></li>
 </ul>
-<p><strong>Why It’s Useful for This Workshop</strong>?</p>
+<p><strong>Why It’s Useful for This Workshop?</strong></p>
 <ul>
 <li class="fragment"><p>Shows whether the Namibia samples form a tight cluster (suggesting an outbreak from a common source).</p></li>
 <li class="fragment"><p>Reveals where the outbreak is genetically similar to.</p></li>
 <li class="fragment"><p>Quickly distinguishes regional genetic signatures (SEA vs Southern Africa vs West Africa).</p></li>
 </ul>
-<p><strong>Strengths</strong>?</p>
+</section>
+<section id="principal-coordinates-analysis-pcoa-1" class="slide level2">
+<h2>Principal Coordinates Analysis (PCoA)</h2>
+<p><strong>Strengths?</strong></p>
 <ul>
 <li class="fragment"><p>Very fast, works on large datasets.</p></li>
 <li class="fragment"><p>Makes complex multidimensional relationships easy to interpret.</p></li>
 <li class="fragment"><p>No model assumptions (unlike PCA which assumes linearity).</p></li>
 <li class="fragment"><p>Great for teaching and preliminary exploration.</p></li>
 </ul>
-<p><strong>Weaknesses</strong>?</p>
+<p><strong>Weaknesses?</strong></p>
 <ul>
 <li class="fragment"><p>The axes are often hard to interpret biologically.</p></li>
 <li class="fragment"><p>Does not explicitly model ancestry or evolution.</p></li>
@@ -683,8 +701,14 @@ Show figure
 </section>
 <section id="neighbour-joining-trees" class="slide level2">
 <h2>Neighbour-joining trees</h2>
-<p>Neighbour joining displays a distance-based clustering summary.</p>
-<p>Exercises for Section 5. Phylogenetic Tree (Neighbor-Joining) - What patterns do you observe in this section? - Which samples or populations stand out? - What does this tell you about the population structure? - Why do we use phylogentic trees plots?</p>
+<p><strong>Neighbour joining displays a distance-based clustering summary.</strong></p>
+<h3 id="exercises-for-section-4.-phylogenetic-tree-neighbor-joining">Exercises for Section 4. Phylogenetic Tree (Neighbor-Joining)</h3>
+<ul>
+<li><p>What patterns do you observe in this section?</p></li>
+<li><p>Which samples or populations stand out?</p></li>
+<li><p>What does this tell you about the population structure?</p></li>
+<li><p>Why do we use phylogentic trees plots?</p></li>
+</ul>
 <p>Other tasks:</p>
 <ul>
 <li>Use <a href="https://ggplot2.tidyverse.org/">ggplot2</a> to change colours or change the shapes of the countries.</li>
@@ -777,6 +801,9 @@ Show figure
 <li class="fragment"><p>SEA background structure</p></li>
 </ul></li>
 </ul>
+</section>
+<section id="phylogenetic-tree-neighbor-joining-1" class="slide level2">
+<h2>Phylogenetic Tree (Neighbor-Joining)</h2>
 <p><strong>Strengths</strong></p>
 <ul>
 <li class="fragment"><p>High interpretability: evolutionary history shown as branching patterns.</p></li>
@@ -790,9 +817,10 @@ Show figure
 <li class="fragment"><p>Recombination in malaria violates tree assumptions - networks or clustering methods may be more accurate.</p></li>
 <li class="fragment"><p>Trees can mislead if there is strong admixture or reticulation.</p></li>
 </ul>
-</section>
-<section id="quiz-time" class="slide level2">
-<h2>Quiz time</h2>
+</section></section>
+<section>
+<section id="quiz-time" class="title-slide slide level1 center">
+<h1>Quiz time</h1>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -814,15 +842,10 @@ Show figure
 </div>
 </div>
 </div>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Solution</strong></p>
-</div>
-<div class="callout-content">
+<details>
+</details></section>
+<section id="solution" class="slide level2">
+<h2>Solution</h2>
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -869,12 +892,11 @@ Show figure
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-</div>
-</section>
-<section id="population-genetic-statistics" class="slide level2">
-<h2>Population Genetic Statistics</h2>
+
+</section></section>
+<section>
+<section id="population-genetic-statistics" class="title-slide slide level1 center">
+<h1>Population Genetic Statistics</h1>
 <p>For each SNP, estimate the probability that two different sampled haploid parasite genotypes carry different alleles. This is an unbiased, sample-size-corrected biallelic diversity estimate, averaged across <strong>typed barcode SNPs</strong>.</p>
 </section>
 <section id="barcode-diversity-summary" class="slide level2">
@@ -965,9 +987,10 @@ Show figure
 <section id="combine-the-global-180-snp-barcode" class="slide level2">
 <h2>Combine the global 180-SNP barcode</h2>
 <p>The <strong>synthetic VCFs</strong> share the same 180 barcode markers, positions and REF/ALT definitions. Nevertheless, a robust pipeline checks allele compatibility before combining data. Any reversed allele definitions are recoded; incompatible variants would be excluded and reported. This prevents a common error when merging real VCFs.</p>
-</section>
-<section id="merge-the-datasets-together-and-plot-the-pcoa-and-phylogenetic-trees" class="slide level2">
-<h2>Merge the datasets together and plot the PCoA and phylogenetic trees</h2>
+</section></section>
+<section>
+<section id="merge-the-datasets-together-and-plot-the-pcoa-and-phylogenetic-trees" class="title-slide slide level1 center">
+<h1>Merge the datasets together and plot the PCoA and phylogenetic trees</h1>
 <details class="code-toggle">
 <summary>
 Show R code
@@ -1229,9 +1252,10 @@ Show figure
 </div>
 </div>
 </details>
-</section>
-<section id="dapc-discriminant-analysis-of-principal-components" class="slide level2">
-<h2>DAPC: discriminant analysis of principal components</h2>
+</section></section>
+<section>
+<section id="dapc-discriminant-analysis-of-principal-components" class="title-slide slide level1 center">
+<h1>DAPC: discriminant analysis of principal components</h1>
 <p>DAPC is a supervised multivariate method when population labels are provided. Here, <strong>country labels are known</strong>; this analysis describes separation among the specified groups, rather than independently discovering the origin of Namibia parasites. PCA retention is capped conservatively to avoid the interactive console prompts used in the original document.</p>
 </section>
 <section id="dapc-scatter-plot" class="slide level2">
@@ -1285,8 +1309,8 @@ Show figure
 </div>
 </details>
 </section>
-<section id="discriminant-axis-distributions" class="slide level2">
-<h2>Discriminant axis distributions</h2>
+<section id="discriminant-distributions" class="slide level2">
+<h2>Discriminant distributions</h2>
 <details class="code-toggle">
 <summary>
 Show R code
@@ -1345,71 +1369,71 @@ Show figure
 </ol>
 </div></li>
 </ul>
-<section id="why-you-might-choose-dapc-over-pcoa" class="slide level2">
-<h2><strong>Why you might choose DAPC over PCoA</strong></h2>
-<h3 id="dapc-explicitly-maximises-between-group-differences"><strong>1. DAPC explicitly maximises between-group differences</strong></h3>
+</section></section>
+<section>
+<section id="why-you-might-choose-dapc-over-pcoa" class="title-slide slide level1 center">
+<h1><strong>Why you might choose DAPC over PCoA</strong></h1>
+
+</section>
+<section id="dapc-explicitly-maximises-between-group-differences" class="incremental">
+<h3><strong>1. DAPC explicitly maximises between-group differences</strong></h3>
 <ul>
-<li class="fragment"><p>PCoA is unsupervised - it reduces the entire distance matrix in a neutral way.</p></li>
-<li class="fragment"><p>DAPC is supervised - you specify group labels (e.g., country, site, outbreak cluster).</p></li>
-<li class="fragment"><p>This allows DAPC to highlight the separation you care about, even if subtle.</p></li>
+<li><p>PCoA is unsupervised - it reduces the entire distance matrix in a neutral way.</p></li>
+<li><p>DAPC is supervised - you specify group labels (e.g., country, site, outbreak cluster).</p></li>
+<li><p>This allows DAPC to highlight the separation you care about, even if subtle.</p></li>
 </ul>
 </section>
-</section>
-<section class="slide level2">
-
-<h3 id="dapc-is-more-powerful-for-detecting-population-structure"><strong>2. DAPC is more powerful for detecting population structure</strong></h3>
+<section id="dapc-is-more-powerful-for-detecting-population-structure" class="incremental">
+<h3><strong>2. DAPC is more powerful for detecting population structure</strong></h3>
 <ul>
-<li class="fragment"><p>DAPC often reveals clusters missed by PCA/PCoA.</p></li>
-<li class="fragment"><p>Particularly useful for:</p>
+<li><p>DAPC often reveals clusters missed by PCA/PCoA.</p></li>
+<li><p>Particularly useful for:</p>
 <ul>
-<li class="fragment"><p>detecting cryptic population structure</p></li>
-<li class="fragment"><p>separating closely related subpopulations</p></li>
-<li class="fragment"><p>identifying outbreak clusters vs.&nbsp;background diversity</p></li>
-</ul></li>
-</ul>
-</section>
-<section class="slide level2">
-
-<h3 id="dapc-is-not-constrained-by-assumptions-of-hardyweinberg-equilibrium"><strong>3. DAPC is not constrained by assumptions of Hardy–Weinberg equilibrium</strong></h3>
-<ul>
-<li class="fragment"><p>Many traditional population genetic methods assume HWE.</p></li>
-<li class="fragment"><p>DAPC does not, making it suitable for:</p>
-<ul>
-<li class="fragment"><p>mixed infections</p></li>
-<li class="fragment"><p>clonally expanding outbreaks</p></li>
-<li class="fragment"><p>organisms with unusual inheritance (e.g., malaria parasites)</p></li>
+<li><p>detecting cryptic population structure</p></li>
+<li><p>separating closely related subpopulations</p></li>
+<li><p>identifying outbreak clusters vs.&nbsp;background diversity</p></li>
 </ul></li>
 </ul>
 </section>
-<section class="slide level2">
-
-<h3 id="dapc-works-well-when-the-goal-is-assignment-or-classification"><strong>4. DAPC works well when the goal is assignment or classification</strong></h3>
+<section id="dapc-is-not-constrained-by-assumptions-of-hardyweinberg-equilibrium" class="incremental">
+<h3><strong>3. DAPC is not constrained by assumptions of Hardy–Weinberg equilibrium</strong></h3>
 <ul>
-<li class="fragment"><p>You can classify individuals into:</p>
+<li><p>Many traditional population genetic methods assume HWE.</p></li>
+<li><p>DAPC does not, making it suitable for:</p>
 <ul>
-<li class="fragment">countries</li>
-<li class="fragment">sites</li>
-<li class="fragment">haplotypes</li>
-<li class="fragment">outbreak vs.&nbsp;non-outbreak lineages</li>
-</ul></li>
-<li class="fragment"><p>It also provides posterior membership probabilities, helpful for detecting:</p>
-<ul>
-<li class="fragment"><p>imports</p></li>
-<li class="fragment"><p>admixture</p></li>
-<li class="fragment"><p>migration events</p></li>
+<li><p>mixed infections</p></li>
+<li><p>clonally expanding outbreaks</p></li>
+<li><p>organisms with unusual inheritance (e.g., malaria parasites)</p></li>
 </ul></li>
 </ul>
 </section>
-<section class="slide level2">
-
-<h3 id="dapc-allows-flexible-selection-of-pcs"><strong>5. DAPC allows flexible selection of PCs</strong></h3>
+<section id="dapc-works-well-when-the-goal-is-assignment-or-classification" class="incremental">
+<h3><strong>4. DAPC works well when the goal is assignment or classification</strong></h3>
 <ul>
-<li class="fragment"><p>You can tune the number of PCs to:</p>
+<li><p>You can classify individuals into:</p>
 <ul>
-<li class="fragment"><p>avoid overfitting</p></li>
-<li class="fragment"><p>ensure robust structure inference</p></li>
+<li>countries</li>
+<li>sites</li>
+<li>haplotypes</li>
+<li>outbreak vs.&nbsp;non-outbreak lineages</li>
 </ul></li>
-<li class="fragment"><p>Tools like <code>xvalDapc()</code> help you identify the optimal number.</p></li>
+<li><p>It also provides posterior membership probabilities, helpful for detecting:</p>
+<ul>
+<li><p>imports</p></li>
+<li><p>admixture</p></li>
+<li><p>migration events</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="dapc-allows-flexible-selection-of-pcs" class="incremental">
+<h3><strong>5. DAPC allows flexible selection of PCs</strong></h3>
+<ul>
+<li><p>You can tune the number of PCs to:</p>
+<ul>
+<li><p>avoid overfitting</p></li>
+<li><p>ensure robust structure inference</p></li>
+</ul></li>
+<li><p>Tools like <code>xvalDapc()</code> help you identify the optimal number.</p></li>
 </ul>
 </section>
 <section id="weaknesses-of-dapc" class="slide level2">
@@ -1424,9 +1448,11 @@ Show figure
 </section>
 <section id="when-to-use-pcoa-vs-dapc" class="slide level2">
 <h2><strong>When to use PcoA vs DAPC?</strong></h2>
-<p>PCoA shows the structure that exists naturally; DAPC shows the structure you are specifically looking for.</p>
-<p>PCoA asks: “How different are all these samples?”</p>
-<p>DAPC asks: “How different are these groups?”</p>
+<ul>
+<li class="fragment"><p>PCoA shows the structure that exists naturally; DAPC shows the structure you are specifically looking for.</p></li>
+<li class="fragment"><p>PCoA asks: “How different are all these samples?”</p></li>
+<li class="fragment"><p>DAPC asks: “How different are these groups?”</p></li>
+</ul>
 </section>
 <section id="genetic-similarity-heatmap" class="slide level2">
 <h2>Genetic similarity heatmap</h2>
@@ -1468,9 +1494,9 @@ Show figure
 </div>
 </div>
 </details>
-</section>
-<section id="additional" class="slide level2">
-<h2>Additional</h2>
+</section></section>
+<section id="additional" class="title-slide slide level1 center">
+<h1>Additional</h1>
 <p><strong>Connectedness Maps (grcMalaria-style)</strong></p>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -1478,10 +1504,10 @@ Show figure
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Connectedness Maps (based on grcMalaria - <a href="https://genremekong.org/tools/grcmalaria-guide" class="uri">https://genremekong.org/tools/grcmalaria-guide</a>)</strong></p>
+<p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-
+<p>Connectedness Maps (based on grcMalaria - <a href="https://genremekong.org/tools/grcmalaria-guide" class="uri">https://genremekong.org/tools/grcmalaria-guide</a>)</p>
 </div>
 </div>
 </div>
@@ -1492,17 +1518,15 @@ Show figure
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>PlasmoGenEpi course - <a href="https://www.plasmogenepi.org/OnlineCourse" class="uri">https://www.plasmogenepi.org/OnlineCourse</a></strong></p>
+<p><strong>Note</strong></p>
 </div>
 <div class="callout-content">
-
+<p>PlasmoGenEpi course - <a href="https://www.plasmogenepi.org/OnlineCourse" class="uri">https://www.plasmogenepi.org/OnlineCourse</a></p>
 </div>
 </div>
 </div>
 </section>
-<section class="slide level2">
 
-</section></section>
 <section>
 <section id="key-take-home-messages" class="title-slide slide level1 center">
 <h1>Key Take-Home Messages</h1>
@@ -1615,9 +1639,6 @@ Show figure
 </div>
 </div>
 </div>
-</section>
-<section class="slide level2">
-
 </section></section>
 <section>
 <section id="workshop-results" class="title-slide slide level1 center">
@@ -1687,9 +1708,6 @@ Show figure
 </div>
 </div>
 </div>
-</section>
-<section class="slide level2">
-
 </section></section>
 <section id="referenceslinks" class="title-slide slide level1 center">
 <h1>References/Links</h1>
@@ -2034,7 +2052,7 @@ Show figure
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp("https:\/\/KirstyMcCann\.github\.io\/2026_CiP_pfal_outbreak_slides\/");
+            var filterRegex = new RegExp('/' + window.location.host + '/');
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }
