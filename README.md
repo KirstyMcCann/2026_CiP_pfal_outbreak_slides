@@ -2,11 +2,11 @@
 
 This repository contains materials for the *Population Genomics Workshop: Identification of Imported Cases*.
 
-Access to the slides: [Slides for Workshop](https://kirstymccann.github.io/2025_CiP_pfal_outbreak_workshop/)
+Access to the slides: [Slides for Workshop]([https://kirstymccann.github.io/2025_CiP_pfal_outbreak_workshop/](https://kirstymccann.github.io/2026_CiP_pfal_outbreak_slides/Population_Genomics_Workshop_slides.html#/title-slide))
 
 # The Scenario
 
-In early 2025, an unexpected cluster of approximately 200 Plasmodium falciparum malaria cases was reported in a district of Namibia that had previously achieved malaria-free status in 2019. As a major tourism destination, the district receives travellers from across Africa, Europe, and Asia. With malaria elimination dependent on preventing re-establishment, every unusual case raises the possibility of importation.
+In early 2026, an unexpected cluster of approximately 200 Plasmodium falciparum malaria cases was reported in a district of Namibia that had previously achieved malaria-free status in 2019. As a major tourism destination, the district receives travellers from across Africa, Europe, and Asia. With malaria elimination dependent on preventing re-establishment, every unusual case raises the possibility of importation.
 
 Although Namibia has achieved very low local transmission, neighbouring countries, particularly Angola, continue to experience substantial malaria burden. The region has a long history of cross-border movement, particularly with workers travelling and occasional parasite importation, making it challenging to immediately determine where a new outbreak is coming from. It is not clear whether we receive the correct travel movements of all those reporting malaria symptoms.
 
@@ -32,4 +32,4 @@ To investigate the origin of this cluster, all cases were genotyped using a glob
 
 ## **Credits**
 
-Developed and maintained by Dr Kirsty McCann for teaching 2025 Concepts in Parasitology Course - Genomics II in R.
+Developed and maintained by Dr Kirsty McCann for teaching 2026 Concepts in Parasitology Course - Genomics II in R.
