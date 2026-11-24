@@ -63,6 +63,7 @@ Parasites introduced from outside Africa.
 Tourism and cross-border movement make multiple hypotheses plausible.
 :::
 
+
 ------------------------------------------------------------------------
 
 ## Your investigation
@@ -822,6 +823,8 @@ plot_nj(d_se, meta, 'Southeast Asia: neighbour-joining tree')
 ``` r
 plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
 ```
+
+</details>
 
 <details class="figure-toggle">
 
@@ -1771,12 +1774,13 @@ ggplot(heat, aes(sample1, sample2, fill = mismatch)) +
 
 **Connectedness Maps (grcMalaria-style)**
 
-::: callout-note
+::: {.callout-note}
 ### Connectedness Maps (based on grcMalaria - <https://genremekong.org/tools/grcmalaria-guide>)
 :::
 
 **Population Genetic Courses**
-::: callout-note
+
+::: {.callout-note}
 ### PlasmoGenEpi course - <https://www.plasmogenepi.org/OnlineCourse>
 :::
 
