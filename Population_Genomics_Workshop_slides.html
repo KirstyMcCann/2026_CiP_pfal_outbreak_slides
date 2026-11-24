@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en"><head>
-<script src="Population_Genomics_Workshop_slides_files/libs/clipboard/clipboard.min.js"></script>
-<script src="Population_Genomics_Workshop_slides_files/libs/quarto-html/tabby.min.js"></script>
-<script src="Population_Genomics_Workshop_slides_files/libs/quarto-html/popper.min.js"></script>
-<script src="Population_Genomics_Workshop_slides_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="Population_Genomics_Workshop_slides_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Population_Genomics_Workshop_slides_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="Population_Genomics_Workshop_slides_files/libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/tabby.min.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.7.31">
 
   <meta name="author" content="Kirsty McCann">
-  <title>Population Genomics Workshop</title>
+  <title>*P. falciparum* Outbreak Workshop – Population Genomics Workshop</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="Population_Genomics_Workshop_slides_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="Population_Genomics_Workshop_slides_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -95,11 +95,11 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="Population_Genomics_Workshop_slides_files/libs/revealjs/dist/theme/quarto-046d5b92b6a13aae1493dc3ca3ab74b3.css">
-  <link href="Population_Genomics_Workshop_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="Population_Genomics_Workshop_slides_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="Population_Genomics_Workshop_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="Population_Genomics_Workshop_slides_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto-046d5b92b6a13aae1493dc3ca3ab74b3.css">
+  <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
     .reveal div.sourceCode {
       margin: 0;
@@ -289,10 +289,10 @@ Kirsty McCann
 <h2>Install and load packages</h2>
 <p><strong>Recommended:</strong> Open <code>setup.R</code> in RStudio and click <strong>Source</strong>. It checks for missing packages and installs them.</p>
 <p><strong>Alternatively</strong>, run this once in the RStudio Console:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">install.packages</span>(</span>
-<span id="cb1-2"><a href=""></a>  <span class="fu">c</span>(<span class="st">"rmarkdown"</span>, <span class="st">"knitr"</span>, <span class="st">"ggplot2"</span>, <span class="st">"ape"</span>, <span class="st">"adegenet"</span>),</span>
-<span id="cb1-3"><a href=""></a>  <span class="at">repos =</span> <span class="st">"https://cloud.r-project.org"</span></span>
-<span id="cb1-4"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">install.packages</span>(</span>
+<span id="cb1-2"><a></a>  <span class="fu">c</span>(<span class="st">"rmarkdown"</span>, <span class="st">"knitr"</span>, <span class="st">"ggplot2"</span>, <span class="st">"ape"</span>, <span class="st">"adegenet"</span>),</span>
+<span id="cb1-3"><a></a>  <span class="at">repos =</span> <span class="st">"https://cloud.r-project.org"</span></span>
+<span id="cb1-4"><a></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -314,10 +314,10 @@ Kirsty McCann
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-2"><a href=""></a><span class="fu">library</span>(ape)</span>
-<span id="cb2-3"><a href=""></a><span class="fu">library</span>(adegenet)</span>
-<span id="cb2-4"><a href=""></a><span class="fu">source</span>(<span class="st">"scripts/helpers.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-2"><a></a><span class="fu">library</span>(ape)</span>
+<span id="cb2-3"><a></a><span class="fu">library</span>(adegenet)</span>
+<span id="cb2-4"><a></a><span class="fu">source</span>(<span class="st">"scripts/helpers.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </section></section>
 <section>
@@ -332,14 +332,14 @@ Show R code
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>meta <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">"data/metadata_samples.txt"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb3-2"><a href=""></a>afr <span class="ot">&lt;-</span> <span class="fu">read_barcode_vcf</span>(<span class="st">"data/AFR_180snp_DR.vcf"</span>)</span>
-<span id="cb3-3"><a href=""></a>sea <span class="ot">&lt;-</span> <span class="fu">read_barcode_vcf</span>(<span class="st">"data/SEA_180snp_DR.vcf"</span>)</span>
-<span id="cb3-4"><a href=""></a></span>
-<span id="cb3-5"><a href=""></a></span>
-<span id="cb3-6"><a href=""></a><span class="co">#stopifnot(!anyDuplicated(meta$sample))</span></span>
-<span id="cb3-7"><a href=""></a><span class="co">#stopifnot(setequal(meta$sample, c(rownames(afr$x), rownames(sea$x))))</span></span>
-<span id="cb3-8"><a href=""></a><span class="co">#stopifnot(ncol(afr$x) == 180L, ncol(sea$x) == 180L)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>meta <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">"data/metadata_samples.txt"</span>, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb3-2"><a></a>afr <span class="ot">&lt;-</span> <span class="fu">read_barcode_vcf</span>(<span class="st">"data/AFR_180snp_DR.vcf"</span>)</span>
+<span id="cb3-3"><a></a>sea <span class="ot">&lt;-</span> <span class="fu">read_barcode_vcf</span>(<span class="st">"data/SEA_180snp_DR.vcf"</span>)</span>
+<span id="cb3-4"><a></a></span>
+<span id="cb3-5"><a></a></span>
+<span id="cb3-6"><a></a><span class="co">#stopifnot(!anyDuplicated(meta$sample))</span></span>
+<span id="cb3-7"><a></a><span class="co">#stopifnot(setequal(meta$sample, c(rownames(afr$x), rownames(sea$x))))</span></span>
+<span id="cb3-8"><a></a><span class="co">#stopifnot(ncol(afr$x) == 180L, ncol(sea$x) == 180L)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </section>
 <section id="check-the-samples" class="slide level2">
@@ -349,12 +349,12 @@ Show R code
 Show R code
 </summary>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">print</span>(<span class="fu">table</span>(meta<span class="sc">$</span>country))</span>
-<span id="cb4-2"><a href=""></a><span class="fu">cat</span>(<span class="st">'AFR:'</span>, <span class="fu">nrow</span>(afr<span class="sc">$</span>x), <span class="st">'samples;'</span>, <span class="fu">ncol</span>(afr<span class="sc">$</span>x), <span class="st">'SNPs</span><span class="sc">\n</span><span class="st">'</span>)</span>
-<span id="cb4-3"><a href=""></a><span class="fu">cat</span>(<span class="st">'SEA:'</span>, <span class="fu">nrow</span>(sea<span class="sc">$</span>x), <span class="st">'samples;'</span>, <span class="fu">ncol</span>(sea<span class="sc">$</span>x), <span class="st">'SNPs</span><span class="sc">\n</span><span class="st">'</span>)</span>
-<span id="cb4-4"><a href=""></a></span>
-<span id="cb4-5"><a href=""></a><span class="co">#warning</span></span>
-<span id="cb4-6"><a href=""></a><span class="co">#stopifnot(ncol(afr$x) == 180L, ncol(sea$x) == 180L)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">print</span>(<span class="fu">table</span>(meta<span class="sc">$</span>country))</span>
+<span id="cb4-2"><a></a><span class="fu">cat</span>(<span class="st">'AFR:'</span>, <span class="fu">nrow</span>(afr<span class="sc">$</span>x), <span class="st">'samples;'</span>, <span class="fu">ncol</span>(afr<span class="sc">$</span>x), <span class="st">'SNPs</span><span class="sc">\n</span><span class="st">'</span>)</span>
+<span id="cb4-3"><a></a><span class="fu">cat</span>(<span class="st">'SEA:'</span>, <span class="fu">nrow</span>(sea<span class="sc">$</span>x), <span class="st">'samples;'</span>, <span class="fu">ncol</span>(sea<span class="sc">$</span>x), <span class="st">'SNPs</span><span class="sc">\n</span><span class="st">'</span>)</span>
+<span id="cb4-4"><a></a></span>
+<span id="cb4-5"><a></a><span class="co">#warning</span></span>
+<span id="cb4-6"><a></a><span class="co">#stopifnot(ncol(afr$x) == 180L, ncol(sea$x) == 180L)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </details>
 <p><strong>African dataset:</strong> 310 samples × 180 SNPs<br>
@@ -386,39 +386,39 @@ Show R code
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>missingness <span class="ot">&lt;-</span> <span class="cf">function</span>(genotypes) {</span>
-<span id="cb6-2"><a href=""></a>  <span class="fu">list</span>(</span>
-<span id="cb6-3"><a href=""></a>    <span class="at">sample =</span> <span class="fu">rowMeans</span>(<span class="fu">is.na</span>(genotypes)),</span>
-<span id="cb6-4"><a href=""></a>    <span class="at">snp =</span> <span class="fu">colMeans</span>(<span class="fu">is.na</span>(genotypes))</span>
-<span id="cb6-5"><a href=""></a>  )</span>
-<span id="cb6-6"><a href=""></a>}</span>
-<span id="cb6-7"><a href=""></a></span>
-<span id="cb6-8"><a href=""></a>qc_af <span class="ot">&lt;-</span> <span class="fu">missingness</span>(afr<span class="sc">$</span>x)</span>
-<span id="cb6-9"><a href=""></a>qc_se <span class="ot">&lt;-</span> <span class="fu">missingness</span>(sea<span class="sc">$</span>x)</span>
-<span id="cb6-10"><a href=""></a></span>
-<span id="cb6-11"><a href=""></a>qc_samples <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb6-12"><a href=""></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb6-13"><a href=""></a>    <span class="at">sample =</span> <span class="fu">names</span>(qc_af<span class="sc">$</span>sample),</span>
-<span id="cb6-14"><a href=""></a>    <span class="at">missing =</span> qc_af<span class="sc">$</span>sample,</span>
-<span id="cb6-15"><a href=""></a>    <span class="at">region =</span> <span class="st">"Africa"</span></span>
-<span id="cb6-16"><a href=""></a>  ),</span>
-<span id="cb6-17"><a href=""></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb6-18"><a href=""></a>    <span class="at">sample =</span> <span class="fu">names</span>(qc_se<span class="sc">$</span>sample),</span>
-<span id="cb6-19"><a href=""></a>    <span class="at">missing =</span> qc_se<span class="sc">$</span>sample,</span>
-<span id="cb6-20"><a href=""></a>    <span class="at">region =</span> <span class="st">"Southeast Asia"</span></span>
-<span id="cb6-21"><a href=""></a>  )</span>
-<span id="cb6-22"><a href=""></a>)</span>
-<span id="cb6-23"><a href=""></a></span>
-<span id="cb6-24"><a href=""></a><span class="fu">ggplot</span>(qc_samples, <span class="fu">aes</span>(missing, <span class="at">fill =</span> region)) <span class="sc">+</span></span>
-<span id="cb6-25"><a href=""></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">alpha =</span> <span class="fl">0.65</span>) <span class="sc">+</span></span>
-<span id="cb6-26"><a href=""></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.08</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb6-27"><a href=""></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>region) <span class="sc">+</span></span>
-<span id="cb6-28"><a href=""></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb6-29"><a href=""></a>  <span class="fu">labs</span>(</span>
-<span id="cb6-30"><a href=""></a>    <span class="at">title =</span> <span class="st">"Sample missingness"</span>,</span>
-<span id="cb6-31"><a href=""></a>    <span class="at">x =</span> <span class="st">"Fraction of missing SNPs"</span>,</span>
-<span id="cb6-32"><a href=""></a>    <span class="at">y =</span> <span class="st">"Samples"</span></span>
-<span id="cb6-33"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>missingness <span class="ot">&lt;-</span> <span class="cf">function</span>(genotypes) {</span>
+<span id="cb6-2"><a></a>  <span class="fu">list</span>(</span>
+<span id="cb6-3"><a></a>    <span class="at">sample =</span> <span class="fu">rowMeans</span>(<span class="fu">is.na</span>(genotypes)),</span>
+<span id="cb6-4"><a></a>    <span class="at">snp =</span> <span class="fu">colMeans</span>(<span class="fu">is.na</span>(genotypes))</span>
+<span id="cb6-5"><a></a>  )</span>
+<span id="cb6-6"><a></a>}</span>
+<span id="cb6-7"><a></a></span>
+<span id="cb6-8"><a></a>qc_af <span class="ot">&lt;-</span> <span class="fu">missingness</span>(afr<span class="sc">$</span>x)</span>
+<span id="cb6-9"><a></a>qc_se <span class="ot">&lt;-</span> <span class="fu">missingness</span>(sea<span class="sc">$</span>x)</span>
+<span id="cb6-10"><a></a></span>
+<span id="cb6-11"><a></a>qc_samples <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb6-12"><a></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb6-13"><a></a>    <span class="at">sample =</span> <span class="fu">names</span>(qc_af<span class="sc">$</span>sample),</span>
+<span id="cb6-14"><a></a>    <span class="at">missing =</span> qc_af<span class="sc">$</span>sample,</span>
+<span id="cb6-15"><a></a>    <span class="at">region =</span> <span class="st">"Africa"</span></span>
+<span id="cb6-16"><a></a>  ),</span>
+<span id="cb6-17"><a></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb6-18"><a></a>    <span class="at">sample =</span> <span class="fu">names</span>(qc_se<span class="sc">$</span>sample),</span>
+<span id="cb6-19"><a></a>    <span class="at">missing =</span> qc_se<span class="sc">$</span>sample,</span>
+<span id="cb6-20"><a></a>    <span class="at">region =</span> <span class="st">"Southeast Asia"</span></span>
+<span id="cb6-21"><a></a>  )</span>
+<span id="cb6-22"><a></a>)</span>
+<span id="cb6-23"><a></a></span>
+<span id="cb6-24"><a></a><span class="fu">ggplot</span>(qc_samples, <span class="fu">aes</span>(missing, <span class="at">fill =</span> region)) <span class="sc">+</span></span>
+<span id="cb6-25"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">alpha =</span> <span class="fl">0.65</span>) <span class="sc">+</span></span>
+<span id="cb6-26"><a></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.08</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb6-27"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>region) <span class="sc">+</span></span>
+<span id="cb6-28"><a></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb6-29"><a></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-30"><a></a>    <span class="at">title =</span> <span class="st">"Sample missingness"</span>,</span>
+<span id="cb6-31"><a></a>    <span class="at">x =</span> <span class="st">"Fraction of missing SNPs"</span>,</span>
+<span id="cb6-32"><a></a>    <span class="at">y =</span> <span class="st">"Samples"</span></span>
+<span id="cb6-33"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -441,27 +441,27 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>qc_snps <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb7-2"><a href=""></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb7-3"><a href=""></a>    <span class="at">missing =</span> qc_af<span class="sc">$</span>snp,</span>
-<span id="cb7-4"><a href=""></a>    <span class="at">region =</span> <span class="st">"Africa"</span></span>
-<span id="cb7-5"><a href=""></a>  ),</span>
-<span id="cb7-6"><a href=""></a>  <span class="fu">data.frame</span>(</span>
-<span id="cb7-7"><a href=""></a>    <span class="at">missing =</span> qc_se<span class="sc">$</span>snp,</span>
-<span id="cb7-8"><a href=""></a>    <span class="at">region =</span> <span class="st">"Southeast Asia"</span></span>
-<span id="cb7-9"><a href=""></a>  )</span>
-<span id="cb7-10"><a href=""></a>)</span>
-<span id="cb7-11"><a href=""></a></span>
-<span id="cb7-12"><a href=""></a><span class="fu">ggplot</span>(qc_snps, <span class="fu">aes</span>(missing, <span class="at">fill =</span> region)) <span class="sc">+</span></span>
-<span id="cb7-13"><a href=""></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
-<span id="cb7-14"><a href=""></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.10</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb7-15"><a href=""></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>region) <span class="sc">+</span></span>
-<span id="cb7-16"><a href=""></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb7-17"><a href=""></a>  <span class="fu">labs</span>(</span>
-<span id="cb7-18"><a href=""></a>    <span class="at">title =</span> <span class="st">"SNP missingness"</span>,</span>
-<span id="cb7-19"><a href=""></a>    <span class="at">x =</span> <span class="st">"Fraction of missing samples"</span>,</span>
-<span id="cb7-20"><a href=""></a>    <span class="at">y =</span> <span class="st">"SNPs"</span></span>
-<span id="cb7-21"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>qc_snps <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb7-2"><a></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb7-3"><a></a>    <span class="at">missing =</span> qc_af<span class="sc">$</span>snp,</span>
+<span id="cb7-4"><a></a>    <span class="at">region =</span> <span class="st">"Africa"</span></span>
+<span id="cb7-5"><a></a>  ),</span>
+<span id="cb7-6"><a></a>  <span class="fu">data.frame</span>(</span>
+<span id="cb7-7"><a></a>    <span class="at">missing =</span> qc_se<span class="sc">$</span>snp,</span>
+<span id="cb7-8"><a></a>    <span class="at">region =</span> <span class="st">"Southeast Asia"</span></span>
+<span id="cb7-9"><a></a>  )</span>
+<span id="cb7-10"><a></a>)</span>
+<span id="cb7-11"><a></a></span>
+<span id="cb7-12"><a></a><span class="fu">ggplot</span>(qc_snps, <span class="fu">aes</span>(missing, <span class="at">fill =</span> region)) <span class="sc">+</span></span>
+<span id="cb7-13"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
+<span id="cb7-14"><a></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.10</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb7-15"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>region) <span class="sc">+</span></span>
+<span id="cb7-16"><a></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb7-17"><a></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-18"><a></a>    <span class="at">title =</span> <span class="st">"SNP missingness"</span>,</span>
+<span id="cb7-19"><a></a>    <span class="at">x =</span> <span class="st">"Fraction of missing samples"</span>,</span>
+<span id="cb7-20"><a></a>    <span class="at">y =</span> <span class="st">"SNPs"</span></span>
+<span id="cb7-21"><a></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -484,24 +484,24 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="co"># Apply QC in two steps: remove poor-quality samples, then poor-quality SNPs.</span></span>
-<span id="cb8-2"><a href=""></a><span class="co"># Keeping the two steps visible makes it easier to explore other thresholds.</span></span>
-<span id="cb8-3"><a href=""></a></span>
-<span id="cb8-4"><a href=""></a>filter_genotypes <span class="ot">&lt;-</span> <span class="cf">function</span>(genotypes, <span class="at">sample_max =</span> <span class="fl">0.08</span>, <span class="at">snp_max =</span> <span class="fl">0.10</span>) {</span>
-<span id="cb8-5"><a href=""></a>  sample_missing <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(<span class="fu">is.na</span>(genotypes))</span>
-<span id="cb8-6"><a href=""></a>  genotypes <span class="ot">&lt;-</span> genotypes[sample_missing <span class="sc">&lt;=</span> sample_max, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb8-7"><a href=""></a>  snp_missing <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(<span class="fu">is.na</span>(genotypes))</span>
-<span id="cb8-8"><a href=""></a>  genotypes <span class="ot">&lt;-</span> genotypes[, snp_missing <span class="sc">&lt;=</span> snp_max, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb8-9"><a href=""></a>  <span class="co"># Require at least two observed genotypes per marker.</span></span>
-<span id="cb8-10"><a href=""></a>  genotypes[, <span class="fu">colSums</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotypes)) <span class="sc">&gt;=</span> <span class="dv">2</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb8-11"><a href=""></a>}</span>
-<span id="cb8-12"><a href=""></a></span>
-<span id="cb8-13"><a href=""></a><span class="co"># Thresholds: samples &lt;=8% missing; SNPs &lt;=10% missing.</span></span>
-<span id="cb8-14"><a href=""></a>x_af <span class="ot">&lt;-</span> <span class="fu">filter_genotypes</span>(afr<span class="sc">$</span>x, <span class="at">sample_max =</span> .<span class="dv">08</span>, <span class="at">snp_max =</span> .<span class="dv">10</span>)</span>
-<span id="cb8-15"><a href=""></a>x_se <span class="ot">&lt;-</span> <span class="fu">filter_genotypes</span>(sea<span class="sc">$</span>x, <span class="at">sample_max =</span> .<span class="dv">08</span>, <span class="at">snp_max =</span> .<span class="dv">10</span>)</span>
-<span id="cb8-16"><a href=""></a><span class="fu">print</span>(<span class="fu">data.frame</span>(<span class="at">region =</span> <span class="fu">c</span>(<span class="st">'Africa'</span>,<span class="st">'Southeast Asia'</span>),</span>
-<span id="cb8-17"><a href=""></a>                 <span class="at">samples_retained =</span> <span class="fu">c</span>(<span class="fu">nrow</span>(x_af),<span class="fu">nrow</span>(x_se)),</span>
-<span id="cb8-18"><a href=""></a>                 <span class="at">SNPs_retained =</span> <span class="fu">c</span>(<span class="fu">ncol</span>(x_af),<span class="fu">ncol</span>(x_se))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="co"># Apply QC in two steps: remove poor-quality samples, then poor-quality SNPs.</span></span>
+<span id="cb8-2"><a></a><span class="co"># Keeping the two steps visible makes it easier to explore other thresholds.</span></span>
+<span id="cb8-3"><a></a></span>
+<span id="cb8-4"><a></a>filter_genotypes <span class="ot">&lt;-</span> <span class="cf">function</span>(genotypes, <span class="at">sample_max =</span> <span class="fl">0.08</span>, <span class="at">snp_max =</span> <span class="fl">0.10</span>) {</span>
+<span id="cb8-5"><a></a>  sample_missing <span class="ot">&lt;-</span> <span class="fu">rowMeans</span>(<span class="fu">is.na</span>(genotypes))</span>
+<span id="cb8-6"><a></a>  genotypes <span class="ot">&lt;-</span> genotypes[sample_missing <span class="sc">&lt;=</span> sample_max, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb8-7"><a></a>  snp_missing <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(<span class="fu">is.na</span>(genotypes))</span>
+<span id="cb8-8"><a></a>  genotypes <span class="ot">&lt;-</span> genotypes[, snp_missing <span class="sc">&lt;=</span> snp_max, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb8-9"><a></a>  <span class="co"># Require at least two observed genotypes per marker.</span></span>
+<span id="cb8-10"><a></a>  genotypes[, <span class="fu">colSums</span>(<span class="sc">!</span><span class="fu">is.na</span>(genotypes)) <span class="sc">&gt;=</span> <span class="dv">2</span>, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb8-11"><a></a>}</span>
+<span id="cb8-12"><a></a></span>
+<span id="cb8-13"><a></a><span class="co"># Thresholds: samples &lt;=8% missing; SNPs &lt;=10% missing.</span></span>
+<span id="cb8-14"><a></a>x_af <span class="ot">&lt;-</span> <span class="fu">filter_genotypes</span>(afr<span class="sc">$</span>x, <span class="at">sample_max =</span> .<span class="dv">08</span>, <span class="at">snp_max =</span> .<span class="dv">10</span>)</span>
+<span id="cb8-15"><a></a>x_se <span class="ot">&lt;-</span> <span class="fu">filter_genotypes</span>(sea<span class="sc">$</span>x, <span class="at">sample_max =</span> .<span class="dv">08</span>, <span class="at">snp_max =</span> .<span class="dv">10</span>)</span>
+<span id="cb8-16"><a></a><span class="fu">print</span>(<span class="fu">data.frame</span>(<span class="at">region =</span> <span class="fu">c</span>(<span class="st">'Africa'</span>,<span class="st">'Southeast Asia'</span>),</span>
+<span id="cb8-17"><a></a>                 <span class="at">samples_retained =</span> <span class="fu">c</span>(<span class="fu">nrow</span>(x_af),<span class="fu">nrow</span>(x_se)),</span>
+<span id="cb8-18"><a></a>                 <span class="at">SNPs_retained =</span> <span class="fu">c</span>(<span class="fu">ncol</span>(x_af),<span class="fu">ncol</span>(x_se))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -531,36 +531,36 @@ Show R code
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="co"># Pairwise mismatch: count differences only at SNPs typed in BOTH samples.</span></span>
-<span id="cb10-2"><a href=""></a><span class="co"># Divide by the number of shared, observed SNPs (not all 180 SNPs).</span></span>
-<span id="cb10-3"><a href=""></a>pairwise_mismatch <span class="ot">&lt;-</span> <span class="cf">function</span>(genotypes, <span class="at">min_overlap =</span> <span class="dv">10</span>) {</span>
-<span id="cb10-4"><a href=""></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(genotypes)</span>
-<span id="cb10-5"><a href=""></a>  distances <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, n, n,</span>
-<span id="cb10-6"><a href=""></a>                      <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">rownames</span>(genotypes), <span class="fu">rownames</span>(genotypes)))</span>
-<span id="cb10-7"><a href=""></a>  overlaps <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>L, n, n, <span class="at">dimnames =</span> <span class="fu">dimnames</span>(distances))</span>
-<span id="cb10-8"><a href=""></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(n)) {</span>
-<span id="cb10-9"><a href=""></a>    <span class="cf">for</span> (j <span class="cf">in</span> i<span class="sc">:</span>n) {</span>
-<span id="cb10-10"><a href=""></a>      shared <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">is.na</span>(genotypes[i, ]) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(genotypes[j, ])</span>
-<span id="cb10-11"><a href=""></a>      n_shared <span class="ot">&lt;-</span> <span class="fu">sum</span>(shared)</span>
-<span id="cb10-12"><a href=""></a>      overlaps[i, j] <span class="ot">&lt;-</span> overlaps[j, i] <span class="ot">&lt;-</span> n_shared</span>
-<span id="cb10-13"><a href=""></a>      mismatch <span class="ot">&lt;-</span> <span class="cf">if</span> (n_shared <span class="sc">&gt;=</span> min_overlap) {</span>
-<span id="cb10-14"><a href=""></a>        <span class="fu">mean</span>(genotypes[i, shared] <span class="sc">!=</span> genotypes[j, shared])</span>
-<span id="cb10-15"><a href=""></a>      } <span class="cf">else</span> <span class="cn">NA_real_</span></span>
-<span id="cb10-16"><a href=""></a>      distances[i, j] <span class="ot">&lt;-</span> distances[j, i] <span class="ot">&lt;-</span> mismatch</span>
-<span id="cb10-17"><a href=""></a>    }</span>
-<span id="cb10-18"><a href=""></a>  }</span>
-<span id="cb10-19"><a href=""></a>  <span class="fu">diag</span>(distances) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb10-20"><a href=""></a>  <span class="fu">list</span>(<span class="at">distance =</span> distances, <span class="at">overlap =</span> overlaps)</span>
-<span id="cb10-21"><a href=""></a>}</span>
-<span id="cb10-22"><a href=""></a></span>
-<span id="cb10-23"><a href=""></a>d_se <span class="ot">&lt;-</span> <span class="fu">pairwise_mismatch</span>(x_se, <span class="at">min_overlap =</span> <span class="dv">10</span>)<span class="sc">$</span>distance</span>
-<span id="cb10-24"><a href=""></a>d_af <span class="ot">&lt;-</span> <span class="fu">pairwise_mismatch</span>(x_af, <span class="at">min_overlap =</span> <span class="dv">10</span>)<span class="sc">$</span>distance</span>
-<span id="cb10-25"><a href=""></a></span>
-<span id="cb10-26"><a href=""></a></span>
-<span id="cb10-27"><a href=""></a><span class="fu">summary</span>(<span class="fu">as.vector</span>(d_se[<span class="fu">upper.tri</span>(d_se)]))</span>
-<span id="cb10-28"><a href=""></a></span>
-<span id="cb10-29"><a href=""></a><span class="co">#warning</span></span>
-<span id="cb10-30"><a href=""></a><span class="co">#stopifnot(!anyNA(d_se), !anyNA(d_af))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="co"># Pairwise mismatch: count differences only at SNPs typed in BOTH samples.</span></span>
+<span id="cb10-2"><a></a><span class="co"># Divide by the number of shared, observed SNPs (not all 180 SNPs).</span></span>
+<span id="cb10-3"><a></a>pairwise_mismatch <span class="ot">&lt;-</span> <span class="cf">function</span>(genotypes, <span class="at">min_overlap =</span> <span class="dv">10</span>) {</span>
+<span id="cb10-4"><a></a>  n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(genotypes)</span>
+<span id="cb10-5"><a></a>  distances <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>, n, n,</span>
+<span id="cb10-6"><a></a>                      <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="fu">rownames</span>(genotypes), <span class="fu">rownames</span>(genotypes)))</span>
+<span id="cb10-7"><a></a>  overlaps <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">0</span>L, n, n, <span class="at">dimnames =</span> <span class="fu">dimnames</span>(distances))</span>
+<span id="cb10-8"><a></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(n)) {</span>
+<span id="cb10-9"><a></a>    <span class="cf">for</span> (j <span class="cf">in</span> i<span class="sc">:</span>n) {</span>
+<span id="cb10-10"><a></a>      shared <span class="ot">&lt;-</span> <span class="sc">!</span><span class="fu">is.na</span>(genotypes[i, ]) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(genotypes[j, ])</span>
+<span id="cb10-11"><a></a>      n_shared <span class="ot">&lt;-</span> <span class="fu">sum</span>(shared)</span>
+<span id="cb10-12"><a></a>      overlaps[i, j] <span class="ot">&lt;-</span> overlaps[j, i] <span class="ot">&lt;-</span> n_shared</span>
+<span id="cb10-13"><a></a>      mismatch <span class="ot">&lt;-</span> <span class="cf">if</span> (n_shared <span class="sc">&gt;=</span> min_overlap) {</span>
+<span id="cb10-14"><a></a>        <span class="fu">mean</span>(genotypes[i, shared] <span class="sc">!=</span> genotypes[j, shared])</span>
+<span id="cb10-15"><a></a>      } <span class="cf">else</span> <span class="cn">NA_real_</span></span>
+<span id="cb10-16"><a></a>      distances[i, j] <span class="ot">&lt;-</span> distances[j, i] <span class="ot">&lt;-</span> mismatch</span>
+<span id="cb10-17"><a></a>    }</span>
+<span id="cb10-18"><a></a>  }</span>
+<span id="cb10-19"><a></a>  <span class="fu">diag</span>(distances) <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb10-20"><a></a>  <span class="fu">list</span>(<span class="at">distance =</span> distances, <span class="at">overlap =</span> overlaps)</span>
+<span id="cb10-21"><a></a>}</span>
+<span id="cb10-22"><a></a></span>
+<span id="cb10-23"><a></a>d_se <span class="ot">&lt;-</span> <span class="fu">pairwise_mismatch</span>(x_se, <span class="at">min_overlap =</span> <span class="dv">10</span>)<span class="sc">$</span>distance</span>
+<span id="cb10-24"><a></a>d_af <span class="ot">&lt;-</span> <span class="fu">pairwise_mismatch</span>(x_af, <span class="at">min_overlap =</span> <span class="dv">10</span>)<span class="sc">$</span>distance</span>
+<span id="cb10-25"><a></a></span>
+<span id="cb10-26"><a></a></span>
+<span id="cb10-27"><a></a><span class="fu">summary</span>(<span class="fu">as.vector</span>(d_se[<span class="fu">upper.tri</span>(d_se)]))</span>
+<span id="cb10-28"><a></a></span>
+<span id="cb10-29"><a></a><span class="co">#warning</span></span>
+<span id="cb10-30"><a></a><span class="co">#stopifnot(!anyNA(d_se), !anyNA(d_af))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -590,45 +590,45 @@ Show R code
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co"># Classical multidimensional scaling (PCoA)</span></span>
-<span id="cb12-2"><a href=""></a><span class="co"># using pairwise genetic distances.</span></span>
-<span id="cb12-3"><a href=""></a></span>
-<span id="cb12-4"><a href=""></a>make_pcoa <span class="ot">&lt;-</span> <span class="cf">function</span>(distance_matrix, metadata, plot_title) {</span>
-<span id="cb12-5"><a href=""></a></span>
-<span id="cb12-6"><a href=""></a>  <span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">anyNA</span>(distance_matrix))</span>
-<span id="cb12-7"><a href=""></a></span>
-<span id="cb12-8"><a href=""></a>  pcoa <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(</span>
-<span id="cb12-9"><a href=""></a>    <span class="fu">as.dist</span>(distance_matrix),</span>
-<span id="cb12-10"><a href=""></a>    <span class="at">k =</span> <span class="dv">2</span>,</span>
-<span id="cb12-11"><a href=""></a>    <span class="at">eig =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb12-12"><a href=""></a>    <span class="at">add =</span> <span class="cn">TRUE</span></span>
-<span id="cb12-13"><a href=""></a>  )</span>
-<span id="cb12-14"><a href=""></a></span>
-<span id="cb12-15"><a href=""></a>  coordinates <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb12-16"><a href=""></a>    <span class="at">sample =</span> row <span class="fu">names</span>(pcoa<span class="sc">$</span>points),</span>
-<span id="cb12-17"><a href=""></a>    <span class="at">PC1 =</span> pcoa<span class="sc">$</span>points[, <span class="dv">1</span>],</span>
-<span id="cb12-18"><a href=""></a>    <span class="at">PC2 =</span> pcoa<span class="sc">$</span>points[, <span class="dv">2</span>]</span>
-<span id="cb12-19"><a href=""></a>  )</span>
-<span id="cb12-20"><a href=""></a></span>
-<span id="cb12-21"><a href=""></a>  coordinates<span class="sc">$</span>country <span class="ot">&lt;-</span> metadata<span class="sc">$</span>country[</span>
-<span id="cb12-22"><a href=""></a>    <span class="fu">match</span>(coordinates<span class="sc">$</span>sample, metadata<span class="sc">$</span>sample)</span>
-<span id="cb12-23"><a href=""></a>  ]</span>
-<span id="cb12-24"><a href=""></a></span>
-<span id="cb12-25"><a href=""></a>  positive_eigenvalues <span class="ot">&lt;-</span> <span class="fu">pmax</span>(pcoa<span class="sc">$</span>eig, <span class="dv">0</span>)</span>
-<span id="cb12-26"><a href=""></a>  percent <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="sc">*</span> positive_eigenvalues[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="sc">/</span></span>
-<span id="cb12-27"><a href=""></a>    <span class="fu">sum</span>(positive_eigenvalues)</span>
-<span id="cb12-28"><a href=""></a></span>
-<span id="cb12-29"><a href=""></a>  <span class="fu">ggplot</span>(coordinates, <span class="fu">aes</span>(PC1, PC2, <span class="at">colour =</span> country)) <span class="sc">+</span></span>
-<span id="cb12-30"><a href=""></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb12-31"><a href=""></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb12-32"><a href=""></a>    <span class="fu">labs</span>(</span>
-<span id="cb12-33"><a href=""></a>      <span class="at">title =</span> plot_title,</span>
-<span id="cb12-34"><a href=""></a>      <span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">"PCoA 1 ("</span>, <span class="fu">round</span>(percent[<span class="dv">1</span>], <span class="dv">1</span>), <span class="st">"%)"</span>),</span>
-<span id="cb12-35"><a href=""></a>      <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">"PCoA 2 ("</span>, <span class="fu">round</span>(percent[<span class="dv">2</span>], <span class="dv">1</span>), <span class="st">"%)"</span>)</span>
-<span id="cb12-36"><a href=""></a>    )</span>
-<span id="cb12-37"><a href=""></a>}</span>
-<span id="cb12-38"><a href=""></a></span>
-<span id="cb12-39"><a href=""></a><span class="fu">print</span>(<span class="fu">make_pcoa</span>(d_se, meta, <span class="st">"Southeast Asian barcode PCoA"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="co"># Classical multidimensional scaling (PCoA)</span></span>
+<span id="cb12-2"><a></a><span class="co"># using pairwise genetic distances.</span></span>
+<span id="cb12-3"><a></a></span>
+<span id="cb12-4"><a></a>make_pcoa <span class="ot">&lt;-</span> <span class="cf">function</span>(distance_matrix, metadata, plot_title) {</span>
+<span id="cb12-5"><a></a></span>
+<span id="cb12-6"><a></a>  <span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">anyNA</span>(distance_matrix))</span>
+<span id="cb12-7"><a></a></span>
+<span id="cb12-8"><a></a>  pcoa <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(</span>
+<span id="cb12-9"><a></a>    <span class="fu">as.dist</span>(distance_matrix),</span>
+<span id="cb12-10"><a></a>    <span class="at">k =</span> <span class="dv">2</span>,</span>
+<span id="cb12-11"><a></a>    <span class="at">eig =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb12-12"><a></a>    <span class="at">add =</span> <span class="cn">TRUE</span></span>
+<span id="cb12-13"><a></a>  )</span>
+<span id="cb12-14"><a></a></span>
+<span id="cb12-15"><a></a>  coordinates <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb12-16"><a></a>    <span class="at">sample =</span> row <span class="fu">names</span>(pcoa<span class="sc">$</span>points),</span>
+<span id="cb12-17"><a></a>    <span class="at">PC1 =</span> pcoa<span class="sc">$</span>points[, <span class="dv">1</span>],</span>
+<span id="cb12-18"><a></a>    <span class="at">PC2 =</span> pcoa<span class="sc">$</span>points[, <span class="dv">2</span>]</span>
+<span id="cb12-19"><a></a>  )</span>
+<span id="cb12-20"><a></a></span>
+<span id="cb12-21"><a></a>  coordinates<span class="sc">$</span>country <span class="ot">&lt;-</span> metadata<span class="sc">$</span>country[</span>
+<span id="cb12-22"><a></a>    <span class="fu">match</span>(coordinates<span class="sc">$</span>sample, metadata<span class="sc">$</span>sample)</span>
+<span id="cb12-23"><a></a>  ]</span>
+<span id="cb12-24"><a></a></span>
+<span id="cb12-25"><a></a>  positive_eigenvalues <span class="ot">&lt;-</span> <span class="fu">pmax</span>(pcoa<span class="sc">$</span>eig, <span class="dv">0</span>)</span>
+<span id="cb12-26"><a></a>  percent <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="sc">*</span> positive_eigenvalues[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="sc">/</span></span>
+<span id="cb12-27"><a></a>    <span class="fu">sum</span>(positive_eigenvalues)</span>
+<span id="cb12-28"><a></a></span>
+<span id="cb12-29"><a></a>  <span class="fu">ggplot</span>(coordinates, <span class="fu">aes</span>(PC1, PC2, <span class="at">colour =</span> country)) <span class="sc">+</span></span>
+<span id="cb12-30"><a></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb12-31"><a></a>    <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb12-32"><a></a>    <span class="fu">labs</span>(</span>
+<span id="cb12-33"><a></a>      <span class="at">title =</span> plot_title,</span>
+<span id="cb12-34"><a></a>      <span class="at">x =</span> <span class="fu">paste0</span>(<span class="st">"PCoA 1 ("</span>, <span class="fu">round</span>(percent[<span class="dv">1</span>], <span class="dv">1</span>), <span class="st">"%)"</span>),</span>
+<span id="cb12-35"><a></a>      <span class="at">y =</span> <span class="fu">paste0</span>(<span class="st">"PCoA 2 ("</span>, <span class="fu">round</span>(percent[<span class="dv">2</span>], <span class="dv">1</span>), <span class="st">"%)"</span>)</span>
+<span id="cb12-36"><a></a>    )</span>
+<span id="cb12-37"><a></a>}</span>
+<span id="cb12-38"><a></a></span>
+<span id="cb12-39"><a></a><span class="fu">print</span>(<span class="fu">make_pcoa</span>(d_se, meta, <span class="st">"Southeast Asian barcode PCoA"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -651,7 +651,7 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">print</span>(<span class="fu">make_pcoa</span>(d_af, meta, <span class="st">'African barcode PCoA'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">print</span>(<span class="fu">make_pcoa</span>(d_af, meta, <span class="st">'African barcode PCoA'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -720,23 +720,23 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="co"># Neighbour-joining builds an unrooted distance-based tree.</span></span>
-<span id="cb14-2"><a href=""></a><span class="co"># Tip colours indicate sampling country, not transmission direction.</span></span>
-<span id="cb14-3"><a href=""></a>plot_nj <span class="ot">&lt;-</span> <span class="cf">function</span>(distance_matrix, metadata, plot_title) {</span>
-<span id="cb14-4"><a href=""></a>  <span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">anyNA</span>(distance_matrix))</span>
-<span id="cb14-5"><a href=""></a>  tree <span class="ot">&lt;-</span> ape<span class="sc">::</span><span class="fu">njs</span>(<span class="fu">as.dist</span>(distance_matrix))</span>
-<span id="cb14-6"><a href=""></a>  countries <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(metadata<span class="sc">$</span>country))</span>
-<span id="cb14-7"><a href=""></a>  palette <span class="ot">&lt;-</span> <span class="fu">setNames</span>(grDevices<span class="sc">::</span><span class="fu">hcl.colors</span>(<span class="fu">length</span>(countries), <span class="st">'Dark 3'</span>), countries)</span>
-<span id="cb14-8"><a href=""></a>  tip_country <span class="ot">&lt;-</span> metadata<span class="sc">$</span>country[<span class="fu">match</span>(tree<span class="sc">$</span>tip.label, metadata<span class="sc">$</span>sample)]</span>
-<span id="cb14-9"><a href=""></a>  ape<span class="sc">::</span><span class="fu">plot.phylo</span>(tree, <span class="at">type =</span> <span class="st">'fan'</span>, <span class="at">show.tip.label =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb14-10"><a href=""></a>                  <span class="at">edge.width =</span> <span class="fl">0.7</span>, <span class="at">main =</span> plot_title)</span>
-<span id="cb14-11"><a href=""></a>  ape<span class="sc">::</span><span class="fu">tiplabels</span>(<span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> palette[tip_country], <span class="at">cex =</span> <span class="fl">0.65</span>)</span>
-<span id="cb14-12"><a href=""></a>  <span class="fu">legend</span>(<span class="st">'topleft'</span>, <span class="at">legend =</span> <span class="fu">names</span>(palette), <span class="at">col =</span> palette,</span>
-<span id="cb14-13"><a href=""></a>         <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> <span class="fl">0.7</span>, <span class="at">bty =</span> <span class="st">'n'</span>)</span>
-<span id="cb14-14"><a href=""></a>  <span class="fu">invisible</span>(tree)</span>
-<span id="cb14-15"><a href=""></a>}</span>
-<span id="cb14-16"><a href=""></a></span>
-<span id="cb14-17"><a href=""></a><span class="fu">plot_nj</span>(d_se, meta, <span class="st">'Southeast Asia: neighbour-joining tree'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="co"># Neighbour-joining builds an unrooted distance-based tree.</span></span>
+<span id="cb14-2"><a></a><span class="co"># Tip colours indicate sampling country, not transmission direction.</span></span>
+<span id="cb14-3"><a></a>plot_nj <span class="ot">&lt;-</span> <span class="cf">function</span>(distance_matrix, metadata, plot_title) {</span>
+<span id="cb14-4"><a></a>  <span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">anyNA</span>(distance_matrix))</span>
+<span id="cb14-5"><a></a>  tree <span class="ot">&lt;-</span> ape<span class="sc">::</span><span class="fu">njs</span>(<span class="fu">as.dist</span>(distance_matrix))</span>
+<span id="cb14-6"><a></a>  countries <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">unique</span>(metadata<span class="sc">$</span>country))</span>
+<span id="cb14-7"><a></a>  palette <span class="ot">&lt;-</span> <span class="fu">setNames</span>(grDevices<span class="sc">::</span><span class="fu">hcl.colors</span>(<span class="fu">length</span>(countries), <span class="st">'Dark 3'</span>), countries)</span>
+<span id="cb14-8"><a></a>  tip_country <span class="ot">&lt;-</span> metadata<span class="sc">$</span>country[<span class="fu">match</span>(tree<span class="sc">$</span>tip.label, metadata<span class="sc">$</span>sample)]</span>
+<span id="cb14-9"><a></a>  ape<span class="sc">::</span><span class="fu">plot.phylo</span>(tree, <span class="at">type =</span> <span class="st">'fan'</span>, <span class="at">show.tip.label =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb14-10"><a></a>                  <span class="at">edge.width =</span> <span class="fl">0.7</span>, <span class="at">main =</span> plot_title)</span>
+<span id="cb14-11"><a></a>  ape<span class="sc">::</span><span class="fu">tiplabels</span>(<span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> palette[tip_country], <span class="at">cex =</span> <span class="fl">0.65</span>)</span>
+<span id="cb14-12"><a></a>  <span class="fu">legend</span>(<span class="st">'topleft'</span>, <span class="at">legend =</span> <span class="fu">names</span>(palette), <span class="at">col =</span> palette,</span>
+<span id="cb14-13"><a></a>         <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">cex =</span> <span class="fl">0.7</span>, <span class="at">bty =</span> <span class="st">'n'</span>)</span>
+<span id="cb14-14"><a></a>  <span class="fu">invisible</span>(tree)</span>
+<span id="cb14-15"><a></a>}</span>
+<span id="cb14-16"><a></a></span>
+<span id="cb14-17"><a></a><span class="fu">plot_nj</span>(d_se, meta, <span class="st">'Southeast Asia: neighbour-joining tree'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -759,7 +759,7 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">plot_nj</span>(d_af, meta, <span class="st">'Africa: neighbour-joining tree'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">plot_nj</span>(d_af, meta, <span class="st">'Africa: neighbour-joining tree'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -905,32 +905,32 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>site_diversity <span class="ot">&lt;-</span> <span class="cf">function</span>(genotypes, metadata) {</span>
-<span id="cb16-2"><a href=""></a>  sites <span class="ot">&lt;-</span> <span class="fu">split</span>(metadata<span class="sc">$</span>sample, metadata<span class="sc">$</span>site)</span>
-<span id="cb16-3"><a href=""></a>  <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(<span class="fu">names</span>(sites), <span class="cf">function</span>(site_name) {</span>
-<span id="cb16-4"><a href=""></a>    ids <span class="ot">&lt;-</span> <span class="fu">intersect</span>(sites[[site_name]], <span class="fu">rownames</span>(genotypes))</span>
-<span id="cb16-5"><a href=""></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">length</span>(ids)) <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
-<span id="cb16-6"><a href=""></a>    z <span class="ot">&lt;-</span> genotypes[ids, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb16-7"><a href=""></a>    n_typed <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="sc">!</span><span class="fu">is.na</span>(z))</span>
-<span id="cb16-8"><a href=""></a>    alt_frequency <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(z, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-9"><a href=""></a>    diversity_per_snp <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> alt_frequency <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> alt_frequency) <span class="sc">*</span></span>
-<span id="cb16-10"><a href=""></a>      n_typed <span class="sc">/</span> (n_typed <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb16-11"><a href=""></a>    diversity_per_snp[n_typed <span class="sc">&lt;</span> <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="cn">NA_real_</span></span>
-<span id="cb16-12"><a href=""></a>    <span class="fu">data.frame</span>(<span class="at">site =</span> site_name,</span>
-<span id="cb16-13"><a href=""></a>               <span class="at">country =</span> metadata<span class="sc">$</span>country[<span class="fu">match</span>(ids[<span class="dv">1</span>], metadata<span class="sc">$</span>sample)],</span>
-<span id="cb16-14"><a href=""></a>               <span class="at">pi_barcode =</span> <span class="cf">if</span> (<span class="fu">all</span>(<span class="fu">is.na</span>(diversity_per_snp))) <span class="cn">NA_real_</span></span>
-<span id="cb16-15"><a href=""></a>                            <span class="cf">else</span> <span class="fu">mean</span>(diversity_per_snp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb16-16"><a href=""></a>               <span class="at">n_samples =</span> <span class="fu">length</span>(ids),</span>
-<span id="cb16-17"><a href=""></a>               <span class="at">n_loci =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(diversity_per_snp)))</span>
-<span id="cb16-18"><a href=""></a>  }))</span>
-<span id="cb16-19"><a href=""></a>}</span>
-<span id="cb16-20"><a href=""></a></span>
-<span id="cb16-21"><a href=""></a>diversity_af <span class="ot">&lt;-</span> <span class="fu">site_diversity</span>(x_af, meta)</span>
-<span id="cb16-22"><a href=""></a>diversity_se <span class="ot">&lt;-</span> <span class="fu">site_diversity</span>(x_se, meta)</span>
-<span id="cb16-23"><a href=""></a>diversity <span class="ot">&lt;-</span> <span class="fu">rbind</span>(diversity_af, diversity_se)</span>
-<span id="cb16-24"><a href=""></a></span>
-<span id="cb16-25"><a href=""></a></span>
-<span id="cb16-26"><a href=""></a><span class="fu">print</span>(diversity[<span class="fu">order</span>(diversity<span class="sc">$</span>pi_barcode, <span class="at">decreasing =</span> <span class="cn">TRUE</span>), ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>site_diversity <span class="ot">&lt;-</span> <span class="cf">function</span>(genotypes, metadata) {</span>
+<span id="cb16-2"><a></a>  sites <span class="ot">&lt;-</span> <span class="fu">split</span>(metadata<span class="sc">$</span>sample, metadata<span class="sc">$</span>site)</span>
+<span id="cb16-3"><a></a>  <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(<span class="fu">names</span>(sites), <span class="cf">function</span>(site_name) {</span>
+<span id="cb16-4"><a></a>    ids <span class="ot">&lt;-</span> <span class="fu">intersect</span>(sites[[site_name]], <span class="fu">rownames</span>(genotypes))</span>
+<span id="cb16-5"><a></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">length</span>(ids)) <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb16-6"><a></a>    z <span class="ot">&lt;-</span> genotypes[ids, , drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb16-7"><a></a>    n_typed <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="sc">!</span><span class="fu">is.na</span>(z))</span>
+<span id="cb16-8"><a></a>    alt_frequency <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(z, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-9"><a></a>    diversity_per_snp <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> alt_frequency <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> alt_frequency) <span class="sc">*</span></span>
+<span id="cb16-10"><a></a>      n_typed <span class="sc">/</span> (n_typed <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb16-11"><a></a>    diversity_per_snp[n_typed <span class="sc">&lt;</span> <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="cn">NA_real_</span></span>
+<span id="cb16-12"><a></a>    <span class="fu">data.frame</span>(<span class="at">site =</span> site_name,</span>
+<span id="cb16-13"><a></a>               <span class="at">country =</span> metadata<span class="sc">$</span>country[<span class="fu">match</span>(ids[<span class="dv">1</span>], metadata<span class="sc">$</span>sample)],</span>
+<span id="cb16-14"><a></a>               <span class="at">pi_barcode =</span> <span class="cf">if</span> (<span class="fu">all</span>(<span class="fu">is.na</span>(diversity_per_snp))) <span class="cn">NA_real_</span></span>
+<span id="cb16-15"><a></a>                            <span class="cf">else</span> <span class="fu">mean</span>(diversity_per_snp, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb16-16"><a></a>               <span class="at">n_samples =</span> <span class="fu">length</span>(ids),</span>
+<span id="cb16-17"><a></a>               <span class="at">n_loci =</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(diversity_per_snp)))</span>
+<span id="cb16-18"><a></a>  }))</span>
+<span id="cb16-19"><a></a>}</span>
+<span id="cb16-20"><a></a></span>
+<span id="cb16-21"><a></a>diversity_af <span class="ot">&lt;-</span> <span class="fu">site_diversity</span>(x_af, meta)</span>
+<span id="cb16-22"><a></a>diversity_se <span class="ot">&lt;-</span> <span class="fu">site_diversity</span>(x_se, meta)</span>
+<span id="cb16-23"><a></a>diversity <span class="ot">&lt;-</span> <span class="fu">rbind</span>(diversity_af, diversity_se)</span>
+<span id="cb16-24"><a></a></span>
+<span id="cb16-25"><a></a></span>
+<span id="cb16-26"><a></a><span class="fu">print</span>(diversity[<span class="fu">order</span>(diversity<span class="sc">$</span>pi_barcode, <span class="at">decreasing =</span> <span class="cn">TRUE</span>), ])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -964,10 +964,10 @@ Show R code
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="fu">ggplot</span>(diversity, <span class="fu">aes</span>(<span class="fu">reorder</span>(site, pi_barcode), pi_barcode, <span class="at">fill =</span> country)) <span class="sc">+</span></span>
-<span id="cb18-2"><a href=""></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb18-3"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Mean per-SNP barcode diversity by site'</span>, <span class="at">x =</span> <span class="st">'Site'</span>,</span>
-<span id="cb18-4"><a href=""></a>       <span class="at">y =</span> <span class="st">'Sample-size-corrected barcode diversity'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">ggplot</span>(diversity, <span class="fu">aes</span>(<span class="fu">reorder</span>(site, pi_barcode), pi_barcode, <span class="at">fill =</span> country)) <span class="sc">+</span></span>
+<span id="cb18-2"><a></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb18-3"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Mean per-SNP barcode diversity by site'</span>, <span class="at">x =</span> <span class="st">'Site'</span>,</span>
+<span id="cb18-4"><a></a>       <span class="at">y =</span> <span class="st">'Sample-size-corrected barcode diversity'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -995,26 +995,26 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a>harmonised <span class="ot">&lt;-</span> <span class="fu">harmonise_vcfs</span>(afr, sea)</span>
-<span id="cb19-2"><a href=""></a></span>
-<span id="cb19-3"><a href=""></a><span class="fu">print</span>(<span class="fu">data.frame</span>(<span class="at">markers_harmonised =</span> harmonised<span class="sc">$</span>compatible,</span>
-<span id="cb19-4"><a href=""></a>                 <span class="at">alleles_flipped =</span> harmonised<span class="sc">$</span>swapped,</span>
-<span id="cb19-5"><a href=""></a>                 <span class="at">incompatible =</span> harmonised<span class="sc">$</span>incompatible))</span>
-<span id="cb19-6"><a href=""></a></span>
-<span id="cb19-7"><a href=""></a><span class="co">#warning</span></span>
-<span id="cb19-8"><a href=""></a><span class="fu">stopifnot</span>(harmonised<span class="sc">$</span>compatible <span class="sc">==</span> <span class="dv">180</span>L, harmonised<span class="sc">$</span>incompatible <span class="sc">==</span> <span class="dv">0</span>L)</span>
-<span id="cb19-9"><a href=""></a></span>
-<span id="cb19-10"><a href=""></a>x_all <span class="ot">&lt;-</span> <span class="fu">filter_genotypes</span>(harmonised<span class="sc">$</span>x, <span class="at">sample_max =</span> .<span class="dv">08</span>, <span class="at">snp_max =</span> .<span class="dv">10</span>)</span>
-<span id="cb19-11"><a href=""></a></span>
-<span id="cb19-12"><a href=""></a><span class="fu">cat</span>(<span class="st">'Global comparison:'</span>, <span class="fu">nrow</span>(x_all), <span class="st">'samples and'</span>, <span class="fu">ncol</span>(x_all), <span class="st">'SNPs after QC</span><span class="sc">\n</span><span class="st">'</span>)</span>
-<span id="cb19-13"><a href=""></a></span>
-<span id="cb19-14"><a href=""></a><span class="co">#warning</span></span>
-<span id="cb19-15"><a href=""></a><span class="fu">stopifnot</span>(<span class="fu">ncol</span>(x_all) <span class="sc">&gt;=</span> <span class="dv">100</span>L)</span>
-<span id="cb19-16"><a href=""></a></span>
-<span id="cb19-17"><a href=""></a>d_all <span class="ot">&lt;-</span> <span class="fu">pairwise_mismatch</span>(x_all, <span class="at">min_overlap =</span> <span class="dv">100</span>)<span class="sc">$</span>distance</span>
-<span id="cb19-18"><a href=""></a></span>
-<span id="cb19-19"><a href=""></a><span class="co">#warning</span></span>
-<span id="cb19-20"><a href=""></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">anyNA</span>(d_all))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>harmonised <span class="ot">&lt;-</span> <span class="fu">harmonise_vcfs</span>(afr, sea)</span>
+<span id="cb19-2"><a></a></span>
+<span id="cb19-3"><a></a><span class="fu">print</span>(<span class="fu">data.frame</span>(<span class="at">markers_harmonised =</span> harmonised<span class="sc">$</span>compatible,</span>
+<span id="cb19-4"><a></a>                 <span class="at">alleles_flipped =</span> harmonised<span class="sc">$</span>swapped,</span>
+<span id="cb19-5"><a></a>                 <span class="at">incompatible =</span> harmonised<span class="sc">$</span>incompatible))</span>
+<span id="cb19-6"><a></a></span>
+<span id="cb19-7"><a></a><span class="co">#warning</span></span>
+<span id="cb19-8"><a></a><span class="fu">stopifnot</span>(harmonised<span class="sc">$</span>compatible <span class="sc">==</span> <span class="dv">180</span>L, harmonised<span class="sc">$</span>incompatible <span class="sc">==</span> <span class="dv">0</span>L)</span>
+<span id="cb19-9"><a></a></span>
+<span id="cb19-10"><a></a>x_all <span class="ot">&lt;-</span> <span class="fu">filter_genotypes</span>(harmonised<span class="sc">$</span>x, <span class="at">sample_max =</span> .<span class="dv">08</span>, <span class="at">snp_max =</span> .<span class="dv">10</span>)</span>
+<span id="cb19-11"><a></a></span>
+<span id="cb19-12"><a></a><span class="fu">cat</span>(<span class="st">'Global comparison:'</span>, <span class="fu">nrow</span>(x_all), <span class="st">'samples and'</span>, <span class="fu">ncol</span>(x_all), <span class="st">'SNPs after QC</span><span class="sc">\n</span><span class="st">'</span>)</span>
+<span id="cb19-13"><a></a></span>
+<span id="cb19-14"><a></a><span class="co">#warning</span></span>
+<span id="cb19-15"><a></a><span class="fu">stopifnot</span>(<span class="fu">ncol</span>(x_all) <span class="sc">&gt;=</span> <span class="dv">100</span>L)</span>
+<span id="cb19-16"><a></a></span>
+<span id="cb19-17"><a></a>d_all <span class="ot">&lt;-</span> <span class="fu">pairwise_mismatch</span>(x_all, <span class="at">min_overlap =</span> <span class="dv">100</span>)<span class="sc">$</span>distance</span>
+<span id="cb19-18"><a></a></span>
+<span id="cb19-19"><a></a><span class="co">#warning</span></span>
+<span id="cb19-20"><a></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">anyNA</span>(d_all))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -1032,7 +1032,7 @@ Show R code
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a><span class="fu">print</span>(<span class="fu">make_pcoa</span>(d_all, meta, <span class="fu">paste0</span>(<span class="st">'Global PCoA: '</span>,<span class="fu">ncol</span>(x_all),<span class="st">' harmonised SNPs'</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">print</span>(<span class="fu">make_pcoa</span>(d_all, meta, <span class="fu">paste0</span>(<span class="st">'Global PCoA: '</span>,<span class="fu">ncol</span>(x_all),<span class="st">' harmonised SNPs'</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -1055,7 +1055,7 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="fu">plot_nj</span>(d_all, meta, <span class="fu">paste0</span>(<span class="st">'Global neighbour-joining tree ('</span>,<span class="fu">ncol</span>(x_all),<span class="st">' SNPs)'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">plot_nj</span>(d_all, meta, <span class="fu">paste0</span>(<span class="st">'Global neighbour-joining tree ('</span>,<span class="fu">ncol</span>(x_all),<span class="st">' SNPs)'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -1087,7 +1087,7 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a><span class="fu">print</span>(<span class="fu">plot_locations</span>(meta, <span class="st">'Sampling locations (simulated coordinates)'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">print</span>(<span class="fu">plot_locations</span>(meta, <span class="st">'Sampling locations (simulated coordinates)'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -1115,14 +1115,14 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>dr <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(sample <span class="sc">~</span> country <span class="sc">+</span> kelch13_C580Y, meta, length)</span>
-<span id="cb25-2"><a href=""></a><span class="fu">names</span>(dr)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">'n'</span></span>
-<span id="cb25-3"><a href=""></a>dr<span class="sc">$</span>total <span class="ot">&lt;-</span> <span class="fu">ave</span>(dr<span class="sc">$</span>n, dr<span class="sc">$</span>country, <span class="at">FUN =</span> sum)</span>
-<span id="cb25-4"><a href=""></a>dr<span class="sc">$</span>proportion <span class="ot">&lt;-</span> dr<span class="sc">$</span>n <span class="sc">/</span> dr<span class="sc">$</span>total</span>
-<span id="cb25-5"><a href=""></a><span class="fu">ggplot</span>(dr, <span class="fu">aes</span>(country, proportion, <span class="at">fill =</span> kelch13_C580Y)) <span class="sc">+</span></span>
-<span id="cb25-6"><a href=""></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb25-7"><a href=""></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">WT =</span> <span class="st">'grey75'</span>, <span class="at">Y =</span> <span class="st">'firebrick'</span>)) <span class="sc">+</span></span>
-<span id="cb25-8"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Simulated kelch13 C580Y states'</span>, <span class="at">x =</span> <span class="st">'Country'</span>, <span class="at">y =</span> <span class="st">'Proportion'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>dr <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(sample <span class="sc">~</span> country <span class="sc">+</span> kelch13_C580Y, meta, length)</span>
+<span id="cb25-2"><a></a><span class="fu">names</span>(dr)[<span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="st">'n'</span></span>
+<span id="cb25-3"><a></a>dr<span class="sc">$</span>total <span class="ot">&lt;-</span> <span class="fu">ave</span>(dr<span class="sc">$</span>n, dr<span class="sc">$</span>country, <span class="at">FUN =</span> sum)</span>
+<span id="cb25-4"><a></a>dr<span class="sc">$</span>proportion <span class="ot">&lt;-</span> dr<span class="sc">$</span>n <span class="sc">/</span> dr<span class="sc">$</span>total</span>
+<span id="cb25-5"><a></a><span class="fu">ggplot</span>(dr, <span class="fu">aes</span>(country, proportion, <span class="at">fill =</span> kelch13_C580Y)) <span class="sc">+</span></span>
+<span id="cb25-6"><a></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> <span class="fu">coord_flip</span>() <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb25-7"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">WT =</span> <span class="st">'grey75'</span>, <span class="at">Y =</span> <span class="st">'firebrick'</span>)) <span class="sc">+</span></span>
+<span id="cb25-8"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Simulated kelch13 C580Y states'</span>, <span class="at">x =</span> <span class="st">'Country'</span>, <span class="at">y =</span> <span class="st">'Proportion'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -1145,19 +1145,19 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>dr_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'kelch13_C580Y'</span>,<span class="st">'crt_N75E'</span>,<span class="st">'crt_K76T'</span>,<span class="st">'crt_I356T'</span>,</span>
-<span id="cb26-2"><a href=""></a>             <span class="st">'mdr1_N86Y'</span>,<span class="st">'mdr1_Y184F'</span>,<span class="st">'dhfr_N51I'</span>,<span class="st">'dhfr_C59R'</span>,</span>
-<span id="cb26-3"><a href=""></a>             <span class="st">'dhfr_S108N'</span>,<span class="st">'dhps_A437G'</span>,<span class="st">'dhps_K540E'</span>)</span>
-<span id="cb26-4"><a href=""></a>dr_long <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(dr_cols, <span class="cf">function</span>(marker) {</span>
-<span id="cb26-5"><a href=""></a>  <span class="fu">data.frame</span>(<span class="at">country =</span> meta<span class="sc">$</span>country, <span class="at">marker =</span> marker,</span>
-<span id="cb26-6"><a href=""></a>             <span class="at">mutant =</span> <span class="fu">as.numeric</span>(<span class="sc">!</span><span class="fu">is.na</span>(meta[[marker]]) <span class="sc">&amp;</span> meta[[marker]] <span class="sc">!=</span> <span class="st">'WT'</span>))</span>
-<span id="cb26-7"><a href=""></a>}))</span>
-<span id="cb26-8"><a href=""></a>dr_summary <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(mutant <span class="sc">~</span> country <span class="sc">+</span> marker, dr_long, mean)</span>
-<span id="cb26-9"><a href=""></a><span class="fu">ggplot</span>(dr_summary, <span class="fu">aes</span>(marker, country, <span class="at">fill =</span> mutant)) <span class="sc">+</span></span>
-<span id="cb26-10"><a href=""></a>  <span class="fu">geom_tile</span>(<span class="at">colour =</span> <span class="st">'white'</span>) <span class="sc">+</span> <span class="fu">scale_fill_viridis_c</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb26-11"><a href=""></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb26-12"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Simulated drug-resistance marker frequency'</span>, <span class="at">x =</span> <span class="st">'Marker'</span>,</span>
-<span id="cb26-13"><a href=""></a>       <span class="at">y =</span> <span class="st">'Country'</span>, <span class="at">fill =</span> <span class="st">'Mutant fraction'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>dr_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'kelch13_C580Y'</span>,<span class="st">'crt_N75E'</span>,<span class="st">'crt_K76T'</span>,<span class="st">'crt_I356T'</span>,</span>
+<span id="cb26-2"><a></a>             <span class="st">'mdr1_N86Y'</span>,<span class="st">'mdr1_Y184F'</span>,<span class="st">'dhfr_N51I'</span>,<span class="st">'dhfr_C59R'</span>,</span>
+<span id="cb26-3"><a></a>             <span class="st">'dhfr_S108N'</span>,<span class="st">'dhps_A437G'</span>,<span class="st">'dhps_K540E'</span>)</span>
+<span id="cb26-4"><a></a>dr_long <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, <span class="fu">lapply</span>(dr_cols, <span class="cf">function</span>(marker) {</span>
+<span id="cb26-5"><a></a>  <span class="fu">data.frame</span>(<span class="at">country =</span> meta<span class="sc">$</span>country, <span class="at">marker =</span> marker,</span>
+<span id="cb26-6"><a></a>             <span class="at">mutant =</span> <span class="fu">as.numeric</span>(<span class="sc">!</span><span class="fu">is.na</span>(meta[[marker]]) <span class="sc">&amp;</span> meta[[marker]] <span class="sc">!=</span> <span class="st">'WT'</span>))</span>
+<span id="cb26-7"><a></a>}))</span>
+<span id="cb26-8"><a></a>dr_summary <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(mutant <span class="sc">~</span> country <span class="sc">+</span> marker, dr_long, mean)</span>
+<span id="cb26-9"><a></a><span class="fu">ggplot</span>(dr_summary, <span class="fu">aes</span>(marker, country, <span class="at">fill =</span> mutant)) <span class="sc">+</span></span>
+<span id="cb26-10"><a></a>  <span class="fu">geom_tile</span>(<span class="at">colour =</span> <span class="st">'white'</span>) <span class="sc">+</span> <span class="fu">scale_fill_viridis_c</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb26-11"><a></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb26-12"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Simulated drug-resistance marker frequency'</span>, <span class="at">x =</span> <span class="st">'Marker'</span>,</span>
+<span id="cb26-13"><a></a>       <span class="at">y =</span> <span class="st">'Country'</span>, <span class="at">fill =</span> <span class="st">'Mutant fraction'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -1180,8 +1180,8 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a>meta<span class="sc">$</span>C580Y_status <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(meta<span class="sc">$</span>kelch13_C580Y <span class="sc">==</span> <span class="st">'Y'</span>, <span class="st">'C580Y mutant'</span>, <span class="st">'WT'</span>)</span>
-<span id="cb27-2"><a href=""></a><span class="fu">print</span>(<span class="fu">plot_locations</span>(meta, <span class="st">'Simulated C580Y geographic distribution'</span>, <span class="st">'C580Y_status'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>meta<span class="sc">$</span>C580Y_status <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(meta<span class="sc">$</span>kelch13_C580Y <span class="sc">==</span> <span class="st">'Y'</span>, <span class="st">'C580Y mutant'</span>, <span class="st">'WT'</span>)</span>
+<span id="cb27-2"><a></a><span class="fu">print</span>(<span class="fu">plot_locations</span>(meta, <span class="st">'Simulated C580Y geographic distribution'</span>, <span class="st">'C580Y_status'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -1208,35 +1208,35 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a>country <span class="ot">&lt;-</span> meta<span class="sc">$</span>country[<span class="fu">match</span>(<span class="fu">rownames</span>(d_all), meta<span class="sc">$</span>sample)]</span>
-<span id="cb28-2"><a href=""></a>centers <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(<span class="fu">cbind</span>(longitude, latitude) <span class="sc">~</span> country, meta, mean)</span>
-<span id="cb28-3"><a href=""></a>thresholds <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">05</span>, .<span class="dv">10</span>, .<span class="dv">20</span>)</span>
-<span id="cb28-4"><a href=""></a>connections <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
-<span id="cb28-5"><a href=""></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(centers) <span class="sc">-</span> <span class="dv">1</span>)) <span class="cf">for</span> (b <span class="cf">in</span> (a<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span><span class="fu">nrow</span>(centers)) {</span>
-<span id="cb28-6"><a href=""></a>  ia <span class="ot">&lt;-</span> <span class="fu">which</span>(country <span class="sc">==</span> centers<span class="sc">$</span>country[a]); ib <span class="ot">&lt;-</span> <span class="fu">which</span>(country <span class="sc">==</span> centers<span class="sc">$</span>country[b])</span>
-<span id="cb28-7"><a href=""></a>  <span class="cf">if</span> (<span class="fu">length</span>(ia) <span class="sc">*</span> <span class="fu">length</span>(ib) <span class="sc">&lt;</span> <span class="dv">10</span>) <span class="cf">next</span></span>
-<span id="cb28-8"><a href=""></a>  values <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(d_all[ia, ib, <span class="at">drop =</span> <span class="cn">FALSE</span>])</span>
-<span id="cb28-9"><a href=""></a>  <span class="cf">for</span> (cutoff <span class="cf">in</span> thresholds) {</span>
-<span id="cb28-10"><a href=""></a>    connections[[<span class="fu">length</span>(connections)<span class="sc">+</span><span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb28-11"><a href=""></a>      <span class="at">country1 =</span> centers<span class="sc">$</span>country[a], <span class="at">country2 =</span> centers<span class="sc">$</span>country[b],</span>
-<span id="cb28-12"><a href=""></a>      <span class="at">lon1 =</span> centers<span class="sc">$</span>longitude[a], <span class="at">lat1 =</span> centers<span class="sc">$</span>latitude[a],</span>
-<span id="cb28-13"><a href=""></a>      <span class="at">lon2 =</span> centers<span class="sc">$</span>longitude[b], <span class="at">lat2 =</span> centers<span class="sc">$</span>latitude[b],</span>
-<span id="cb28-14"><a href=""></a>      <span class="at">fraction =</span> <span class="fu">mean</span>(values <span class="sc">&lt;=</span> cutoff), <span class="at">cutoff =</span> <span class="fu">paste0</span>(<span class="st">'Mismatch &lt;= '</span>,cutoff))</span>
-<span id="cb28-15"><a href=""></a>  }</span>
-<span id="cb28-16"><a href=""></a>}</span>
-<span id="cb28-17"><a href=""></a>connections <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, connections)</span>
-<span id="cb28-18"><a href=""></a>connections <span class="ot">&lt;-</span> <span class="fu">subset</span>(connections, fraction <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
-<span id="cb28-19"><a href=""></a><span class="fu">print</span>(<span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb28-20"><a href=""></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> connections,</span>
-<span id="cb28-21"><a href=""></a>               <span class="fu">aes</span>(<span class="at">x =</span> lon1, <span class="at">y =</span> lat1, <span class="at">xend =</span> lon2, <span class="at">yend =</span> lat2,</span>
-<span id="cb28-22"><a href=""></a>                   <span class="at">linewidth =</span> fraction, <span class="at">colour =</span> fraction), <span class="at">alpha =</span> .<span class="dv">65</span>) <span class="sc">+</span></span>
-<span id="cb28-23"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> centers, <span class="fu">aes</span>(longitude, latitude), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb28-24"><a href=""></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> centers, <span class="fu">aes</span>(longitude, latitude, <span class="at">label =</span> country),</span>
-<span id="cb28-25"><a href=""></a>            <span class="at">size =</span> <span class="fl">2.8</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb28-26"><a href=""></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> cutoff) <span class="sc">+</span> <span class="fu">coord_quickmap</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">25</span>,<span class="dv">115</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">30</span>,<span class="dv">30</span>)) <span class="sc">+</span></span>
-<span id="cb28-27"><a href=""></a>  <span class="fu">scale_linewidth</span>(<span class="at">range =</span> <span class="fu">c</span>(.<span class="dv">2</span>, <span class="fl">2.5</span>)) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb28-28"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Genetic connectedness: between-country comparisons'</span>,</span>
-<span id="cb28-29"><a href=""></a>       <span class="at">x =</span> <span class="st">'Longitude'</span>, <span class="at">y =</span> <span class="st">'Latitude'</span>, <span class="at">colour =</span> <span class="st">'Fraction'</span>, <span class="at">linewidth =</span> <span class="st">'Fraction'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>country <span class="ot">&lt;-</span> meta<span class="sc">$</span>country[<span class="fu">match</span>(<span class="fu">rownames</span>(d_all), meta<span class="sc">$</span>sample)]</span>
+<span id="cb28-2"><a></a>centers <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(<span class="fu">cbind</span>(longitude, latitude) <span class="sc">~</span> country, meta, mean)</span>
+<span id="cb28-3"><a></a>thresholds <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">05</span>, .<span class="dv">10</span>, .<span class="dv">20</span>)</span>
+<span id="cb28-4"><a></a>connections <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb28-5"><a></a><span class="cf">for</span> (a <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">nrow</span>(centers) <span class="sc">-</span> <span class="dv">1</span>)) <span class="cf">for</span> (b <span class="cf">in</span> (a<span class="sc">+</span><span class="dv">1</span>)<span class="sc">:</span><span class="fu">nrow</span>(centers)) {</span>
+<span id="cb28-6"><a></a>  ia <span class="ot">&lt;-</span> <span class="fu">which</span>(country <span class="sc">==</span> centers<span class="sc">$</span>country[a]); ib <span class="ot">&lt;-</span> <span class="fu">which</span>(country <span class="sc">==</span> centers<span class="sc">$</span>country[b])</span>
+<span id="cb28-7"><a></a>  <span class="cf">if</span> (<span class="fu">length</span>(ia) <span class="sc">*</span> <span class="fu">length</span>(ib) <span class="sc">&lt;</span> <span class="dv">10</span>) <span class="cf">next</span></span>
+<span id="cb28-8"><a></a>  values <span class="ot">&lt;-</span> <span class="fu">as.vector</span>(d_all[ia, ib, <span class="at">drop =</span> <span class="cn">FALSE</span>])</span>
+<span id="cb28-9"><a></a>  <span class="cf">for</span> (cutoff <span class="cf">in</span> thresholds) {</span>
+<span id="cb28-10"><a></a>    connections[[<span class="fu">length</span>(connections)<span class="sc">+</span><span class="dv">1</span>]] <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb28-11"><a></a>      <span class="at">country1 =</span> centers<span class="sc">$</span>country[a], <span class="at">country2 =</span> centers<span class="sc">$</span>country[b],</span>
+<span id="cb28-12"><a></a>      <span class="at">lon1 =</span> centers<span class="sc">$</span>longitude[a], <span class="at">lat1 =</span> centers<span class="sc">$</span>latitude[a],</span>
+<span id="cb28-13"><a></a>      <span class="at">lon2 =</span> centers<span class="sc">$</span>longitude[b], <span class="at">lat2 =</span> centers<span class="sc">$</span>latitude[b],</span>
+<span id="cb28-14"><a></a>      <span class="at">fraction =</span> <span class="fu">mean</span>(values <span class="sc">&lt;=</span> cutoff), <span class="at">cutoff =</span> <span class="fu">paste0</span>(<span class="st">'Mismatch &lt;= '</span>,cutoff))</span>
+<span id="cb28-15"><a></a>  }</span>
+<span id="cb28-16"><a></a>}</span>
+<span id="cb28-17"><a></a>connections <span class="ot">&lt;-</span> <span class="fu">do.call</span>(rbind, connections)</span>
+<span id="cb28-18"><a></a>connections <span class="ot">&lt;-</span> <span class="fu">subset</span>(connections, fraction <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb28-19"><a></a><span class="fu">print</span>(<span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb28-20"><a></a>  <span class="fu">geom_segment</span>(<span class="at">data =</span> connections,</span>
+<span id="cb28-21"><a></a>               <span class="fu">aes</span>(<span class="at">x =</span> lon1, <span class="at">y =</span> lat1, <span class="at">xend =</span> lon2, <span class="at">yend =</span> lat2,</span>
+<span id="cb28-22"><a></a>                   <span class="at">linewidth =</span> fraction, <span class="at">colour =</span> fraction), <span class="at">alpha =</span> .<span class="dv">65</span>) <span class="sc">+</span></span>
+<span id="cb28-23"><a></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> centers, <span class="fu">aes</span>(longitude, latitude), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb28-24"><a></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> centers, <span class="fu">aes</span>(longitude, latitude, <span class="at">label =</span> country),</span>
+<span id="cb28-25"><a></a>            <span class="at">size =</span> <span class="fl">2.8</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb28-26"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> cutoff) <span class="sc">+</span> <span class="fu">coord_quickmap</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">25</span>,<span class="dv">115</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">30</span>,<span class="dv">30</span>)) <span class="sc">+</span></span>
+<span id="cb28-27"><a></a>  <span class="fu">scale_linewidth</span>(<span class="at">range =</span> <span class="fu">c</span>(.<span class="dv">2</span>, <span class="fl">2.5</span>)) <span class="sc">+</span> <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb28-28"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Genetic connectedness: between-country comparisons'</span>,</span>
+<span id="cb28-29"><a></a>       <span class="at">x =</span> <span class="st">'Longitude'</span>, <span class="at">y =</span> <span class="st">'Latitude'</span>, <span class="at">colour =</span> <span class="st">'Fraction'</span>, <span class="at">linewidth =</span> <span class="st">'Fraction'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -1264,35 +1264,35 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a>x_dapc <span class="ot">&lt;-</span> x_all</span>
-<span id="cb29-2"><a href=""></a></span>
-<span id="cb29-3"><a href=""></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">ncol</span>(x_dapc))) {</span>
-<span id="cb29-4"><a href=""></a>  miss <span class="ot">&lt;-</span> <span class="fu">is.na</span>(x_dapc[, j])</span>
-<span id="cb29-5"><a href=""></a></span>
-<span id="cb29-6"><a href=""></a>  <span class="cf">if</span> (<span class="fu">any</span>(miss)) {</span>
-<span id="cb29-7"><a href=""></a>    x_dapc[miss, j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(x_dapc[, j], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)}</span>
-<span id="cb29-8"><a href=""></a>}</span>
-<span id="cb29-9"><a href=""></a></span>
-<span id="cb29-10"><a href=""></a>groups <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
-<span id="cb29-11"><a href=""></a>  meta<span class="sc">$</span>country[<span class="fu">match</span>(<span class="fu">rownames</span>(x_dapc), meta<span class="sc">$</span>sample)])</span>
-<span id="cb29-12"><a href=""></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">anyNA</span>(groups))</span>
-<span id="cb29-13"><a href=""></a></span>
-<span id="cb29-14"><a href=""></a><span class="co"># Run DAPC</span></span>
-<span id="cb29-15"><a href=""></a><span class="co"># n.pca = number of principal components retained</span></span>
-<span id="cb29-16"><a href=""></a><span class="co"># n.da  = number of discriminant axes retained</span></span>
-<span id="cb29-17"><a href=""></a></span>
-<span id="cb29-18"><a href=""></a>n_pca <span class="ot">&lt;-</span> <span class="dv">30</span></span>
-<span id="cb29-19"><a href=""></a>n_da <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb29-20"><a href=""></a></span>
-<span id="cb29-21"><a href=""></a>dapc_fit <span class="ot">&lt;-</span> adegenet<span class="sc">::</span><span class="fu">dapc</span>(</span>
-<span id="cb29-22"><a href=""></a>  x_dapc,</span>
-<span id="cb29-23"><a href=""></a>  <span class="at">grp =</span> groups,</span>
-<span id="cb29-24"><a href=""></a>  <span class="at">n.pca =</span> n_pca,</span>
-<span id="cb29-25"><a href=""></a>  <span class="at">n.da =</span> n_da</span>
-<span id="cb29-26"><a href=""></a>)</span>
-<span id="cb29-27"><a href=""></a></span>
-<span id="cb29-28"><a href=""></a><span class="fu">scatter</span>(dapc_fit, <span class="at">scree.da=</span><span class="cn">FALSE</span>, <span class="at">scree.pca=</span><span class="cn">FALSE</span>,</span>
-<span id="cb29-29"><a href=""></a><span class="at">cell=</span><span class="fl">1.5</span>, <span class="at">cex=</span><span class="dv">4</span>, <span class="at">solid=</span><span class="fl">0.8</span>, <span class="at">bg=</span><span class="st">"white"</span>,<span class="at">cstar=</span><span class="dv">0</span>, <span class="at">clab=</span><span class="dv">0</span>, <span class="at">leg=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>x_dapc <span class="ot">&lt;-</span> x_all</span>
+<span id="cb29-2"><a></a></span>
+<span id="cb29-3"><a></a><span class="cf">for</span> (j <span class="cf">in</span> <span class="fu">seq_len</span>(<span class="fu">ncol</span>(x_dapc))) {</span>
+<span id="cb29-4"><a></a>  miss <span class="ot">&lt;-</span> <span class="fu">is.na</span>(x_dapc[, j])</span>
+<span id="cb29-5"><a></a></span>
+<span id="cb29-6"><a></a>  <span class="cf">if</span> (<span class="fu">any</span>(miss)) {</span>
+<span id="cb29-7"><a></a>    x_dapc[miss, j] <span class="ot">&lt;-</span> <span class="fu">mean</span>(x_dapc[, j], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)}</span>
+<span id="cb29-8"><a></a>}</span>
+<span id="cb29-9"><a></a></span>
+<span id="cb29-10"><a></a>groups <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb29-11"><a></a>  meta<span class="sc">$</span>country[<span class="fu">match</span>(<span class="fu">rownames</span>(x_dapc), meta<span class="sc">$</span>sample)])</span>
+<span id="cb29-12"><a></a><span class="fu">stopifnot</span>(<span class="sc">!</span><span class="fu">anyNA</span>(groups))</span>
+<span id="cb29-13"><a></a></span>
+<span id="cb29-14"><a></a><span class="co"># Run DAPC</span></span>
+<span id="cb29-15"><a></a><span class="co"># n.pca = number of principal components retained</span></span>
+<span id="cb29-16"><a></a><span class="co"># n.da  = number of discriminant axes retained</span></span>
+<span id="cb29-17"><a></a></span>
+<span id="cb29-18"><a></a>n_pca <span class="ot">&lt;-</span> <span class="dv">30</span></span>
+<span id="cb29-19"><a></a>n_da <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb29-20"><a></a></span>
+<span id="cb29-21"><a></a>dapc_fit <span class="ot">&lt;-</span> adegenet<span class="sc">::</span><span class="fu">dapc</span>(</span>
+<span id="cb29-22"><a></a>  x_dapc,</span>
+<span id="cb29-23"><a></a>  <span class="at">grp =</span> groups,</span>
+<span id="cb29-24"><a></a>  <span class="at">n.pca =</span> n_pca,</span>
+<span id="cb29-25"><a></a>  <span class="at">n.da =</span> n_da</span>
+<span id="cb29-26"><a></a>)</span>
+<span id="cb29-27"><a></a></span>
+<span id="cb29-28"><a></a><span class="fu">scatter</span>(dapc_fit, <span class="at">scree.da=</span><span class="cn">FALSE</span>, <span class="at">scree.pca=</span><span class="cn">FALSE</span>,</span>
+<span id="cb29-29"><a></a><span class="at">cell=</span><span class="fl">1.5</span>, <span class="at">cex=</span><span class="dv">4</span>, <span class="at">solid=</span><span class="fl">0.8</span>, <span class="at">bg=</span><span class="st">"white"</span>,<span class="at">cstar=</span><span class="dv">0</span>, <span class="at">clab=</span><span class="dv">0</span>, <span class="at">leg=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -1315,8 +1315,8 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a><span class="fu">scatter</span>(dapc_fit,<span class="dv">1</span>,<span class="dv">1</span>,  <span class="at">bg=</span><span class="st">"white"</span>,</span>
-<span id="cb30-2"><a href=""></a><span class="at">scree.da=</span><span class="cn">FALSE</span>, <span class="at">legend=</span><span class="cn">TRUE</span>, <span class="at">solid=</span><span class="fl">0.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">scatter</span>(dapc_fit,<span class="dv">1</span>,<span class="dv">1</span>,  <span class="at">bg=</span><span class="st">"white"</span>,</span>
+<span id="cb30-2"><a></a><span class="at">scree.da=</span><span class="cn">FALSE</span>, <span class="at">legend=</span><span class="cn">TRUE</span>, <span class="at">solid=</span><span class="fl">0.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -1339,7 +1339,7 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a><span class="fu">compoplot</span>(dapc_fit, <span class="at">lab=</span><span class="st">""</span>, <span class="at">posi=</span><span class="fu">list</span>(<span class="at">x=</span><span class="dv">100</span>,<span class="at">y=</span><span class="sc">-</span>.<span class="dv">03</span>), <span class="at">cleg=</span>.<span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">compoplot</span>(dapc_fit, <span class="at">lab=</span><span class="st">""</span>, <span class="at">posi=</span><span class="fu">list</span>(<span class="at">x=</span><span class="dv">100</span>,<span class="at">y=</span><span class="sc">-</span>.<span class="dv">03</span>), <span class="at">cleg=</span>.<span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -1464,21 +1464,21 @@ Show figure
 <summary>
 Show R code
 </summary>
-<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb32-2"><a href=""></a></span>
-<span id="cb32-3"><a href=""></a>nam <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">rownames</span>(d_all), meta<span class="sc">$</span>sample[meta<span class="sc">$</span>country <span class="sc">==</span> <span class="st">'Namibia'</span>])</span>
-<span id="cb32-4"><a href=""></a>ref_by_country <span class="ot">&lt;-</span> <span class="fu">split</span>(meta<span class="sc">$</span>sample[meta<span class="sc">$</span>country <span class="sc">!=</span> <span class="st">'Namibia'</span>], meta<span class="sc">$</span>country[meta<span class="sc">$</span>country <span class="sc">!=</span> <span class="st">'Namibia'</span>])</span>
-<span id="cb32-5"><a href=""></a>ref_subset <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(ref_by_country, <span class="cf">function</span>(ids) <span class="fu">head</span>(<span class="fu">intersect</span>(ids, <span class="fu">rownames</span>(d_all)), <span class="dv">3</span>)), <span class="at">use.names =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb32-6"><a href=""></a>chosen <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">head</span>(nam, <span class="dv">12</span>), ref_subset)</span>
-<span id="cb32-7"><a href=""></a>subD <span class="ot">&lt;-</span> d_all[chosen, chosen, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
-<span id="cb32-8"><a href=""></a>heat <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">as.table</span>(subD)); <span class="fu">names</span>(heat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'sample1'</span>,<span class="st">'sample2'</span>,<span class="st">'mismatch'</span>)</span>
-<span id="cb32-9"><a href=""></a></span>
-<span id="cb32-10"><a href=""></a><span class="fu">ggplot</span>(heat, <span class="fu">aes</span>(sample1, sample2, <span class="at">fill =</span> mismatch)) <span class="sc">+</span></span>
-<span id="cb32-11"><a href=""></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span> <span class="fu">scale_fill_viridis_c</span>() <span class="sc">+</span> <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
-<span id="cb32-12"><a href=""></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">6</span>),</span>
-<span id="cb32-13"><a href=""></a>                          <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">6</span>)) <span class="sc">+</span></span>
-<span id="cb32-14"><a href=""></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Pairwise barcode mismatch heatmap (selected samples)'</span>,</span>
-<span id="cb32-15"><a href=""></a>       <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="st">'Mismatch'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb32-2"><a></a></span>
+<span id="cb32-3"><a></a>nam <span class="ot">&lt;-</span> <span class="fu">intersect</span>(<span class="fu">rownames</span>(d_all), meta<span class="sc">$</span>sample[meta<span class="sc">$</span>country <span class="sc">==</span> <span class="st">'Namibia'</span>])</span>
+<span id="cb32-4"><a></a>ref_by_country <span class="ot">&lt;-</span> <span class="fu">split</span>(meta<span class="sc">$</span>sample[meta<span class="sc">$</span>country <span class="sc">!=</span> <span class="st">'Namibia'</span>], meta<span class="sc">$</span>country[meta<span class="sc">$</span>country <span class="sc">!=</span> <span class="st">'Namibia'</span>])</span>
+<span id="cb32-5"><a></a>ref_subset <span class="ot">&lt;-</span> <span class="fu">unlist</span>(<span class="fu">lapply</span>(ref_by_country, <span class="cf">function</span>(ids) <span class="fu">head</span>(<span class="fu">intersect</span>(ids, <span class="fu">rownames</span>(d_all)), <span class="dv">3</span>)), <span class="at">use.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb32-6"><a></a>chosen <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">head</span>(nam, <span class="dv">12</span>), ref_subset)</span>
+<span id="cb32-7"><a></a>subD <span class="ot">&lt;-</span> d_all[chosen, chosen, drop <span class="ot">=</span> <span class="cn">FALSE</span>]</span>
+<span id="cb32-8"><a></a>heat <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">as.table</span>(subD)); <span class="fu">names</span>(heat) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'sample1'</span>,<span class="st">'sample2'</span>,<span class="st">'mismatch'</span>)</span>
+<span id="cb32-9"><a></a></span>
+<span id="cb32-10"><a></a><span class="fu">ggplot</span>(heat, <span class="fu">aes</span>(sample1, sample2, <span class="at">fill =</span> mismatch)) <span class="sc">+</span></span>
+<span id="cb32-11"><a></a>  <span class="fu">geom_tile</span>() <span class="sc">+</span> <span class="fu">scale_fill_viridis_c</span>() <span class="sc">+</span> <span class="fu">coord_equal</span>() <span class="sc">+</span></span>
+<span id="cb32-12"><a></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">6</span>),</span>
+<span id="cb32-13"><a></a>                          <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">6</span>)) <span class="sc">+</span></span>
+<span id="cb32-14"><a></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Pairwise barcode mismatch heatmap (selected samples)'</span>,</span>
+<span id="cb32-15"><a></a>       <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="st">'Mismatch'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <details class="figure-toggle">
 <summary>
@@ -1727,6 +1727,7 @@ Show figure
 <li><p><a href="https://genremekong.org/">GenRe - Mekong</a> - transforming data into a Genetic Report Card (GRC), grcMalaria tool, EpiGenTracker</p></li>
 </ul>
 
+
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
@@ -1737,19 +1738,19 @@ Show figure
 </div></div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="Population_Genomics_Workshop_slides_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="site_libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="Population_Genomics_Workshop_slides_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="Population_Genomics_Workshop_slides_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="Population_Genomics_Workshop_slides_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="Population_Genomics_Workshop_slides_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="Population_Genomics_Workshop_slides_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="site_libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="Population_Genomics_Workshop_slides_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="Population_Genomics_Workshop_slides_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="Population_Genomics_Workshop_slides_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="Population_Genomics_Workshop_slides_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="site_libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>
@@ -2051,7 +2052,7 @@ Show figure
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp('/' + window.location.host + '/');
+            var filterRegex = new RegExp("https:\/\/KirstyMcCann\.github\.io\/2026_CiP_pfal_outbreak_slides\/");
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }
