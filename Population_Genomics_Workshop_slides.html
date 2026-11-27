@@ -111,6 +111,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -790,17 +791,6 @@ Show figure
 <li class="fragment"><p>Branch lengths reflect genetic distance or divergence.</p></li>
 <li class="fragment"><p>Clades represent groups with shared ancestry.</p></li>
 </ul>
-<p><strong>Why It’s Useful for This Workshop?</strong></p>
-<ul>
-<li class="fragment"><p>Can identify a single outbreak clade in Namibia.</p></li>
-<li class="fragment"><p>Confirms where the outbreak samples descend from.</p></li>
-<li class="fragment"><p>Highlights differences between:</p>
-<ul>
-<li class="fragment"><p>outbreak lineage</p></li>
-<li class="fragment"><p>local African diversity</p></li>
-<li class="fragment"><p>SEA background structure</p></li>
-</ul></li>
-</ul>
 </section>
 <section id="phylogenetic-tree-neighbor-joining-1" class="slide level2">
 <h2>Phylogenetic Tree (Neighbor-Joining)</h2>
@@ -818,8 +808,7 @@ Show figure
 <li class="fragment"><p>Trees can mislead if there is strong admixture or reticulation.</p></li>
 </ul>
 </section></section>
-<section>
-<section id="quiz-time" class="title-slide slide level1 center">
+<section id="quiz-time" class="title-slide slide level1 center scrollable">
 <h1>Quiz time</h1>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -843,9 +832,10 @@ Show figure
 </div>
 </div>
 <details>
-</details></section>
-<section id="solution" class="slide level2">
-<h2>Solution</h2>
+<summary>
+<strong>Solution</strong>
+</summary>
+<div style="font-size: 80%;">
 <table class="caption-top">
 <colgroup>
 <col style="width: 33%">
@@ -892,8 +882,10 @@ Show figure
 </tr>
 </tbody>
 </table>
+</div>
+</details>
+</section>
 
-</section></section>
 <section>
 <section id="population-genetic-statistics" class="title-slide slide level1 center">
 <h1>Population Genetic Statistics</h1>
@@ -1356,7 +1348,7 @@ Show figure
 </div>
 </details>
 </section>
-<section id="what-is-dapc" class="slide level2">
+<section id="what-is-dapc" class="slide level2 scrollable">
 <h2><strong>What is DAPC?</strong></h2>
 <ul>
 <li class="fragment"><p>DAPC = Discriminant Analysis of Principal Components, implemented in <a href="https://academic.oup.com/bioinformatics/article/24/11/1403/191127">adegenet</a>.</p></li>
@@ -1423,17 +1415,6 @@ Show figure
 <li><p>admixture</p></li>
 <li><p>migration events</p></li>
 </ul></li>
-</ul>
-</section>
-<section id="dapc-allows-flexible-selection-of-pcs" class="incremental">
-<h3><strong>5. DAPC allows flexible selection of PCs</strong></h3>
-<ul>
-<li><p>You can tune the number of PCs to:</p>
-<ul>
-<li><p>avoid overfitting</p></li>
-<li><p>ensure robust structure inference</p></li>
-</ul></li>
-<li><p>Tools like <code>xvalDapc()</code> help you identify the optimal number.</p></li>
 </ul>
 </section>
 <section id="weaknesses-of-dapc" class="slide level2">

@@ -151,7 +151,7 @@
     "href": "Population_Genomics_Workshop_slides.html#phylogenetic-tree-neighbor-joining",
     "title": "Population Genomics Workshop",
     "section": "Phylogenetic Tree (Neighbor-Joining)",
-    "text": "Phylogenetic Tree (Neighbor-Joining)\nTree Purpose\n\nReconstruct relationships between samples.\nShow how lineages evolved over time.\nHelp identify transmission clusters, founder haplotypes, and ancestral relationships.\n\nWhat a Tree Shows?\n\nReconstructs evolutionary relationships between samples.\nBranch lengths reflect genetic distance or divergence.\nClades represent groups with shared ancestry.\n\nWhy It’s Useful for This Workshop?\n\nCan identify a single outbreak clade in Namibia.\nConfirms where the outbreak samples descend from.\nHighlights differences between:\n\noutbreak lineage\nlocal African diversity\nSEA background structure"
+    "text": "Phylogenetic Tree (Neighbor-Joining)\nTree Purpose\n\nReconstruct relationships between samples.\nShow how lineages evolved over time.\nHelp identify transmission clusters, founder haplotypes, and ancestral relationships.\n\nWhat a Tree Shows?\n\nReconstructs evolutionary relationships between samples.\nBranch lengths reflect genetic distance or divergence.\nClades represent groups with shared ancestry."
   },
   {
     "objectID": "Population_Genomics_Workshop_slides.html#phylogenetic-tree-neighbor-joining-1",
@@ -159,13 +159,6 @@
     "title": "Population Genomics Workshop",
     "section": "Phylogenetic Tree (Neighbor-Joining)",
     "text": "Phylogenetic Tree (Neighbor-Joining)\nStrengths\n\nHigh interpretability: evolutionary history shown as branching patterns.\nExcellent for identifying clonal expansions, outbreak clusters, and transmissions.\nWorks even with small numbers of SNPs (e.g. barcodes).\n\nWeaknesses\n\nDistance-based trees (e.g., NJ) do not model evolution explicitly.\nLow SNP counts can produce low-resolution or uncertain topologies.\nRecombination in malaria violates tree assumptions - networks or clustering methods may be more accurate.\nTrees can mislead if there is strong admixture or reticulation."
-  },
-  {
-    "objectID": "Population_Genomics_Workshop_slides.html#solution",
-    "href": "Population_Genomics_Workshop_slides.html#solution",
-    "title": "Population Genomics Workshop",
-    "section": "Solution",
-    "text": "Solution\n\n\n\n\n\n\n\n\nPurpose\nBest Method\nWhy\n\n\n\n\nExplore broad population structure\nPCoA\nFast, intuitive, clustering-focused\n\n\nIdentify outbreak clusters\nPCoA and Trees\nPCoA visualises clusters, tree shows lineage\n\n\nExamine evolutionary relationships\nTree\nReflects ancestral history\n\n\nDetect admixture or complex ancestry\nPCoA (or DAPC)\nTrees can be misleading with recombination\n\n\nFirst-pass QC / exploratory analysis\nPCoA\nQuick sanity check\n\n\nIdentify drug resistant mutations\nNeither\nThese plots will not help us in identifying new or emerging mutations. You can however, colours the plots based on this metadata information."
   },
   {
     "objectID": "Population_Genomics_Workshop_slides.html#barcode-diversity-summary",
