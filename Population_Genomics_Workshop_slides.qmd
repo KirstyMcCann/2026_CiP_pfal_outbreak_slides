@@ -5,6 +5,7 @@ author: "Kirsty McCann"
 format:
   revealjs:
     slide-level: 2
+    css: styles.css
     theme:
       - default
       - theme.scss
@@ -906,7 +907,7 @@ plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
 -   Trees can mislead if there is strong admixture or reticulation.
 :::
 
-# Quiz time {.scrollable}
+# Quiz time {.quiz-scroll}
 
 ::: callout-note
 **When would you use a PCoA plot and a tree in the following scenarios?**
@@ -922,7 +923,7 @@ plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
 <details>
 <summary><strong>Solution</strong></summary>
 
-::: {style="font-size: 80%; max-height: 350px; overflow-y: auto;"}
+::: {style="font-size: 80%;"}
 
 | Purpose | Best Method | Why |
 |----|----|----|
