@@ -14,7 +14,7 @@ format:
     transition: fade
     center: false
     smaller: false
-    scrollable: false
+    scrollable: true
     width: 1280
     height: 720
 execute:
@@ -882,19 +882,6 @@ plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
 
 -   Clades represent groups with shared ancestry.
 
-**Why It’s Useful for This Workshop?**
-
--   Can identify a single outbreak clade in Namibia.
-
--   Confirms where the outbreak samples descend from.
-
--   Highlights differences between:
-
-    -   outbreak lineage
-
-    -   local African diversity
-
-    -   SEA background structure
 :::
 
 ## Phylogenetic Tree (Neighbor-Joining)
@@ -939,7 +926,9 @@ plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
 
 <details>
 
-## Solution
+<summary><strong>Solution</strong></summary>
+
+::: {style="font-size: 80%;"}
 
 | Purpose | Best Method | Why |
 |----|----|----|
@@ -949,6 +938,8 @@ plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
 | Detect admixture or complex ancestry | PCoA (or DAPC) | Trees can be misleading with recombination |
 | First-pass QC / exploratory analysis | PCoA | Quick sanity check |
 | Identify drug resistant mutations | Neither | These plots will not help us in identifying new or emerging mutations. You can however, colours the plots based on this metadata information. |
+
+:::
 
 </details>
 
@@ -1686,18 +1677,6 @@ compoplot(dapc_fit, lab="", posi=list(x=100,y=-.03), cleg=.7)
     -   admixture
 
     -   migration events
-:::
-
-::: incremental
-### **5. DAPC allows flexible selection of PCs**
-
--   You can tune the number of PCs to:
-
-    -   avoid overfitting
-
-    -   ensure robust structure inference
-
--   Tools like `xvalDapc()` help you identify the optimal number.
 :::
 
 ::: incremental
