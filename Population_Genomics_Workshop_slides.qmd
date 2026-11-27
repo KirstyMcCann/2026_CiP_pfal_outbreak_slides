@@ -926,7 +926,7 @@ plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
 
 <details>
 
-<summary><strong>Solution</strong></summary>
+# Solution
 
 ::: {style="font-size: 80%;"}
 
