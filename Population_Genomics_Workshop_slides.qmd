@@ -907,21 +907,20 @@ plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
 -   Trees can mislead if there is strong admixture or reticulation.
 :::
 
-# Quiz time {.quiz-scroll}
+# Quiz time
 
 ::: callout-note
 **When would you use a PCoA plot and a tree in the following scenarios?**
 
-1.  Explore broad population structure
-2.  Identify outbreak clusters
-3.  Examine evolutionary relationships
-4.  Identify drug resistant mutations
-5.  Detect admixture or complex ancestry
-6.  First-pass QC / exploratory analysis
+1. Explore broad population structure
+2. Identify outbreak clusters
+3. Examine evolutionary relationships
+4. Identify drug resistant mutations
+5. Detect admixture or complex ancestry
+6. First-pass QC / exploratory analysis
 :::
 
-<details>
-<summary><strong>Solution</strong></summary>
+# Solution
 
 ::: {style="font-size: 80%;"}
 
@@ -935,8 +934,6 @@ plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
 | Identify drug resistant mutations | Neither | These plots will not help us in identifying new or emerging mutations. You can however, colours the plots based on this metadata information. |
 
 :::
-
-</details>
 
 # Population Genetic Statistics
 
