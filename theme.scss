@@ -1,0 +1,117 @@
+
+/*-- scss:defaults --*/
+
+// CIIDIR brand colours
+$ciidir-cyan: #51BFCE;
+$ciidir-magenta: #D90078;
+$ciidir-orange: #F08321;
+$ciidir-charcoal: #606060;
+$ciidir-dark: #30343B;
+
+// Base slide colours
+$body-bg: #FFFFFF;
+$body-color: $ciidir-dark;
+$link-color: #168D9C;
+
+// Typography
+$presentation-heading-color: $ciidir-charcoal;
+$presentation-heading-font: "Arial", sans-serif;
+$presentation-font-size-root: 36px;
+
+// Code blocks
+$code-block-bg: #F3F7F8;
+$code-block-border-color: #DCE7E9;
+$code-block-font-size: 0.80em;
+
+// RevealJS
+$presentation-title-slide-text-align: left;
+
+/*-- scss:rules --*/
+
+// Headings
+.reveal h1 {
+  color: $ciidir-charcoal;
+  font-weight: 700;
+}
+
+.reveal h2 {
+  color: $ciidir-charcoal;
+  font-weight: 700;
+  border-bottom: 4px solid $ciidir-cyan;
+  padding-bottom: 12px;
+}
+
+.reveal h3 {
+  color: $ciidir-magenta;
+  font-weight: 600;
+}
+
+.reveal h4 {
+  color: $ciidir-dark;
+}
+
+// Links
+.reveal a {
+  color: #168D9C;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.reveal a:hover {
+  color: $ciidir-magenta;
+  text-decoration: underline;
+}
+
+// Emphasis
+.reveal strong {
+  color: $ciidir-magenta;
+}
+
+// Code blocks
+.reveal pre {
+  border-left: 4px solid $ciidir-cyan;
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.reveal code {
+  font-family: "Consolas", "Menlo", monospace;
+}
+
+// Tables
+.reveal table th {
+  background-color: $ciidir-cyan;
+  color: #FFFFFF;
+}
+
+.reveal table td {
+  border-bottom: 1px solid #DCE7E9;
+}
+
+// Section divider slides
+.reveal section.section-divider {
+  background-color: transparent;
+  color: #606060;
+}
+
+.reveal section.section-divider h1,
+.reveal section.section-divider h2 {
+  color: #606060;
+  border-bottom: 4px solid $ciidir-orange;
+}
+
+// Slide number
+.reveal .slide-number {
+  color: $ciidir-charcoal;
+  font-size: 14px;
+  bottom: 12px;
+  right: 18px;
+}
+
+// CIIDIR logo on regular slides
+.reveal .slide-background:not(.title-slide) {
+  background-image: url("images/CIIDIR_logo.png");
+  background-repeat: no-repeat;
+  background-position: left 20px bottom 15px;
+  background-size: 145px auto;
+}
