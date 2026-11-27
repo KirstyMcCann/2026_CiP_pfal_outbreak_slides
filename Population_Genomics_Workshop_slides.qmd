@@ -912,23 +912,17 @@ plot_nj(d_af, meta, 'Africa: neighbour-joining tree')
 **When would you use a PCoA plot and a tree in the following scenarios?**
 
 1.  Explore broad population structure
-
 2.  Identify outbreak clusters
-
 3.  Examine evolutionary relationships
-
 4.  Identify drug resistant mutations
-
 5.  Detect admixture or complex ancestry
-
 6.  First-pass QC / exploratory analysis
 :::
 
 <details>
-
 <summary><strong>Solution</strong></summary>
 
-::: {style="font-size: 80%;"}
+::: {style="font-size: 80%; max-height: 350px; overflow-y: auto;"}
 
 | Purpose | Best Method | Why |
 |----|----|----|
